@@ -1,5 +1,9 @@
 import "./index.scss";
 
 export const App = () => {
-    return <div className={"app"}>React injected successfully!</div>;
+    return (
+        // TODO добавить роуты
+
+        <div className={"app"}>React injected successfully!</div>
+    );
 };
