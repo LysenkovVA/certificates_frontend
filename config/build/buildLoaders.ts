@@ -37,5 +37,10 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
         ],
     };
 
-    return [typeScriptLoader, sassLoader];
+    const dxCssLoader = {
+        test: /\.css$/,
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }],
+    };
+
+    return [typeScriptLoader, sassLoader, dxCssLoader];
 }

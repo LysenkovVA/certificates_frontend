@@ -1,3 +1,4 @@
+import { Button } from "devextreme-react";
 import { memo } from "react";
 
 interface LoginPageProps {
@@ -6,7 +7,12 @@ interface LoginPageProps {
 
 const LoginPage = (props: LoginPageProps) => {
     const { className } = props;
-    return <div>Login page</div>;
+
+    const sayHelloWorld = () => {
+        alert("Hello world!");
+    };
+
+    return <Button text="Click me" onClick={sayHelloWorld} />;
     //return <div className={classNames(cls.LoginPage, {})}>LOGIN PAGE</div>;
 };
 
