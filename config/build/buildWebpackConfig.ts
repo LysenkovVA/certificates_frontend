@@ -16,7 +16,7 @@ export function buildWebpackConfig(
         module: {
             rules: buildLoaders(options),
         },
-        resolve: buildResolvers(),
+        resolve: buildResolvers(options),
         output: {
             // Кешируем изменения
             filename: "[name].[contenthash].js",
