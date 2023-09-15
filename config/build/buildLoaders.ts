@@ -3,6 +3,37 @@ import webpack from "webpack";
 import { BuildOptions } from "./types/config";
 
 export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
+    const svgLoader = {
+        test: /\.svg$/,
+        use: [
+            {
+                loader: "@svgr/webpack",
+                options: {
+                    icon: true,
+                    svgoConfig: {
+                        plugins: [
+                            {
+                                name: "convertColors",
+                                params: {
+                                    currentColor: true,
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+        ],
+    };
+
+    const fileLoader = {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+            {
+                loader: "file-loader",
+            },
+        ],
+    };
+
     const typeScriptLoader = {
         test: /\.tsx?$/,
         use: "ts-loader",
@@ -10,7 +41,8 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
     };
 
     const sassLoader = {
-        test: /\.s[ac]ss$/i,
+        // test: /\.s[ac]ss$/i, // было
+        test: /\.(sc|sa|c)ss$/,
         use: [
             // В режиме разработки не будем генерить отдельно файлы со стилями
             options.isDev ? "style-loader" : MiniCssExtractPlugin.loader,
@@ -18,16 +50,17 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
             {
                 loader: "css-loader",
                 options: {
+                    esModule: true,
                     // Включаем изоляцию модулей для CSS стилей
                     modules: {
-                        // Работаем только с файлами в имени которых есть ".modules."
-                        auto: (resPath: string) =>
-                            Boolean(resPath.includes(".modules.")),
+                        // auto: (resPath: string) =>
+                        //     Boolean(resPath.includes(".modules.")),
+                        auto: true,
                         // Имена стилей для разных режимов сборки:
                         // Dev - понятное имя
                         // Prod - Хеш
                         localIdentName: options.isDev
-                            ? "[path][name]__[local]-[hase:base64:5]"
+                            ? "[path][name]-[hase:base64:5]"
                             : "[hase:base64:8]",
                     },
                 },
@@ -37,10 +70,10 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
         ],
     };
 
-    const dxCssLoader = {
-        test: /\.css$/,
-        use: [{ loader: "style-loader" }, { loader: "css-loader" }],
-    };
+    // const dxCssLoader = {
+    //     test: /\.css$/,
+    //     use: [{ loader: "style-loader" }, { loader: "css-loader" }],
+    // };
 
-    return [typeScriptLoader, sassLoader, dxCssLoader];
+    return [svgLoader, fileLoader, typeScriptLoader, sassLoader];
 }

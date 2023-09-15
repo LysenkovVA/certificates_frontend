@@ -1,7 +1,11 @@
-import { AppRouter } from "@/app/providers/router";
 import "devextreme/dist/css/dx.light.css";
+import { AppRouter } from "./providers/router";
 import "./styles/index.scss";
 
 export const App = () => {
-    return <AppRouter />;
+    return (
+        <div className="content-page">
+            <AppRouter />
+        </div>
+    );
 };
