@@ -3,7 +3,11 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    extends: ["standard-with-typescript", "plugin:react/recommended"],
+    extends: [
+        "standard-with-typescript",
+        "plugin:react/recommended",
+        "plugin:storybook/recommended"
+    ],
     overrides: [
         {
             env: {
@@ -41,6 +45,8 @@ module.exports = {
         "no-unused-vars": "off",
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/consistent-indexed-object-style": "off",
+        "@typescript-eslint/promise-function-async": "off",
+        "@typescript-eslint/no-confusing-void-expression": "off"
     },
     globals: {
         __IS_DEV__: true,

@@ -3,6 +3,7 @@ import webpack from "webpack";
 import { BuildOptions } from "./types/config";
 
 export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
+    // Лоадер для SVG
     const svgLoader = {
         test: /\.svg$/,
         use: [
@@ -25,6 +26,7 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
         ],
     };
 
+    // Лоадер для файлов
     const fileLoader = {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
@@ -34,12 +36,14 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
         ],
     };
 
+    // Лоадер для TS
     const typeScriptLoader = {
         test: /\.tsx?$/,
         use: "ts-loader",
         exclude: /node_modules/,
     };
 
+    // Лоадер для scss
     const sassLoader = {
         // test: /\.s[ac]ss$/i, // было
         test: /\.(sc|sa|c)ss$/,
@@ -53,9 +57,9 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
                     esModule: true,
                     // Включаем изоляцию модулей для CSS стилей
                     modules: {
-                        // auto: (resPath: string) =>
-                        //     Boolean(resPath.includes(".modules.")),
-                        auto: true,
+                        auto: (resPath: string) =>
+                            Boolean(resPath.includes(".module.")),
+                        // auto: true,
                         // Имена стилей для разных режимов сборки:
                         // Dev - понятное имя
                         // Prod - Хеш
