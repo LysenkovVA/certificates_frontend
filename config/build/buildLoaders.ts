@@ -1,5 +1,6 @@
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import webpack from "webpack";
+import { buildBabelLoader } from "./loaders/buildBabelLoader";
+import { buildCssLoader } from "./loaders/buildCssLoader";
 import { BuildOptions } from "./types/config";
 
 export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
@@ -36,6 +37,9 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
         ],
     };
 
+    const codeBabelLoader = buildBabelLoader({ ...options, isTsx: false });
+    const tsxCodeBabelLoader = buildBabelLoader({ ...options, isTsx: true });
+
     // Лоадер для TS
     const typeScriptLoader = {
         test: /\.tsx?$/,
@@ -44,40 +48,14 @@ export function buildLoaders(options: BuildOptions): webpack.RuleSetRule[] {
     };
 
     // Лоадер для scss
-    const sassLoader = {
-        // test: /\.s[ac]ss$/i, // было
-        test: /\.(sc|sa|c)ss$/,
-        use: [
-            // В режиме разработки не будем генерить отдельно файлы со стилями
-            options.isDev ? "style-loader" : MiniCssExtractPlugin.loader,
-            // Translates CSS into CommonJS
-            {
-                loader: "css-loader",
-                options: {
-                    esModule: true,
-                    // Включаем изоляцию модулей для CSS стилей
-                    modules: {
-                        auto: (resPath: string) =>
-                            Boolean(resPath.includes(".module.")),
-                        // auto: true,
-                        // Имена стилей для разных режимов сборки:
-                        // Dev - понятное имя
-                        // Prod - Хеш
-                        localIdentName: options.isDev
-                            ? "[path][name]-[hase:base64:5]"
-                            : "[hase:base64:8]",
-                    },
-                },
-            },
-            // Compiles Sass to CSS
-            "sass-loader",
-        ],
-    };
+    const sassLoader = buildCssLoader(options.isDev);
 
-    // const dxCssLoader = {
-    //     test: /\.css$/,
-    //     use: [{ loader: "style-loader" }, { loader: "css-loader" }],
-    // };
-
-    return [svgLoader, fileLoader, typeScriptLoader, sassLoader];
+    return [
+        svgLoader,
+        fileLoader,
+        sassLoader,
+        codeBabelLoader,
+        tsxCodeBabelLoader,
+        typeScriptLoader,
+    ];
 }

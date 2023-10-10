@@ -6,7 +6,7 @@ module.exports = {
     extends: [
         "standard-with-typescript",
         "plugin:react/recommended",
-        "plugin:storybook/recommended"
+        "plugin:storybook/recommended",
     ],
     overrides: [
         {
@@ -46,7 +46,9 @@ module.exports = {
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/consistent-indexed-object-style": "off",
         "@typescript-eslint/promise-function-async": "off",
-        "@typescript-eslint/no-confusing-void-expression": "off"
+        "@typescript-eslint/no-confusing-void-expression": "off",
+        "react/display-name": "off",
+        "@typescript-eslint/no-unused-vars": "off",
     },
     globals: {
         __IS_DEV__: true,

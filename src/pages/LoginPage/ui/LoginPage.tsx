@@ -1,4 +1,5 @@
 import { classNames } from "@/shared/helpers/classNames/classNames";
+import { Text } from "@/shared/ui/Text/ui/Text";
 import { memo } from "react";
 import cls from "./LoginPage.module.scss";
 
@@ -15,7 +16,7 @@ const LoginPage = (props: LoginPageProps) => {
 
     return (
         <div className={classNames(cls.LoginPage, {}, [className])}>
-            {"Login page"}
+            <Text title={"Title"} text={"text"} bold variant={"primary"} />
         </div>
     );
 };
