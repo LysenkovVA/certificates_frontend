@@ -1,4 +1,3 @@
-import { classNames } from "@/shared/helpers/classNames/classNames";
 import "./Loader.scss";
 
 interface LoaderProps {
@@ -7,9 +6,7 @@ interface LoaderProps {
 
 export const Loader = ({ className }: LoaderProps) => {
     return (
-        <div className={classNames("lds-ellipsis", {}, [className])}>
-            <div></div>
-            <div></div>
+        <div className="lds-ripple">
             <div></div>
             <div></div>
         </div>

@@ -16,9 +16,9 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
     args: {
-        variant: "primary",
+        colorStyle: "base",
         align: "center",
-        text: "Sample text",
-        title: "Sample title",
+        text: "Текст статьи, которая описывает тренды в области ОТ и ТБ",
+        title: "Новое в охране труда",
     },
 };

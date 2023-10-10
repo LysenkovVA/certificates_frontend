@@ -1,1 +1,1 @@
-export * from "./Loader";
+export * from "./ui/Loader";

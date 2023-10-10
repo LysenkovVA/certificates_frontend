@@ -1,41 +1,150 @@
 .title {
-    color: var(--text);
+    color: var(--color-base-strong);
 }
 
 .text {
-    color: var(--text);
+    color: var(--color-base-strong);
 }
 
-.primary {
+.base {
     .title {
-        color: var(--text);
+        color: var(--color-base-strong);
     }
 
     .text {
-        color: var(--text);
+        color: var(--color-base-strong);
     }
 }
 
-.error {
+.base-weak {
     .title {
-        color: var(--red-light);
+        color: var(--color-base-weak);
     }
 
     .text {
-        color: var(--red-dark);
+        color: var(--color-base-weak);
+    }
+}
+
+.faint {
+    .title {
+        color: var(--color-faint-strong);
+    }
+
+    .text {
+        color: var(--color-faint-strong);
+    }
+}
+
+.faint-weak {
+    .title {
+        color: var(--color-faint-weak);
+    }
+
+    .text {
+        color: var(--color-faint-weak);
     }
 }
 
 .accent {
     .title {
-        color: var(--accent);
+        color: var(--color-accent-strong);
     }
 
     .text {
-        color: var(--accent);
+        color: var(--color-accent-strong);
     }
 }
 
+.accent-weak {
+    .title {
+        color: var(--color-accent-weak);
+    }
+
+    .text {
+        color: var(--color-accent-weak);
+    }
+}
+
+.complement {
+    .title {
+        color: var(--color-complement-strong);
+    }
+
+    .text {
+        color: var(--color-complement-strong);
+    }
+}
+
+.complement-weak {
+    .title {
+        color: var(--color-complement-weak);
+    }
+
+    .text {
+        color: var(--color-complement-weak);
+    }
+}
+
+.critic {
+    .title {
+        color: var(--color-critic-strong);
+    }
+
+    .text {
+        color: var(--color-critic-strong);
+    }
+}
+
+.critic-weak {
+    .title {
+        color: var(--color-critic-weak);
+    }
+
+    .text {
+        color: var(--color-critic-weak);
+    }
+}
+
+.warning {
+    .title {
+        color: var(--color-warning-strong);
+    }
+
+    .text {
+        color: var(--color-warning-strong);
+    }
+}
+
+.warning-weak {
+    .title {
+        color: var(--color-warning-weak);
+    }
+
+    .text {
+        color: var(--color-warning-weak);
+    }
+}
+
+.success {
+    .title {
+        color: var(--color-success-strong);
+    }
+
+    .text {
+        color: var(--color-success-strong);
+    }
+}
+
+.success-weak {
+    .title {
+        color: var(--color-success-weak);
+    }
+
+    .text {
+        color: var(--color-success-weak);
+    }
+}
 
 .left {
     text-align: left;
@@ -47,6 +156,16 @@
 
 .center {
     text-align: center;
+}
+
+.size_xs {
+    .title {
+        font: var(--font-s);
+    }
+
+    .text {
+        font: var(--font-xs);
+    }
 }
 
 .size_s {
