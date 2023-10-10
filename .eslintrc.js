@@ -49,6 +49,9 @@ module.exports = {
         "@typescript-eslint/no-confusing-void-expression": "off",
         "react/display-name": "off",
         "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
+        "@typescript-eslint/prefer-includes": "off",
     },
     globals: {
         __IS_DEV__: true,

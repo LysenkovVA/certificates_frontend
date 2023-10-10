@@ -1,16 +1,19 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
+import path from "path";
 import { Configuration, DefinePlugin, RuleSetRule } from "webpack";
-import { buildCssLoader } from "../config/build/loaders/buildCssLoader";
-import path = require("path");
+import { buildCssLoader } from "../build/loaders/buildCssLoader";
 
 const config: StorybookConfig = {
-    stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+    stories: [
+        "../../src/**/*.mdx",
+        "../../src/**/*.stories.@(js|jsx|mjs|ts|tsx)",
+    ],
     addons: [
         "@storybook/addon-links",
         "@storybook/addon-essentials",
         "@storybook/addon-onboarding",
         "@storybook/addon-interactions",
-        //"storybook-css-modules",
+        // "storybook-css-modules",
     ],
     framework: {
         name: "@storybook/react-webpack5",
@@ -22,7 +25,7 @@ const config: StorybookConfig = {
     // Конфигурируем все пути
     webpackFinal: async (config: Configuration) => {
         const paths = {
-            src: path.resolve(__dirname, "..", "src"),
+            src: path.resolve(__dirname, "..", "..", "src"),
         };
         config!.resolve!.modules!.push(paths.src);
         config!.resolve!.extensions!.push(".ts", ".tsx");
@@ -32,7 +35,6 @@ const config: StorybookConfig = {
         };
 
         config!.module!.rules = config!.module!.rules!.map(
-            // @ts-ignore
             (rule: RuleSetRule) => {
                 if (/svg/.test(rule.test as string)) {
                     return { ...rule, exclude: /\.svg$/i };
