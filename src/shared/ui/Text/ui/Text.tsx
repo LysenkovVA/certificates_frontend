@@ -1,4 +1,4 @@
-import { classNames } from "@/shared/helpers/classNames/classNames";
+import { classNames } from "@/shared/lib/classNames/classNames";
 import { ColorStyle } from "@/shared/types/ColorStyle";
 import { TextAlign } from "@/shared/types/TextAlign";
 import { TextSize } from "@/shared/types/TextSize";

@@ -52,6 +52,7 @@ module.exports = {
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/prefer-includes": "off",
+        "@typescript-eslint/no-empty-interfac": "off"
     },
     globals: {
         __IS_DEV__: true,

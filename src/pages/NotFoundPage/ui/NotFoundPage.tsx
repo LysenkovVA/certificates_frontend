@@ -1,4 +1,4 @@
-import { classNames } from "@/shared/helpers/classNames/classNames";
+import { classNames } from "@/shared/lib/classNames/classNames";
 import { memo } from "react";
 import cls from "./NotFoundPage.module.scss";
 

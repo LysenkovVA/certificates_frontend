@@ -8,3 +8,6 @@
 
 ## Development build
 "build:dev": "webpack --env mode=development"
+
+## Api url для разработки
+http://localhost:8000

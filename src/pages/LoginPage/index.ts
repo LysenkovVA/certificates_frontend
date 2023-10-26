@@ -1,2 +1,2 @@
-import { LoginPageAsync } from "@/pages/LoginPage/ui/LoginPage.async";
+import { LoginPageAsync } from "./ui/LoginPage.async";
 export { LoginPageAsync as LoginPage };

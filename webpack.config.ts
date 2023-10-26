@@ -1,7 +1,19 @@
 import * as path from "path";
 import * as webpack from "webpack";
 import { buildWebpackConfig } from "./config/build/buildWebpackConfig";
-import { BuildEnv, BuildPaths } from "./config/build/types/config"; //to access built-in plugins
+import { BuildEnv, BuildMode, BuildPaths } from "./config/build/types/config"; //to access built-in plugins
+
+function getApiUrl(mode: BuildMode, apiUrl?: string) {
+    if (apiUrl) {
+        return apiUrl;
+    }
+    if (mode === "production") {
+        return "/api";
+    }
+
+    // Backend
+    return "http://localhost:5001/api/";
+}
 
 // Чтобы получать переменные окружения из скриптов возвращаем
 // не сам конфиг, а функцию, которая возвращает конфиг
@@ -16,6 +28,7 @@ export default (env: BuildEnv) => {
 
     const mode = env?.mode || "development";
     const PORT = env?.port || 3000;
+    const apiUrl = getApiUrl(mode, env?.apiUrl);
 
     const isDev = mode === "development";
 
@@ -24,6 +37,7 @@ export default (env: BuildEnv) => {
         paths,
         isDev,
         port: PORT,
+        apiUrl,
     });
 
     return config;

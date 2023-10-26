@@ -6,7 +6,7 @@ import { BuildOptions } from "./types/config";
 export function buildPlugins(
     options: BuildOptions,
 ): webpack.WebpackPluginInstance[] {
-    const { isDev, paths } = options;
+    const { isDev, paths, apiUrl } = options;
 
     const plugins = [
         // Показываем прогресс сборки
@@ -24,6 +24,7 @@ export function buildPlugins(
         // Определяем глобальные константы
         new webpack.DefinePlugin({
             __IS_DEV__: JSON.stringify(isDev),
+            __API__: JSON.stringify(apiUrl),
         }),
     ];
 
