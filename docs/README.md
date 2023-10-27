@@ -1,3 +1,6 @@
+## FSD архитектура
+![img.png](img.png)
+
 ## Запуск Dev Server (в папку dist не попадает)
 
 "start:dev": "webpack serve --env port=3000",

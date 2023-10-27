@@ -2,6 +2,7 @@ import { IUser } from "@/entities/User/model/types/IUser";
 import { authByEmail } from "@/features/auth";
 import { TestAsyncThunk } from "@/shared/lib/tests/TestAsyncThunk/TestAsyncThunk";
 
+// TODO: починить тест
 describe("authByEmail.test", () => {
     test("Success login", async () => {
         const userValue: IUser = {
