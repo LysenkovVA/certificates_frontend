@@ -1,4 +1,4 @@
-import { Authorization } from "@/features/auth/ui/Authorization";
+import { Authorization } from "@/features/auth";
 import { memo } from "react";
 
 interface LoginPageProps {

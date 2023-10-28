@@ -1,4 +1,5 @@
-import { authActions, authReducer, AuthSchema } from "../../index";
+import { authReducer, AuthSchema } from "../../index";
+import { authActions } from "../../model/slice/authSlice";
 
 describe("authSlice.test", () => {
     test("Test set email", () => {

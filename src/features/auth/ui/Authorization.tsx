@@ -1,17 +1,14 @@
 import { AppDispatch } from "@/app/providers/StoreProvider";
-import { getAuthenticatedUser } from "@/entities/User/model/selectors/getAuthenticatedUser/getAuthenticatedUser";
-import { authActions, authByEmail, getAuth } from "@/features/auth";
+import { getAuthenticatedUser } from "@/entities/User";
 import logo from "@/shared/assets/logo/crane.png";
+import { AppRoutes } from "@/shared/config/routeConfig/routeConfig";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-interface FieldType {
-    username?: string;
-    password?: string;
-    remember?: string;
-}
+import { getAuth } from "../model/selectors/getAuth/getAuth";
+import { authByEmail } from "../model/services/authByEmail/authByEmail";
+import { authActions } from "../model/slice/authSlice";
 
 export const Authorization = memo(() => {
     const dispatch = useDispatch<AppDispatch>();
@@ -45,6 +42,10 @@ export const Authorization = memo(() => {
         await dispatch(authByEmail({ email, password }));
     }, [dispatch, email, password]);
 
+    const onGoToSignUp = useCallback(() => {
+        navigate(AppRoutes.SIGNUP);
+    }, [navigate]);
+
     return (
         <>
             <Flex
@@ -69,10 +70,12 @@ export const Authorization = memo(() => {
                     onChange={(e) => onChangePassword(e.target.value)}
                 />
                 {error && <Alert message={error} type="error" />}
-                <Button type={"primary"} onClick={onLogin}>
+                <Button type={"primary"} onClick={onLogin} loading={isLoading}>
                     {"Войти"}
                 </Button>
-                <Button type={"link"}>{"Зарегистрироваться"}</Button>
+                <Button type={"link"} onClick={onGoToSignUp}>
+                    {"Зарегистрироваться"}
+                </Button>
             </Flex>
         </>
     );

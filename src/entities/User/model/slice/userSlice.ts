@@ -9,6 +9,7 @@ const initialState: UserSchema = {
         email: undefined,
         token: undefined,
     },
+    registeredUserId: undefined,
 };
 
 export const userSlice = createSlice({
@@ -30,6 +31,9 @@ export const userSlice = createSlice({
         logout: (state) => {
             state.authenticatedUser = undefined;
             localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+        },
+        setRegisteredData: (state, action: PayloadAction<string>) => {
+            state.registeredUserId = action.payload;
         },
     },
 });
