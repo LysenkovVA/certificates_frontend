@@ -30,6 +30,9 @@ interface InputProps extends HTMLInputProps {
     size?: InputSize;
 }
 
+/**
+ *@deprecated
+ */
 export const TextBox = memo((props: InputProps) => {
     const {
         className,

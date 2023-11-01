@@ -4,6 +4,9 @@ interface LoaderProps {
     className?: string;
 }
 
+/**
+ *@deprecated
+ */
 export const Loader = ({ className }: LoaderProps) => {
     return (
         <div className="lds-ripple">

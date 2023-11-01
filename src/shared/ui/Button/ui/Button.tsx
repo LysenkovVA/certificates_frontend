@@ -43,6 +43,9 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     addonRight?: ReactNode;
 }
 
+/**
+ *@deprecated
+ */
 export const Button = forwardRef(
     (props: ButtonProps, ref: ForwardedRef<HTMLButtonElement>) => {
         const {

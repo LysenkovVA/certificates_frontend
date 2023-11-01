@@ -8,6 +8,11 @@ const initialState: UserSchema = {
         id: undefined,
         email: undefined,
         token: undefined,
+        surname: undefined,
+        name: undefined,
+        patronymic: undefined,
+        birthDate: undefined,
+        avatar: undefined,
     },
     registeredUserId: undefined,
 };
@@ -19,6 +24,19 @@ export const userSlice = createSlice({
         // Новые данные
         setAuthData: (state, action: PayloadAction<IUser>) => {
             state.authenticatedUser = action.payload;
+        },
+        // Данные профиля
+        setAuthDataSurname: (state, action: PayloadAction<string>) => {
+            state.authenticatedUser.surname = action.payload;
+        },
+        setAuthDataName: (state, action: PayloadAction<string>) => {
+            state.authenticatedUser.name = action.payload;
+        },
+        setAuthDataPatronymic: (state, action: PayloadAction<string>) => {
+            state.authenticatedUser.patronymic = action.payload;
+        },
+        setAuthDataBirthDate: (state, action: PayloadAction<Date>) => {
+            state.authenticatedUser.birthDate = action.payload;
         },
         // Инициализация при отрытии приложения
         initAuthData: (state) => {

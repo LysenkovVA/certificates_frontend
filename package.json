@@ -80,6 +80,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.6",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",

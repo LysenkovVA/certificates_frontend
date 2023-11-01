@@ -1,7 +1,8 @@
 import { AppDispatch } from "@/app/providers/StoreProvider";
 import { getAuthenticatedUser } from "@/entities/User";
 import logo from "@/shared/assets/logo/crane.png";
-import { AppRoutes } from "@/shared/config/routeConfig/routeConfig";
+import { AppRoutes, RoutePath } from "@/shared/config/routeConfig/routeConfig";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,10 +19,11 @@ export const Authorization = memo(() => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log("Authorization useEffect (user): " + JSON.stringify(user));
         if (user?.token) {
             dispatch(authActions.setEmail(""));
             dispatch(authActions.setPassword(""));
-            navigate("/profile");
+            navigate(RoutePath.inspections);
         }
     }, [user, navigate, dispatch]);
 
@@ -56,14 +58,14 @@ export const Authorization = memo(() => {
             >
                 <Image src={logo} width={100} height={100} preview={false} />
                 <Input
-                    title={"E-mail"}
+                    prefix={<UserOutlined />}
                     placeholder={"E-mail"}
                     value={email}
                     onChange={(e) => onChangeEmail(e.target.value)}
                     style={{ width: "100%" }}
                 />
                 <Input.Password
-                    title={"Password"}
+                    prefix={<LockOutlined />}
                     type={"password"}
                     placeholder={"Пароль"}
                     value={password}

@@ -32,6 +32,9 @@ interface TextProps {
     "data-testid"?: string; // на будущее для тестов
 }
 
+/**
+ *@deprecated
+ */
 export const Text = memo((props: TextProps) => {
     const {
         className,
