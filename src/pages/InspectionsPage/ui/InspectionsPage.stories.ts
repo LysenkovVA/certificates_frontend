@@ -1,19 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from "../index";
+import { InspectionsPage } from "../index";
 
 const meta = {
-    title: "shared/Button",
-    component: Button,
+    title: "pages/InspectionsPage",
+    component: InspectionsPage,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
     },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof InspectionsPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-    args: { children: "Press me", variant: "outline", colorStyle: "base" },
+    args: {},
 };

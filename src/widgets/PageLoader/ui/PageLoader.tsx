@@ -1,3 +1,3 @@
 export const PageLoader = () => {
-    return "Load indicator";
+    return "Загрузка...";
 };

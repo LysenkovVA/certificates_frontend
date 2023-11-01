@@ -1,22 +1,19 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { TextBox } from "../index";
+import { ProfilePage } from "../index";
 
 const meta = {
-    title: "shared/TextBox",
-    component: TextBox,
+    title: "pages/ProfilePage",
+    component: ProfilePage,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
     },
-} satisfies Meta<typeof TextBox>;
+} satisfies Meta<typeof ProfilePage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-    args: {
-        label: "Login",
-        value: "user@mail.ru",
-    },
+    args: {},
 };

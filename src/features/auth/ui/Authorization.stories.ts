@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Loader } from "../index";
+import { Authorization } from "../index";
 
 const meta = {
-    title: "shared/Loader",
-    component: Loader,
+    title: "features/auth/Authorization",
+    component: Authorization,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
     },
-} satisfies Meta<typeof Loader>;
+} satisfies Meta<typeof Authorization>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
