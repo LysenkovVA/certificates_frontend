@@ -1,17 +1,18 @@
-import { AppDispatch } from "@/app/providers/StoreProvider";
 import { getRegisteredUserId } from "@/entities/User";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import logo from "@/shared/assets/logo/crane.png";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getSignUp } from "../model/selectors/getSignUp/getSignUp";
 import { signUpByEmail } from "../model/services/signUpByEmail/signUpByEmail";
 import { signUpActions } from "../model/slice/signUpSlice";
 
 export const SignUp = memo(() => {
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const { email, password, repeatedPassword, isLoading, error } =
         useSelector(getSignUp);
     const registeredUserId = useSelector(getRegisteredUserId);

@@ -1,7 +1,7 @@
 import { SignUp } from "@/features/signUp";
 import { memo } from "react";
 
-interface SignUpPageProps {
+export interface SignUpPageProps {
     className?: string;
 }
 

@@ -1,11 +1,11 @@
-import { AppDispatch } from "@/app/providers/StoreProvider";
 import { getAuthenticatedUser } from "@/entities/User";
 import { userActions } from "@/entities/User/model/slice/userSlice";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { CloseOutlined, SaveOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, DatePicker, Flex, Form, Input } from "antd";
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import cls from "./UserCard.module.scss";
 
 interface UserCardProps {
@@ -16,7 +16,8 @@ interface UserCardProps {
 export const UserCard = (props: UserCardProps) => {
     const { className, readonly } = props;
 
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
 
     const { surname, name, patronymic, birthDate, avatar } =
         useSelector(getAuthenticatedUser);

@@ -1,18 +1,19 @@
-import { AppDispatch } from "@/app/providers/StoreProvider";
 import { getAuthenticatedUser } from "@/entities/User";
 import logo from "@/shared/assets/logo/crane.png";
 import { AppRoutes, RoutePath } from "@/shared/config/routeConfig/routeConfig";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAuth } from "../model/selectors/getAuth/getAuth";
 import { authByEmail } from "../model/services/authByEmail/authByEmail";
 import { authActions } from "../model/slice/authSlice";
 
 export const Authorization = memo(() => {
-    const dispatch = useDispatch<AppDispatch>();
+    // const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const { email, password, isLoading, error } = useSelector(getAuth);
     const user = useSelector(getAuthenticatedUser);
 

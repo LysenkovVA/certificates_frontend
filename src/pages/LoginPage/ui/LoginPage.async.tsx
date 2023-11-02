@@ -1,5 +1,5 @@
-import { lazy } from "react";
-import "./LoginPage";
+import { FC, lazy } from "react";
+import { LoginPageProps } from "./LoginPage";
 
 // Искуственная задержка
 // export const LoginPageAsync = lazy(() => {
@@ -14,6 +14,6 @@ import "./LoginPage";
 //     return import("./LoginPage").then((moduleExports) => moduleExports);
 // });
 
-export const LoginPageAsync = lazy(() => {
+export const LoginPageAsync = lazy<FC<LoginPageProps>>(() => {
     return import("./LoginPage");
 });

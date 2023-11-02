@@ -1,7 +1,7 @@
 import { Authorization } from "@/features/auth";
 import { memo } from "react";
 
-interface LoginPageProps {
+export interface LoginPageProps {
     className?: string;
 }
 

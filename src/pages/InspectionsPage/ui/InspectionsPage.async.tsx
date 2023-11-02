@@ -1,5 +1,6 @@
-import { lazy } from "react";
+import { FC, lazy } from "react";
+import { InspectionsPageProps } from "./InspectionsPage";
 
-export const InspectionsPageAsync = lazy(() => {
+export const InspectionsPageAsync = lazy<FC<InspectionsPageProps>>(() => {
     return import("./InspectionsPage");
 });

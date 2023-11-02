@@ -2,7 +2,7 @@ import { classNames } from "@/shared/lib/classNames/classNames";
 import { memo } from "react";
 import cls from "./InspectionsPage.module.scss";
 
-interface InspectionsPageProps {
+export interface InspectionsPageProps {
     className?: string;
 }
 

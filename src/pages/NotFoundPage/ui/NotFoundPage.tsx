@@ -2,7 +2,7 @@ import { classNames } from "@/shared/lib/classNames/classNames";
 import { memo } from "react";
 import cls from "./NotFoundPage.module.scss";
 
-interface NotFoundPageProps {
+export interface NotFoundPageProps {
     className?: string;
 }
 

@@ -28,10 +28,18 @@ export function buildPlugins(
         }),
     ];
 
+    // Анализ бандла
+    // plugins.push(
+    //     new BundleAnalyzerPlugin({
+    //         openAnalyzer: false,
+    //     }),
+    // );
+
     // Плагины для режима разработки
     if (isDev) {
         // Моментальные изменения при разработке без перезагрузки страницы
         plugins.push(new webpack.HotModuleReplacementPlugin());
+
         // plugins.push(new ReactRefreshWebpackPlugin());
     }
 

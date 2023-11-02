@@ -20,3 +20,4 @@ export function createReduxStore(initialState?: StateSchema) {
 // попытка с asyncThunk
 const store = createReduxStore();
 export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
