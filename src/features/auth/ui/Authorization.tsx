@@ -88,8 +88,13 @@ export const Authorization = memo(() => {
                     onChange={(e) => onChangePassword(e.target.value)}
                 />
                 {error && <Alert message={error} type="error" />}
-                <Button type={"primary"} onClick={onLogin} loading={isLoading}>
-                    {"Войти"}
+                <Button
+                    type={"primary"}
+                    onClick={onLogin}
+                    loading={isLoading}
+                    disabled={isLoading}
+                >
+                    {isLoading ? "Вход..." : "Войти"}
                 </Button>
                 <Button type={"link"} onClick={onGoToSignUp}>
                     {"Зарегистрироваться"}

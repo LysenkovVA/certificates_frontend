@@ -1,23 +1,26 @@
-import { StateSchema } from "@/app/providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "@/app/providers/StoreProvider";
 import StoreProvider from "@/app/providers/StoreProvider/ui/StoreProvider";
+import { userReducer } from "@/entities/User/model/slice/userSlice";
+import { authReducer } from "@/features/auth/model/slice/authSlice";
+import { signUpReducer } from "@/features/signUp";
+import { ReducersList } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 
-const initialState: DeepPartial<StateSchema> = {
-    user: {
-        authenticatedUser: {
-            id: "1",
-            email: "sb@mail.ru",
-            token: "TOKEN",
-            avatar: "",
-            birthDate: new Date(),
-            surname: "Ivanov",
-            name: "Ivan",
-            patronymic: "Ivanovich",
-        },
-    },
+// Дефолтные редюсеры для сторибука
+const defaultAsyncReducers: ReducersList = {
+    auth: authReducer,
+    signUp: signUpReducer,
+    user: userReducer,
 };
 
-export const StoreDecorator = (Story: any) => (
-    <StoreProvider initialState={initialState as StateSchema}>
+export const StoreDecorator = (
+    state: StateSchema,
+    Story?: any,
+    asyncReducers?: ReducersList,
+) => (
+    <StoreProvider
+        initialState={state}
+        asyncReducers={{ ...defaultAsyncReducers, ...asyncReducers }}
+    >
         {Story()}
     </StoreProvider>
 );

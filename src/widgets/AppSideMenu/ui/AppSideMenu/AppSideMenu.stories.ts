@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
+import { StateSchema } from "@/app/providers/StoreProvider";
+import { StoreDecorator } from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import { AppSideMenu } from "./AppSideMenu";
 
 const meta = {
@@ -14,10 +16,17 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
-    args: {},
+const initialState: DeepPartial<StateSchema> = {
+    user: {
+        authenticatedUser: {
+            id: "1",
+            email: "sb@mail.ru",
+            token: "TOKEN",
+        },
+    },
 };
 
-export const Collapsed: Story = {
-    args: { collapsed: true },
+export const Primary: Story = {
+    args: {},
+    decorators: [(S) => StoreDecorator(initialState as StateSchema, S)],
 };

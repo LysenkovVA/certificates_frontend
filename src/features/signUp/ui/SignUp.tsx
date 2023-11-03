@@ -113,8 +113,13 @@ export const SignUp = memo(() => {
                         type="success"
                     />
                 )}
-                <Button type={"primary"} onClick={onSignUp} loading={isLoading}>
-                    {"Зарегистрироваться"}
+                <Button
+                    type={"primary"}
+                    onClick={onSignUp}
+                    loading={isLoading}
+                    disabled={isLoading}
+                >
+                    {isLoading ? "Регистрация..." : "Зарегистрироваться"}
                 </Button>
                 <Button type={"link"} onClick={onGoToLogin}>
                     {"Войти"}
