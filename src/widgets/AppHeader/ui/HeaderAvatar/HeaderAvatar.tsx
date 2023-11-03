@@ -1,12 +1,12 @@
-import { AppDispatch } from "@/app/providers/StoreProvider";
 import { getAuthenticatedUser } from "@/entities/User";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Popover, Space } from "antd";
 import { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import cls from "./HeaderAvatar.module.scss";
 
@@ -17,7 +17,7 @@ export interface HeaderAvatarProps {
 export const HeaderAvatar = (props: HeaderAvatarProps) => {
     const { className } = props;
 
-    const dispatch = useDispatch<AppDispatch>();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const user = useSelector(getAuthenticatedUser);
 

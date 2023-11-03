@@ -1,8 +1,9 @@
 import { UserCard } from "@/entities/User";
 import { getAuthenticatedUser } from "@/entities/User/model/selectors/getAuthenticatedUser/getAuthenticatedUser";
 import { userActions } from "@/entities/User/model/slice/userSlice";
+import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { memo, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 export interface ProfilePageProps {
@@ -12,7 +13,7 @@ export interface ProfilePageProps {
 const ProfilePage = (props: ProfilePageProps) => {
     const { className } = props;
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const authData = useSelector(getAuthenticatedUser);
     const navigate = useNavigate();
 

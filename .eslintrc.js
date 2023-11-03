@@ -54,7 +54,8 @@ module.exports = {
         "@typescript-eslint/prefer-includes": "off",
         "@typescript-eslint/no-empty-interfac": "off",
         "@typescript-eslint/no-floating-promises": "off",
-        "@typescript-eslint/no-misused-promises": "off"
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
     },
     globals: {
         __IS_DEV__: true,

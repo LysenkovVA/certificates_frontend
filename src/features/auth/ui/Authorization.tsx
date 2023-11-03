@@ -2,25 +2,40 @@ import { getAuthenticatedUser } from "@/entities/User";
 import logo from "@/shared/assets/logo/crane.png";
 import { AppRoutes, RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
+import {
+    DynamicModuleLoader,
+    ReducersList,
+} from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAuth } from "../model/selectors/getAuth/getAuth";
+import { getAuthEmail } from "../model/selectors/getAuthEmail/getAuthEmail";
+import { getAuthError } from "../model/selectors/getAuthError/getAuthError";
+import { getAuthIsLoading } from "../model/selectors/getAuthIsLoading/getAuthIsLoading";
+import { getAuthPassword } from "../model/selectors/getAuthPassword/getAuthPassword";
 import { authByEmail } from "../model/services/authByEmail/authByEmail";
-import { authActions } from "../model/slice/authSlice";
+import { authActions, authReducer } from "../model/slice/authSlice";
+
+// Редюсеры для компонента
+const initialReducers: ReducersList = { auth: authReducer };
 
 export const Authorization = memo(() => {
     // const dispatch = useDispatch<AppDispatch>();
     const dispatch = useAppDispatch();
-    const { email, password, isLoading, error } = useSelector(getAuth);
+
+    const email = useSelector(getAuthEmail);
+    const password = useSelector(getAuthPassword);
+    const isLoading = useSelector(getAuthIsLoading);
+    const error = useSelector(getAuthError);
+
     const user = useSelector(getAuthenticatedUser);
 
     const navigate = useNavigate();
 
+    // TODO дважды монтируется редюсер, разобраться с навигацией в нужном месте
     useEffect(() => {
-        console.log("Authorization useEffect (user): " + JSON.stringify(user));
         if (user?.token) {
             dispatch(authActions.setEmail(""));
             dispatch(authActions.setPassword(""));
@@ -50,7 +65,7 @@ export const Authorization = memo(() => {
     }, [navigate]);
 
     return (
-        <>
+        <DynamicModuleLoader reducers={initialReducers}>
             <Flex
                 align={"center"}
                 gap={"small"}
@@ -80,6 +95,6 @@ export const Authorization = memo(() => {
                     {"Зарегистрироваться"}
                 </Button>
             </Flex>
-        </>
+        </DynamicModuleLoader>
     );
 });
