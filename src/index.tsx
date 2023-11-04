@@ -6,9 +6,9 @@ import { App } from "./app/App";
 // Render your React component instead
 const root = createRoot(document.getElementById("root"));
 root.render(
-    <StoreProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+        <StoreProvider>
             <App />
-        </BrowserRouter>
-    </StoreProvider>,
+        </StoreProvider>
+    </BrowserRouter>,
 );

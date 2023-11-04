@@ -1,11 +1,20 @@
 import { userReducer } from "@/entities/User/model/slice/userSlice";
-import { configureStore, ReducersMapObject } from "@reduxjs/toolkit";
+import { $api } from "@/shared/api/axios";
+import {
+    CombinedState,
+    configureStore,
+    Reducer,
+    ReducersMapObject,
+} from "@reduxjs/toolkit";
+import { To } from "@remix-run/router";
+import { NavigateOptions } from "react-router/dist/lib/context";
 import { createReducerManager } from "./reducerManager";
-import { StateSchema } from "./StateSchema";
+import { StateSchema, ThunkExtraArg } from "./StateSchema";
 
 export function createReduxStore(
     initialState?: StateSchema,
     asyncReducers?: ReducersMapObject<StateSchema>,
+    navigate?: (to: To, options?: NavigateOptions) => void,
 ) {
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
@@ -16,11 +25,24 @@ export function createReduxStore(
 
     const reducerManager = createReducerManager(rootReducers);
 
-    const store = configureStore<StateSchema>({
-        reducer: reducerManager.reduce,
+    const extraArg: ThunkExtraArg = {
+        api: $api,
+        navigate,
+    };
+
+    // TODO:  убрал тут дженерик configureStore<StateSchema> чтобы не ругалось на middleware
+    const store = configureStore({
+        reducer: reducerManager.reduce as Reducer<CombinedState<StateSchema>>,
         // Отключаем devtools для production
         devTools: __IS_DEV__,
         preloadedState: initialState,
+        // Чтобы использовать аргумент extra в thunkApi
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware({
+                thunk: {
+                    extraArgument: extraArg,
+                },
+            }),
     });
 
     // @ts-ignore

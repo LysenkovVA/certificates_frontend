@@ -1,6 +1,7 @@
+import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { IUser } from "@/entities/User/model/types/IUser";
-import { $api } from "@/shared/api/axios";
+import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -12,14 +13,16 @@ export interface LoginByEmailProps {
 export const authByEmail = createAsyncThunk<
     IUser,
     LoginByEmailProps,
-    { rejectValue: string }
+    ThunkConfig<string>
 >("auth/authByEmail", async (authData, thunkApi) => {
+    const { dispatch, extra, rejectWithValue } = thunkApi;
+
     try {
         // TODO
-        const response = await $api.post<IUser>("/auth/login", authData);
+        const response = await extra.api.post<IUser>("/auth/login", authData);
 
         if (!response.data) {
-            return thunkApi.rejectWithValue("Ответ от сервера не получен");
+            return rejectWithValue("Ответ от сервера не получен");
         }
 
         localStorage.setItem(
@@ -27,12 +30,13 @@ export const authByEmail = createAsyncThunk<
             JSON.stringify(response.data),
         );
         // Добавляем в стейт данные об авторизованном пользователе
-        thunkApi.dispatch(userActions.setAuthData(response.data));
+        dispatch(userActions.setAuthData(response.data));
+        extra.navigate(RoutePath.inspections);
 
         return response.data;
     } catch (e) {
         // TODO
         console.log("Error at authorization: " + e);
-        return thunkApi.rejectWithValue("Не верный логин или пароль!");
+        return rejectWithValue("Не верный логин или пароль!");
     }
 });

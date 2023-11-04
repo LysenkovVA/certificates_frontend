@@ -1,6 +1,6 @@
 import { getAuthenticatedUser } from "@/entities/User";
 import logo from "@/shared/assets/logo/crane.png";
-import { AppRoutes, RoutePath } from "@/shared/config/routeConfig/routeConfig";
+import { AppRoutes } from "@/shared/config/routeConfig/routeConfig";
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import {
     DynamicModuleLoader,
@@ -8,7 +8,7 @@ import {
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Image, Input } from "antd";
-import { memo, useCallback, useEffect } from "react";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAuthEmail } from "../model/selectors/getAuthEmail/getAuthEmail";
@@ -34,14 +34,13 @@ export const Authorization = memo(() => {
 
     const navigate = useNavigate();
 
-    // TODO дважды монтируется редюсер, разобраться с навигацией в нужном месте
-    useEffect(() => {
-        if (user?.token) {
-            dispatch(authActions.setEmail(""));
-            dispatch(authActions.setPassword(""));
-            navigate(RoutePath.inspections);
-        }
-    }, [user, navigate, dispatch]);
+    // useEffect(() => {
+    //     if (user?.token) {
+    //         // dispatch(authActions.setEmail(""));
+    //         // dispatch(authActions.setPassword(""));
+    //         navigate(RoutePath.inspections);
+    //     }
+    // }, [user, navigate, dispatch]);
 
     const onChangeEmail = useCallback(
         (value: string) => {
