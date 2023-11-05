@@ -5,9 +5,9 @@ import { UserSchema } from "../types/UserSchema";
 
 const initialState: UserSchema = {
     authenticatedUser: {
-        id: undefined,
-        email: undefined,
-        token: undefined,
+        id: "",
+        email: "",
+        token: "",
         surname: undefined,
         name: undefined,
         patronymic: undefined,
@@ -27,16 +27,24 @@ export const userSlice = createSlice({
         },
         // Данные профиля
         setAuthDataSurname: (state, action: PayloadAction<string>) => {
-            state.authenticatedUser.surname = action.payload;
+            if (state?.authenticatedUser) {
+                state.authenticatedUser.surname = action.payload;
+            }
         },
         setAuthDataName: (state, action: PayloadAction<string>) => {
-            state.authenticatedUser.name = action.payload;
+            if (state?.authenticatedUser) {
+                state.authenticatedUser.name = action.payload;
+            }
         },
         setAuthDataPatronymic: (state, action: PayloadAction<string>) => {
-            state.authenticatedUser.patronymic = action.payload;
+            if (state?.authenticatedUser) {
+                state.authenticatedUser.patronymic = action.payload;
+            }
         },
         setAuthDataBirthDate: (state, action: PayloadAction<Date>) => {
-            state.authenticatedUser.birthDate = action.payload;
+            if (state?.authenticatedUser) {
+                state.authenticatedUser.birthDate = action.payload;
+            }
         },
         // Инициализация при отрытии приложения
         initAuthData: (state) => {

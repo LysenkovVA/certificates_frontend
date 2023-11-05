@@ -19,12 +19,11 @@ export const UserCard = (props: UserCardProps) => {
     // const dispatch = useDispatch<AppDispatch>();
     const dispatch = useAppDispatch();
 
-    const { surname, name, patronymic, birthDate, avatar } =
-        useSelector(getAuthenticatedUser);
+    const user = useSelector(getAuthenticatedUser);
 
-    const [newSurname, setNewSurname] = useState(surname);
-    const [newName, setNewName] = useState(name);
-    const [newPatronymic, setNewPatronymic] = useState(patronymic);
+    const [newSurname, setNewSurname] = useState(user?.surname);
+    const [newName, setNewName] = useState(user?.name);
+    const [newPatronymic, setNewPatronymic] = useState(user?.patronymic);
 
     const onChangeSurname = useCallback(
         (value: string) => {
@@ -38,10 +37,10 @@ export const UserCard = (props: UserCardProps) => {
     }, [dispatch]);
 
     const onSave = useCallback(() => {
-        dispatch(userActions.setAuthDataSurname(surname));
+        dispatch(userActions.setAuthDataSurname(newSurname || ""));
 
         // TODO: Запрос на бекэнд!
-    }, [dispatch, surname]);
+    }, [dispatch, newSurname]);
 
     return (
         <Card

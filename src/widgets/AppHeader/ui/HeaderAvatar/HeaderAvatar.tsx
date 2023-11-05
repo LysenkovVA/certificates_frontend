@@ -50,15 +50,15 @@ export const HeaderAvatar = (props: HeaderAvatarProps) => {
 
     return (
         <Popover
-            title={user.email}
+            title={user?.email}
             content={content}
             open={isOpen}
             onOpenChange={showMenu}
             placement={"bottomLeft"}
         >
             <div className={classNames(cls.HeaderAvatar, {}, [className])}>
-                <Avatar icon={!user.avatar && <UserOutlined />} />
-                {user.email}
+                <Avatar icon={!user?.avatar && <UserOutlined />} />
+                {user?.email}
             </div>
         </Popover>
     );

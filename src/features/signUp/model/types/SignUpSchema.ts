@@ -3,5 +3,5 @@ export interface SignUpSchema {
     password: string;
     repeatedPassword: string;
     isLoading: boolean;
-    error: string;
+    error: string | undefined;
 }

@@ -38,7 +38,7 @@ export const SignUp = memo(() => {
             dispatch(signUpActions.setEmail(""));
             dispatch(signUpActions.setPassword(""));
             dispatch(signUpActions.setRepeatedPassword(""));
-            dispatch(signUpActions.setError(undefined));
+            dispatch(signUpActions.setError(""));
         }
     }, [registeredUserId, navigate, dispatch]);
 
@@ -72,7 +72,7 @@ export const SignUp = memo(() => {
     }, [dispatch, email, password, repeatedPassword]);
 
     const onGoToLogin = useCallback(() => {
-        dispatch(userActions.setRegisteredData(undefined));
+        dispatch(userActions.setRegisteredData(""));
         navigate("/");
     }, [dispatch, navigate]);
 

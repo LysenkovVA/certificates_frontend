@@ -30,11 +30,11 @@ export const signUpSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(signUpByEmail.pending, (state, action) => {
+            .addCase(signUpByEmail.pending, (state) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(signUpByEmail.fulfilled, (state, action) => {
+            .addCase(signUpByEmail.fulfilled, (state) => {
                 state.isLoading = false;
             })
             .addCase(signUpByEmail.rejected, (state, action) => {
