@@ -2,8 +2,8 @@ import { getAuthenticatedUser } from "@/entities/User";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { classNames } from "@/shared/lib/classNames/classNames";
-import { CloseOutlined, SaveOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, DatePicker, Flex, Form, Input } from "antd";
+import { SaveCancelButtons } from "@/shared/ui/SaveCancelButtons/SaveCancelButtons";
+import { Avatar, Card, DatePicker, Form, Input } from "antd";
 import { useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import cls from "./UserCard.module.scss";
@@ -31,10 +31,6 @@ export const UserCard = (props: UserCardProps) => {
         },
         [setNewSurname],
     );
-
-    const onLogOut = useCallback(() => {
-        dispatch(userActions.logout());
-    }, [dispatch]);
 
     const onSave = useCallback(() => {
         dispatch(userActions.setAuthDataSurname(newSurname || ""));
@@ -74,19 +70,7 @@ export const UserCard = (props: UserCardProps) => {
                     />
                 </Form.Item>
             </Form>
-            <Flex align={"center"} justify={"center"} gap={"small"}>
-                <Button
-                    type={"default"}
-                    icon={<SaveOutlined />}
-                    onClick={onSave}
-                >
-                    {"Сохранить"}
-                </Button>
-                <Button type={"default"} icon={<CloseOutlined />} danger>
-                    {"Отмена"}
-                </Button>
-            </Flex>
-            <Button onClick={onLogOut}>{"Logout"}</Button>
+            <SaveCancelButtons onSaveClick={onSave} />
         </Card>
     );
 };

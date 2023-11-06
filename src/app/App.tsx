@@ -1,4 +1,3 @@
-import { ErrorBoundary } from "@/app/providers/ErrorBoundary";
 import { getAuthenticatedUser } from "@/entities/User";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { classNames } from "@/shared/lib/classNames/classNames";
@@ -53,9 +52,7 @@ export const App = () => {
     } else {
         return (
             <div className="content-page">
-                <ErrorBoundary>
-                    <AppRouter />
-                </ErrorBoundary>
+                <AppRouter />
             </div>
         );
     }
