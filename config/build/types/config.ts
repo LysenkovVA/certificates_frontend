@@ -20,4 +20,6 @@ export interface BuildOptions {
     isDev: boolean;
     port: number;
     apiUrl: string;
+    // Переменная для настройки конкретной среды
+    project_env: "frontend" | "storybook" | "jest";
 }

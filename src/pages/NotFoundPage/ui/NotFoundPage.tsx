@@ -1,6 +1,5 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { Button, Result } from "antd";
 import { memo } from "react";
-import cls from "./NotFoundPage.module.scss";
 
 export interface NotFoundPageProps {
     className?: string;
@@ -10,9 +9,12 @@ const NotFoundPage = (props: NotFoundPageProps) => {
     const { className } = props;
 
     return (
-        <div className={classNames(cls.NotFoundPage, {}, [className])}>
-            {"Страница не найдена"}
-        </div>
+        <Result
+            status="404"
+            title="404"
+            subTitle="Страница не найдена!"
+            extra={<Button type="primary">На главную</Button>}
+        />
     );
 };
 

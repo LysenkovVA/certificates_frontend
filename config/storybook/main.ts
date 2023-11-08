@@ -1,6 +1,6 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
 import path from "path";
-import { Configuration, DefinePlugin } from "webpack";
+import { Configuration, DefinePlugin, RuleSetRule } from "webpack";
 import { buildCssLoader } from "../build/loaders/buildCssLoader";
 
 const config: StorybookConfig = {
@@ -34,22 +34,23 @@ const config: StorybookConfig = {
             "@": paths.src,
         };
 
-        // config!.module!.rules = config!.module!.rules!.map(
-        //     (rule: RuleSetRule) => {
-        //         if (/svg/.test(rule.test as string)) {
-        //             return { ...rule, exclude: /\.svg$/i };
-        //         }
-        //
-        //         return rule;
-        //     },
-        // );
+        config!.module!.rules = config!.module!.rules!.map(
+            // @ts-ignore
+            (rule: RuleSetRule) => {
+                if (/svg/.test(rule.test as string)) {
+                    return { ...rule, exclude: /\.svg$/i };
+                }
+
+                return rule;
+            },
+        );
 
         // disable whatever is already set to load SVGs
-        config!
-            // @ts-ignore
-            .module!.rules!.filter((rule) => rule.test.test(".svg"))
-            // @ts-ignore
-            .forEach((rule) => (rule.exclude = /\.svg$/i));
+        // config!
+        //     // @ts-ignore
+        //     .module!.rules!.filter((rule) => rule.test.test(".svg"))
+        //     // @ts-ignore
+        //     .forEach((rule) => (rule.exclude = /\.svg$/i));
 
         config!.module!.rules!.push({
             test: /\.svg$/,
@@ -62,7 +63,7 @@ const config: StorybookConfig = {
             new DefinePlugin({
                 __IS_DEV__: JSON.stringify(true),
                 __API__: JSON.stringify("https://testapi.ru"),
-                // __PROJECT__: JSON.stringify("storybook"),
+                __PROJECT_ENV__: JSON.stringify("storybook"),
             }),
         );
         // Return the altered config

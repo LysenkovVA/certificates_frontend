@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Popover, Space } from "antd";
-import { useCallback, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import cls from "./HeaderAvatar.module.scss";
@@ -14,7 +14,7 @@ export interface HeaderAvatarProps {
     className?: string;
 }
 
-export const HeaderAvatar = (props: HeaderAvatarProps) => {
+export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     const { className } = props;
 
     const dispatch = useAppDispatch();
@@ -62,4 +62,4 @@ export const HeaderAvatar = (props: HeaderAvatarProps) => {
             </div>
         </Popover>
     );
-};
+});

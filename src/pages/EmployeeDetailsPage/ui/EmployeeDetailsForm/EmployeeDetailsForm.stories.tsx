@@ -1,15 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-
-import { PageLoader } from "../index";
+import { EmployeeDetailsForm } from "./EmployeeDetailsForm";
 
 const meta = {
-    title: "widgets/PageLoader",
-    component: PageLoader,
+    title: "pages/EmployeeDetailsPage/EmployeeDetailsForm",
+    component: EmployeeDetailsForm,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
     },
-} satisfies Meta<typeof PageLoader>;
+} satisfies Meta<typeof EmployeeDetailsForm>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

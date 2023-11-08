@@ -23,7 +23,7 @@ const initialState: DeepPartial<StateSchema> = {
             email: "sb@mail.ru",
             token: "TOKEN",
             avatar: "",
-            birthDate: new Date(),
+            birthDate: new Date().toDateString(),
             surname: "Ivanov",
             name: "Ivan",
             patronymic: "Ivanovich",

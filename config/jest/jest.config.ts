@@ -19,6 +19,7 @@ const config: Config = {
     globals: {
         __IS_DEV__: true,
         __API__: "",
+        __PROJECT_ENV__: "jest",
     },
 
     // An array of directory names to be searched recursively up from the requiring module's location

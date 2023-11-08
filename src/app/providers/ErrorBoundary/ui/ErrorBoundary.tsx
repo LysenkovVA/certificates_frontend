@@ -1,5 +1,5 @@
-import { PageError } from "@/widgets/PageError";
-import React, { ErrorInfo, ReactNode, Suspense } from "react";
+import { Button, Result } from "antd";
+import React, { ErrorInfo, ReactNode } from "react";
 
 interface ErrorBoundaryProps {
     children: ReactNode;
@@ -37,9 +37,12 @@ class ErrorBoundary extends React.Component<
             console.log("Render error boundary");
             // You can render any custom fallback UI
             return (
-                <Suspense fallback={""}>
-                    <PageError />
-                </Suspense>
+                <Result
+                    status="500"
+                    title="500"
+                    subTitle="Что-то пошло не так"
+                    extra={<Button type="primary">На главную</Button>}
+                />
             );
         }
 

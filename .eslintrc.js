@@ -7,6 +7,7 @@ module.exports = {
         "standard-with-typescript",
         "plugin:react/recommended",
         "plugin:storybook/recommended",
+        "plugin:react-hooks/recommended",
     ],
     overrides: [
         {
@@ -17,7 +18,11 @@ module.exports = {
             files: [".eslintrc.{js,cjs}"],
             excludedFiles: [""],
             parserOptions: {
-                sourceType: "script",
+                ecmaVersion: "latest",
+                sourceType: "module", // script
+                ecmaFeatures: {
+                    jsx: true,
+                },
             },
         },
     ],
@@ -26,15 +31,14 @@ module.exports = {
         sourceType: "module",
     },
     ignorePatterns: ["./node_modules/"],
-    plugins: ["react"],
+    plugins: ["react", "react-hooks"],
     rules: {
         "@definitelytyped/no-self-import": "off",
         quotes: "off",
         "@typescript-eslint/quotes": ["error", "double"],
         "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/prefer-nullish-coalescing": "off",
-         "@typescript-eslint/indent": ["warn", 4],
-        //indent: ["warn", 4],
+        "@typescript-eslint/indent": ["warn", 4],
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/space-before-function-paren": "off",
@@ -52,12 +56,18 @@ module.exports = {
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-unnecessary-type-assertion": "off",
         "@typescript-eslint/prefer-includes": "off",
-        "@typescript-eslint/no-empty-interfac": "off",
+        "@typescript-eslint/no-empty-interface": "off",
         "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-extraneous-class": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+        "multiline-ternary": "off",
     },
     globals: {
         __IS_DEV__: true,
+        __API__: true,
+        __PROJECT_ENV__: true,
     },
 };

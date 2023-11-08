@@ -1,3 +1,4 @@
+import { updateProfile } from "@/entities/User/model/services/updateProfileData";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../types/IUser";
@@ -14,7 +15,10 @@ const initialState: UserSchema = {
         birthDate: undefined,
         avatar: undefined,
     },
+    userProfile: {},
     registeredUserId: undefined,
+    isLoading: false,
+    error: "",
 };
 
 export const userSlice = createSlice({
@@ -26,31 +30,15 @@ export const userSlice = createSlice({
             state.authenticatedUser = action.payload;
         },
         // Данные профиля
-        setAuthDataSurname: (state, action: PayloadAction<string>) => {
-            if (state?.authenticatedUser) {
-                state.authenticatedUser.surname = action.payload;
-            }
-        },
-        setAuthDataName: (state, action: PayloadAction<string>) => {
-            if (state?.authenticatedUser) {
-                state.authenticatedUser.name = action.payload;
-            }
-        },
-        setAuthDataPatronymic: (state, action: PayloadAction<string>) => {
-            if (state?.authenticatedUser) {
-                state.authenticatedUser.patronymic = action.payload;
-            }
-        },
-        setAuthDataBirthDate: (state, action: PayloadAction<Date>) => {
-            if (state?.authenticatedUser) {
-                state.authenticatedUser.birthDate = action.payload;
-            }
+        setProfileData: (state, action: PayloadAction<IUser>) => {
+            state.userProfile = action.payload;
         },
         // Инициализация при отрытии приложения
         initAuthData: (state) => {
             const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
             if (user) {
                 state.authenticatedUser = JSON.parse(user);
+                state.userProfile = JSON.parse(user);
             }
         },
         // Выход из приложения
@@ -61,6 +49,20 @@ export const userSlice = createSlice({
         setRegisteredData: (state, action: PayloadAction<string>) => {
             state.registeredUserId = action.payload;
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(updateProfile.pending, (state, action) => {
+                state.error = undefined;
+                state.isLoading = true;
+            })
+            .addCase(updateProfile.fulfilled, (state, action) => {
+                state.isLoading = false;
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            });
     },
 });
 

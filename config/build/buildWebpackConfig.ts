@@ -24,6 +24,9 @@ export function buildWebpackConfig(
             path: paths.build,
             // Подчищаем старые файлы на выходе
             clean: true,
+            // Чтобы не грузились в качестве пути всевозможные
+            // чанки и прочая хрень
+            publicPath: "/",
         },
         devtool: isDev ? "inline-source-map" : undefined,
         devServer: isDev ? buildDevServer(options) : undefined,

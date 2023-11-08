@@ -1,0 +1,22 @@
+.ProfileCardView {
+
+}
+
+.avatar,
+.surname {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nodata {
+    background-color: red;
+    color: blue;
+}
+

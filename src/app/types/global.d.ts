@@ -18,10 +18,12 @@ declare module "*.svg" {
 }
 
 // Для плагина webpack.DefinePlugin
+// Режим разработки
 declare const __IS_DEV__: boolean;
-
 // Axios
 declare const __API__: string;
+// Среда разработки
+declare const __PROJECT_ENV__: "frontend" | "storybook" | "jest";
 
 type DeepPartial<T> = T extends object
     ? {

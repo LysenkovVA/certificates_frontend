@@ -6,7 +6,7 @@ import { BuildOptions } from "./types/config";
 export function buildPlugins(
     options: BuildOptions,
 ): webpack.WebpackPluginInstance[] {
-    const { isDev, paths, apiUrl } = options;
+    const { isDev, paths, apiUrl, project_env } = options;
 
     const plugins = [
         // Показываем прогресс сборки
@@ -25,6 +25,7 @@ export function buildPlugins(
         new webpack.DefinePlugin({
             __IS_DEV__: JSON.stringify(isDev),
             __API__: JSON.stringify(apiUrl),
+            __PROJECT_ENV__: JSON.stringify(project_env),
         }),
     ];
 

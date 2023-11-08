@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { StateSchema } from "@/app/providers/StoreProvider";
 import { StoreDecorator } from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
-import { ProfilePage } from "../index";
+import { ProfilePage } from "../../index";
 
 const meta = {
     title: "pages/ProfilePage",
@@ -20,7 +20,7 @@ const initialState: DeepPartial<StateSchema> = {
     user: {
         authenticatedUser: {
             avatar: "",
-            birthDate: new Date(),
+            birthDate: new Date().toDateString(),
             surname: "Ivanov",
             name: "Ivan",
             patronymic: "Ivanovich",

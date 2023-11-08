@@ -4,10 +4,10 @@ import { IDepartment } from "@/entities/Department/types/IDepartment";
 export interface IEmployee {
     id: string;
     surname: string;
-    name: string;
-    hireDate: string;
-    dismissDate: string;
-    rank: string;
-    department: IDepartment;
-    berth: IBerth;
+    name?: string;
+    hireDate?: string;
+    dismissDate?: string;
+    rank?: string;
+    department?: IDepartment;
+    berth?: IBerth;
 }

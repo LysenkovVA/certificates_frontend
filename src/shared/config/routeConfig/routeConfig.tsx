@@ -1,6 +1,7 @@
 import { CertificatesPage } from "@/pages/CertificatesPage";
 import { ConstructionObjectsPage } from "@/pages/ConstructionObjectsPage";
 import { DepartmentsPage } from "@/pages/DepartmentsPage";
+import { EmployeeDetailsPage } from "@/pages/EmployeeDetailsPage";
 import { EmployeesPage } from "@/pages/EmployeesPage";
 import { InspectionsPage } from "@/pages/InspectionsPage";
 import { LoginPage } from "@/pages/LoginPage";
@@ -18,6 +19,7 @@ export enum AppRoutes {
     CONSTRUCTION_OBJECTS = "objects",
     DEPARTMENTS = "departments",
     EMPLOYEES = "employees",
+    EMPLOYEE_DETAILS = "employee_details",
 
     // Несуществующий маршрут - последний!
     NOT_FOUND = "not_found",
@@ -32,6 +34,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.CONSTRUCTION_OBJECTS]: "/objects",
     [AppRoutes.DEPARTMENTS]: "/departments",
     [AppRoutes.EMPLOYEES]: "/employees",
+    [AppRoutes.EMPLOYEE_DETAILS]: "/employees/", // +id
     [AppRoutes.NOT_FOUND]: "*",
 };
 
@@ -76,6 +79,11 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.EMPLOYEES]: {
         path: RoutePath.employees,
         element: <EmployeesPage />,
+        authOnly: true,
+    },
+    [AppRoutes.EMPLOYEE_DETAILS]: {
+        path: `${RoutePath.employee_details}:id`,
+        element: <EmployeeDetailsPage />,
         authOnly: true,
     },
     [AppRoutes.NOT_FOUND]: {

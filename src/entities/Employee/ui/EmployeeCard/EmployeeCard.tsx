@@ -1,5 +1,5 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card } from "antd";
+import { Avatar, Card, Flex } from "antd";
 import { IEmployee } from "../../model/types/IEmployee";
 
 interface EmployeeCardProps {
@@ -11,10 +11,12 @@ export const EmployeeCard = (props: EmployeeCardProps) => {
     const { className, employee } = props;
 
     return (
-        <Card>
-            <Avatar icon={<UserOutlined />} />
-            <div>{employee.surname}</div>
-            <div>{employee.name}</div>
+        <Card hoverable style={{ width: 150 }}>
+            <Flex vertical align={"center"}>
+                <Avatar icon={<UserOutlined />} />
+                <div>{employee.surname}</div>
+                <div>{employee.name}</div>
+            </Flex>
         </Card>
     );
 };

@@ -31,6 +31,8 @@ export const authByEmail = createAsyncThunk<
         );
         // Добавляем в стейт данные об авторизованном пользователе
         dispatch(userActions.setAuthData(response.data));
+        // Добавляем в стейт данные о профиле пользователя
+        dispatch(userActions.setProfileData(response.data));
 
         if (extra.navigate) {
             extra.navigate(RoutePath.inspections);
