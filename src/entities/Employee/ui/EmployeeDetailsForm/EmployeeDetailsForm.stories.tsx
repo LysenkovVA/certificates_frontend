@@ -1,8 +1,9 @@
+import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
 import type { Meta, StoryObj } from "@storybook/react";
 import { EmployeeDetailsForm } from "./EmployeeDetailsForm";
 
 const meta = {
-    title: "pages/EmployeeDetailsPage/EmployeeDetailsForm",
+    title: "entities/Employee/EmployeeDetailsForm",
     component: EmployeeDetailsForm,
     tags: ["autodocs"],
     parameters: {
@@ -13,6 +14,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const employee: IEmployee = {
+    id: "1",
+    surname: "Ivanov",
+    name: "Ivan",
+};
+
 export const Primary: Story = {
-    args: {},
+    args: { employee },
 };

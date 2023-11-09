@@ -1,34 +1,45 @@
-import { EmployeeDetailsForm } from "@/pages/EmployeeDetailsPage/ui/EmployeeDetailsForm/EmployeeDetailsForm";
-import { EmployeeDetailsView } from "@/pages/EmployeeDetailsPage/ui/EmployeeDetailsView/EmployeeDetailsView";
+import { EmployeeDetailsCard } from "@/entities/Employee";
+import { employeeDetailsReducer } from "@/entities/Employee/model/slice/employeeSlice";
 import { classNames } from "@/shared/lib/classNames/classNames";
-import { memo, useCallback, useState } from "react";
+import {
+    DynamicModuleLoader,
+    ReducersList,
+} from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
+import { memo } from "react";
+import { useParams } from "react-router-dom";
 import cls from "./EmployeeDetailsPage.module.scss";
 
 interface EmployeeDetailsPageProps {
     className?: string;
 }
 
+const reducers: ReducersList = {
+    employeeDetailsSchema: employeeDetailsReducer,
+};
+
 const EmployeeDetailsPage = (props: EmployeeDetailsPageProps) => {
     const { className } = props;
 
-    const [canEdit, setCanEdit] = useState(false);
+    const { id } = useParams();
 
-    const onEditClick = useCallback(() => {
-        setCanEdit(true);
-    }, []);
-
-    const onSaveClick = useCallback(() => {
-        setCanEdit(false);
-    }, []);
-
-    const onCancelClick = useCallback(() => {
-        setCanEdit(false);
-    }, []);
+    const content = (
+        <>
+            {!id ? (
+                <div>Не найдено</div>
+            ) : (
+                <div
+                    className={classNames(cls.EmployeeDetailsPage, {}, [
+                        className,
+                    ])}
+                >
+                    <EmployeeDetailsCard employeeId={id} />
+                </div>
+            )}
+        </>
+    );
 
     return (
-        <div className={classNames(cls.EmployeeDetailsPage, {}, [className])}>
-            {canEdit ? <EmployeeDetailsForm /> : <EmployeeDetailsView />}
-        </div>
+        <DynamicModuleLoader reducers={reducers}>{content}</DynamicModuleLoader>
     );
 };
 
