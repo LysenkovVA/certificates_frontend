@@ -6,6 +6,7 @@ import { EmployeesPage } from "@/pages/EmployeesPage";
 import { InspectionsPage } from "@/pages/InspectionsPage";
 import { LoginPage } from "@/pages/LoginPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
+import { OrganizationsPage } from "@/pages/OrganizationsPage";
 import { ProfilePage } from "@/pages/ProfilePage";
 import { SignUpPage } from "@/pages/SignUpPage";
 import { RouteProps } from "react-router-dom";
@@ -16,6 +17,7 @@ export enum AppRoutes {
     PROFILE = "profile",
     INSPECTIONS = "inspections",
     CERTIFICATES = "certificates",
+    ORGANIZATIONS = "organizations",
     CONSTRUCTION_OBJECTS = "objects",
     DEPARTMENTS = "departments",
     EMPLOYEES = "employees",
@@ -31,6 +33,7 @@ export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.PROFILE]: "/profile",
     [AppRoutes.INSPECTIONS]: "/inspections",
     [AppRoutes.CERTIFICATES]: "/certificates",
+    [AppRoutes.ORGANIZATIONS]: "/organizations",
     [AppRoutes.CONSTRUCTION_OBJECTS]: "/objects",
     [AppRoutes.DEPARTMENTS]: "/departments",
     [AppRoutes.EMPLOYEES]: "/employees",
@@ -64,6 +67,11 @@ export const routeConfig: Record<AppRoutes, AppRouteProps> = {
     [AppRoutes.CERTIFICATES]: {
         path: RoutePath.certificates,
         element: <CertificatesPage />,
+        authOnly: true,
+    },
+    [AppRoutes.ORGANIZATIONS]: {
+        path: RoutePath.organizations,
+        element: <OrganizationsPage />,
         authOnly: true,
     },
     [AppRoutes.CONSTRUCTION_OBJECTS]: {

@@ -1,20 +1,26 @@
 import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
-import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { employeesAdapter } from "../adapter/employeesAdapter";
+import { fetchEmployees } from "../services/fetchEmployees";
 import { EmployeesSchema } from "../types/EmployeesSchema";
 
 const initialState: EmployeesSchema = {
+    ids: [],
+    entities: {},
     isLoading: false,
     error: undefined,
-    employees: [],
+    // employees: [],
+    searchQuery: "",
 };
 
 export const employeesSlice = createSlice({
     name: "employees",
-    initialState,
+    initialState: employeesAdapter.getInitialState<EmployeesSchema>({
+        ...initialState,
+    }),
     reducers: {
-        setEmployees: (state, action: PayloadAction<IEmployee[]>) => {
-            state.employees = action.payload;
+        setSearchQuery: (state, action: PayloadAction<string | undefined>) => {
+            state.searchQuery = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -28,7 +34,7 @@ export const employeesSlice = createSlice({
                 (state, action: PayloadAction<IEmployee[]>) => {
                     state.isLoading = false;
                     state.error = undefined;
-                    state.employees = action.payload;
+                    employeesAdapter.setAll(state, action.payload);
                 },
             )
             .addCase(fetchEmployees.rejected, (state, action) => {

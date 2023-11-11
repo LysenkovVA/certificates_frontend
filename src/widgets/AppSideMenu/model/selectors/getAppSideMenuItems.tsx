@@ -6,6 +6,7 @@ import {
     BankOutlined,
     CarryOutOutlined,
     ContactsOutlined,
+    DeploymentUnitOutlined,
     IdcardOutlined,
 } from "@ant-design/icons";
 import { createSelector } from "@reduxjs/toolkit";
@@ -28,6 +29,11 @@ export const getAppSideMenuItems = createSelector(
                     path: RoutePath.certificates,
                     text: "Удостоверения",
                     icon: <IdcardOutlined />,
+                },
+                {
+                    path: RoutePath.organizations,
+                    text: "Организации",
+                    icon: <DeploymentUnitOutlined />,
                 },
                 {
                     path: RoutePath.objects,

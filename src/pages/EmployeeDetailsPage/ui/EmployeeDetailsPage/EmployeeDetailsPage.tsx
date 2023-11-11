@@ -20,7 +20,7 @@ const reducers: ReducersList = {
 const EmployeeDetailsPage = (props: EmployeeDetailsPageProps) => {
     const { className } = props;
 
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
     const content = (
         <>

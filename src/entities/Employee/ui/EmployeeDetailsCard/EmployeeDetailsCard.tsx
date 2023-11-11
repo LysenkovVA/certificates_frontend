@@ -40,9 +40,13 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
         setCanEdit(false);
     }, []);
 
+    if (!employee) {
+        return <div>Ошибка</div>;
+    }
+
     return (
         <Card
-            title={"Карточка сотрудника"}
+            title={`${employee?.surname} ${employee?.name}`}
             className={classNames(cls.EmployeeDetailsCard, {}, [className])}
         >
             {canEdit ? (

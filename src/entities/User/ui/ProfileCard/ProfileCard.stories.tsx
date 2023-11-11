@@ -1,4 +1,6 @@
+import { StateSchema } from "@/app/providers/StoreProvider";
 import { IUser } from "@/entities/User/model/types/IUser";
+import { StoreDecorator } from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ProfileCard } from "./ProfileCard";
 
@@ -14,6 +16,12 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const initialSchema: StateSchema = {
+    user: {
+        authenticatedUser: {},
+    },
+};
+
 const profileData: IUser = {
     id: "1",
     email: "email@email.ru",
@@ -25,4 +33,5 @@ const profileData: IUser = {
 
 export const Primary: Story = {
     args: { profileData },
+    decorators: [(S) => StoreDecorator(initialSchema, S)],
 };

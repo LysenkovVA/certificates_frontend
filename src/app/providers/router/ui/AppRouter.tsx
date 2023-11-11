@@ -1,6 +1,5 @@
 import { getAuthenticatedUser } from "@/entities/User";
 import { routeConfig } from "@/shared/config/routeConfig/routeConfig";
-import { Spin } from "antd";
 import { memo, Suspense, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
@@ -27,11 +26,7 @@ const AppRouter = () => {
                     key={path}
                     path={path}
                     element={
-                        <Suspense
-                            fallback={<Spin spinning={true} tip={"Загрузка"} />}
-                        >
-                            {element}
-                        </Suspense>
+                        <Suspense fallback={"Загрузка..."}>{element}</Suspense>
                     }
                 />
             ))}

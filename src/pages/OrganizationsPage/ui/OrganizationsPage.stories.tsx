@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ProfileCardView } from "./ProfileCardView";
+import OrganizationsPage from "./OrganizationsPage";
 
 const meta = {
-    title: "entities/User/ProfileCardView",
-    component: ProfileCardView,
+    title: "pages/OrganizationsPage",
+    component: OrganizationsPage,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
     },
-} satisfies Meta<typeof ProfileCardView>;
+} satisfies Meta<typeof OrganizationsPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

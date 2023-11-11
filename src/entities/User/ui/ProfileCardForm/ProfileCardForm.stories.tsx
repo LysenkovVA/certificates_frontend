@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ProfileCardForm } from "./ProfileCardForm";
 
 const meta = {
-    title: ".../ProfileCardForm",
+    title: "entities/User/ProfileCardForm",
     component: ProfileCardForm,
     tags: ["autodocs"],
     parameters: {
