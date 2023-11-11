@@ -1,12 +1,10 @@
 import { EmployeeCard } from "@/entities/Employee";
-import { SearchBar } from "@/features/searchBar";
 import {
     getEmployees,
     getEmployeesError,
     getEmployeesIsLoading,
-    getEmployeesSearchQuery,
 } from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
-import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees";
+import { initializeEmployeesPage } from "@/pages/EmployeesPage/model/services/initializeEmployeesPage/initializeEmployeesPage";
 import {
     employeesPageActions,
     employeesPageReducer,
@@ -17,10 +15,10 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
-import { Flex } from "antd";
+import { Flex, Skeleton } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export interface EmployeesPageProps {
     className?: string;
@@ -36,16 +34,17 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     const employees = useSelector(getEmployees.selectAll);
     const isLoading = useSelector(getEmployeesIsLoading);
     const error = useSelector(getEmployeesError);
-    const searchQuery = useSelector(getEmployeesSearchQuery);
+
+    // Получаем параметры из строки запроса
+    const [searchParams] = useSearchParams();
 
     const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (__PROJECT_ENV__ !== "storybook") {
-            // fetch employees
-            dispatch(fetchEmployees({ limit: 20, offset: 0 }));
+            dispatch(initializeEmployeesPage(searchParams));
         }
-    }, [dispatch]);
+    }, [dispatch, searchParams]);
 
     const navigate = useNavigate();
 
@@ -67,21 +66,25 @@ const EmployeesPage = (props: EmployeesPageProps) => {
 
     return (
         <DynamicModuleLoader reducers={initialReducers}>
-            <Flex vertical gap={16}>
-                <SearchBar searchQuery={searchQuery} onSearch={onSearch} />
-                {error && "Ошибка: " + error}
-                <Flex wrap={"wrap"}>
-                    {employees.length > 0
-                        ? employees.map((employee) => (
-                              <EmployeeCard
-                                  key={employee.id}
-                                  employee={employee}
-                                  onClick={onClick}
-                              />
-                          ))
-                        : "Пусто"}
+            {isLoading ? (
+                <Skeleton active />
+            ) : (
+                <Flex vertical gap={16}>
+                    {/*<SearchBar searchQuery={searchQuery} onSearch={onSearch} />*/}
+                    {error && "Ошибка: " + error}
+                    <Flex wrap={"wrap"}>
+                        {employees.length > 0
+                            ? employees.map((employee) => (
+                                  <EmployeeCard
+                                      key={employee.id}
+                                      employee={employee}
+                                      onClick={onClick}
+                                  />
+                              ))
+                            : "Пусто"}
+                    </Flex>
                 </Flex>
-            </Flex>
+            )}
         </DynamicModuleLoader>
     );
 };

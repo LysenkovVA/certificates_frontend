@@ -4,6 +4,12 @@ import { EntityState } from "@reduxjs/toolkit";
 export interface EmployeesPageSchema extends EntityState<IEmployee> {
     isLoading?: boolean;
     error?: string;
-    // page
+    // pagination
+    limit: number;
+    offset: number;
+
+    // filters
     searchQuery?: string;
+
+    _isInitialized: boolean;
 }

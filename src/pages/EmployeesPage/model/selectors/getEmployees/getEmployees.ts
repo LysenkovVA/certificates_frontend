@@ -8,10 +8,19 @@ export const getEmployees = employeesPageAdapter.getSelectors<StateSchema>(
 );
 
 export const getEmployeesIsLoading = (state: StateSchema) =>
-    state?.employeesPageSchema?.isLoading || false;
+    state?.employeesPageSchema?.isLoading ?? false;
 
 export const getEmployeesError = (state: StateSchema) =>
-    state?.employeesPageSchema?.error || "";
+    state?.employeesPageSchema?.error ?? "";
+
+export const getEmployeesLimit = (state: StateSchema) =>
+    state?.employeesPageSchema?.limit ?? 10;
+
+export const getEmployeesOffset = (state: StateSchema) =>
+    state?.employeesPageSchema?.offset ?? 0;
 
 export const getEmployeesSearchQuery = (state: StateSchema) =>
-    state?.employeesPageSchema?.searchQuery || "";
+    state?.employeesPageSchema?.searchQuery ?? "";
+
+export const getEmployeesIsInitialized = (state: StateSchema) =>
+    state?.employeesPageSchema?._isInitialized ?? false;

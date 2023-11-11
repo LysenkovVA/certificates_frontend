@@ -1,7 +1,6 @@
-import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { employeesPageAdapter } from "../adapter/employeesPageAdapter";
-import { fetchEmployees } from "../services/fetchEmployees";
+import { fetchEmployees } from "../services/fetchEmployees/fetchEmployees";
 import { EmployeesPageSchema } from "../types/EmployeesPageSchema";
 
 const initialState: EmployeesPageSchema = {
@@ -9,9 +8,10 @@ const initialState: EmployeesPageSchema = {
     entities: {},
     isLoading: false,
     error: undefined,
-
-    // page
+    limit: 10,
+    offset: 0,
     searchQuery: "",
+    _isInitialized: false,
 };
 
 export const employeesPageSlice = createSlice({
@@ -20,24 +20,44 @@ export const employeesPageSlice = createSlice({
         ...initialState,
     }),
     reducers: {
+        initializeState: (state) => {
+            state._isInitialized = true;
+        },
+        setLimit: (state, action: PayloadAction<number>) => {
+            state.limit = action.payload;
+        },
+        setOffset: (state, action: PayloadAction<number>) => {
+            state.offset = action.payload;
+        },
         setSearchQuery: (state, action: PayloadAction<string | undefined>) => {
             state.searchQuery = action.payload;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchEmployees.pending, (state) => {
+            .addCase(fetchEmployees.pending, (state, action) => {
                 state.isLoading = true;
                 state.error = undefined;
+
+                // Если данные заменяются
+                if (action.meta.arg.replaceData) {
+                    // Очищаем старые
+                    employeesPageAdapter.removeAll(state);
+                }
             })
-            .addCase(
-                fetchEmployees.fulfilled,
-                (state, action: PayloadAction<IEmployee[]>) => {
-                    state.isLoading = false;
-                    state.error = undefined;
+            .addCase(fetchEmployees.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.error = undefined;
+
+                // Если данные заменяются
+                if (action.meta.arg.replaceData) {
+                    // Записываем новые данные
                     employeesPageAdapter.setAll(state, action.payload);
-                },
-            )
+                } else {
+                    // Добавляем порцию данных
+                    employeesPageAdapter.addMany(state, action.payload);
+                }
+            })
             .addCase(fetchEmployees.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
