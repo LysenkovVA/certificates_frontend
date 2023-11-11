@@ -4,7 +4,7 @@ import { employeeDetailsReducer } from "@/entities/Employee/model/slice/employee
 import { userReducer } from "@/entities/User/model/slice/userSlice";
 import { authReducer } from "@/features/auth/model/slice/authSlice";
 import { signUpReducer } from "@/features/signUp";
-import { employeesReducer } from "@/pages/EmployeesPage/model/slice/employeesSlice";
+import { employeesPageReducer } from "@/pages/EmployeesPage/model/slice/employeesPageSlice";
 import { ReducersList } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 
 // Дефолтные редюсеры для сторибука
@@ -12,7 +12,7 @@ const defaultAsyncReducers: ReducersList = {
     auth: authReducer,
     signUp: signUpReducer,
     user: userReducer,
-    employeesSchema: employeesReducer,
+    employeesPageSchema: employeesPageReducer,
     employeeDetailsSchema: employeeDetailsReducer,
 };
 

@@ -15,9 +15,12 @@ export const fetchEmployees = createAsyncThunk<
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
-        const response = await extra.api.get<IEmployee[]>(
-            `/employees?limit=${props.limit}&offset=${props.offset}`,
-        );
+        const response = await extra.api.get<IEmployee[]>("/employees", {
+            params: {
+                limit: props.limit,
+                offset: props.offset,
+            },
+        });
 
         if (!response.data) {
             return rejectWithValue("Ответ от сервера не получен");

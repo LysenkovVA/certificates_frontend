@@ -40,8 +40,6 @@ export const authByEmail = createAsyncThunk<
 
         return response.data;
     } catch (e) {
-        // TODO
-        console.log("Error at authorization: " + e);
         return rejectWithValue("Не верный логин или пароль!");
     }
 });

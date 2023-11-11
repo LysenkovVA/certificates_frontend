@@ -1,21 +1,22 @@
 import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { employeesAdapter } from "../adapter/employeesAdapter";
+import { employeesPageAdapter } from "../adapter/employeesPageAdapter";
 import { fetchEmployees } from "../services/fetchEmployees";
-import { EmployeesSchema } from "../types/EmployeesSchema";
+import { EmployeesPageSchema } from "../types/EmployeesPageSchema";
 
-const initialState: EmployeesSchema = {
+const initialState: EmployeesPageSchema = {
     ids: [],
     entities: {},
     isLoading: false,
     error: undefined,
-    // employees: [],
+
+    // page
     searchQuery: "",
 };
 
-export const employeesSlice = createSlice({
+export const employeesPageSlice = createSlice({
     name: "employees",
-    initialState: employeesAdapter.getInitialState<EmployeesSchema>({
+    initialState: employeesPageAdapter.getInitialState<EmployeesPageSchema>({
         ...initialState,
     }),
     reducers: {
@@ -34,7 +35,7 @@ export const employeesSlice = createSlice({
                 (state, action: PayloadAction<IEmployee[]>) => {
                     state.isLoading = false;
                     state.error = undefined;
-                    employeesAdapter.setAll(state, action.payload);
+                    employeesPageAdapter.setAll(state, action.payload);
                 },
             )
             .addCase(fetchEmployees.rejected, (state, action) => {
@@ -44,5 +45,5 @@ export const employeesSlice = createSlice({
     },
 });
 
-export const { actions: employeesActions } = employeesSlice;
-export const { reducer: employeesReducer } = employeesSlice;
+export const { actions: employeesPageActions } = employeesPageSlice;
+export const { reducer: employeesPageReducer } = employeesPageSlice;

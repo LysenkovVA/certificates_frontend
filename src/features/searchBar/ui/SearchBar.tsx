@@ -12,6 +12,7 @@ export const SearchBar = memo((props: SearchBarProps) => {
 
     return (
         <Search
+            id={"searchBarInput"}
             placeholder={"Введите текст..."}
             value={searchQuery}
             onChange={(e) => onSearch?.(e.target.value)}

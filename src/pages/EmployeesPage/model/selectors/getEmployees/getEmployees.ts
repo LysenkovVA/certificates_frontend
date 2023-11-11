@@ -1,16 +1,17 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
 
-import { employeesAdapter } from "@/pages/EmployeesPage/model/adapter/employeesAdapter";
+import { employeesPageAdapter } from "@/pages/EmployeesPage/model/adapter/employeesPageAdapter";
 
-export const getEmployees = employeesAdapter.getSelectors<StateSchema>(
-    (state) => state.employeesSchema || employeesAdapter.getInitialState(),
+export const getEmployees = employeesPageAdapter.getSelectors<StateSchema>(
+    (state) =>
+        state.employeesPageSchema || employeesPageAdapter.getInitialState(),
 );
 
 export const getEmployeesIsLoading = (state: StateSchema) =>
-    state?.employeesSchema?.isLoading || false;
+    state?.employeesPageSchema?.isLoading || false;
 
 export const getEmployeesError = (state: StateSchema) =>
-    state?.employeesSchema?.error || "";
+    state?.employeesPageSchema?.error || "";
 
 export const getEmployeesSearchQuery = (state: StateSchema) =>
-    state?.employeesSchema?.searchQuery || "";
+    state?.employeesPageSchema?.searchQuery || "";

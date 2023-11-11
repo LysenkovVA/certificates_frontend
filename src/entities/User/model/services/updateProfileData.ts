@@ -36,8 +36,6 @@ export const updateProfile = createAsyncThunk<
 
         return response.data;
     } catch (e) {
-        // TODO
-        console.log("Error at user/updateProfile: " + e);
         return rejectWithValue(
             "Произошла ошибка при обновлении данных профиля!",
         );

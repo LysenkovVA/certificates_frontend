@@ -8,9 +8,9 @@ import {
 } from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
 import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees";
 import {
-    employeesActions,
-    employeesReducer,
-} from "@/pages/EmployeesPage/model/slice/employeesSlice";
+    employeesPageActions,
+    employeesPageReducer,
+} from "@/pages/EmployeesPage/model/slice/employeesPageSlice";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import {
@@ -27,7 +27,7 @@ export interface EmployeesPageProps {
 }
 
 const initialReducers: ReducersList = {
-    employeesSchema: employeesReducer,
+    employeesPageSchema: employeesPageReducer,
 };
 
 const EmployeesPage = (props: EmployeesPageProps) => {
@@ -43,7 +43,7 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     useEffect(() => {
         if (__PROJECT_ENV__ !== "storybook") {
             // fetch employees
-            dispatch(fetchEmployees({ limit: 10, offset: 0 }));
+            dispatch(fetchEmployees({ limit: 20, offset: 0 }));
         }
     }, [dispatch]);
 
@@ -60,7 +60,7 @@ const EmployeesPage = (props: EmployeesPageProps) => {
 
     const onSearch = useCallback(
         (value: string | undefined) => {
-            dispatch(employeesActions.setSearchQuery(value));
+            dispatch(employeesPageActions.setSearchQuery(value));
         },
         [dispatch],
     );

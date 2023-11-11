@@ -30,8 +30,6 @@ export const signUpByEmail = createAsyncThunk<
 
         return response.data;
     } catch (e) {
-        // TODO
-        console.log("Error at registration: " + e);
         return rejectWithValue(JSON.stringify(e));
     }
 });

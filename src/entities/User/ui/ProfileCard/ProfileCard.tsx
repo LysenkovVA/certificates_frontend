@@ -71,8 +71,6 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
 
     const onChangeBirthDate = useCallback(
         (value: string | undefined) => {
-            console.log("onChangeBD " + String(value));
-
             dispatch(
                 userActions.setProfileData({
                     ...profileData,

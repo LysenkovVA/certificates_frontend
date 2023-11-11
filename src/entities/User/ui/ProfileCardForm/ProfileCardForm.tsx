@@ -22,7 +22,12 @@ export const ProfileCardForm = memo((props: ProfileCardFormProps) => {
         onChangeBirthDate,
     } = props;
     return (
-        <Form layout={"horizontal"} style={{ width: "100%" }} labelWrap>
+        <Form
+            id={"profileCardForm"}
+            layout={"horizontal"}
+            style={{ width: "100%" }}
+            labelWrap
+        >
             <Form.Item>
                 <Avatar
                     size={150}

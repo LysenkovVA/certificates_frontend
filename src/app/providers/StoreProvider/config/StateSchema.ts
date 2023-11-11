@@ -3,7 +3,7 @@ import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeD
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
 import { AuthSchema } from "@/features/auth/model/types/AuthSchema";
 import { SignUpSchema } from "@/features/signUp/model/types/SignUpSchema";
-import { EmployeesSchema } from "@/pages/EmployeesPage/model/types/EmployeesSchema";
+import { EmployeesPageSchema } from "@/pages/EmployeesPage/model/types/EmployeesPageSchema";
 import {
     AnyAction,
     CombinedState,
@@ -21,7 +21,7 @@ export interface StateSchema {
     // Асинхронные редюсеры
     auth?: AuthSchema;
     signUp?: SignUpSchema;
-    employeesSchema?: EmployeesSchema;
+    employeesPageSchema?: EmployeesPageSchema;
     employeeDetailsSchema?: EmployeeDetailsSchema;
 }
 
