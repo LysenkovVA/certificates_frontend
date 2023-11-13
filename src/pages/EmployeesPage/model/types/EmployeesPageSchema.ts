@@ -7,6 +7,7 @@ export interface EmployeesPageSchema extends EntityState<IEmployee> {
     // pagination
     limit: number;
     offset: number;
+    hasMore: boolean;
 
     // filters
     searchQuery?: string;

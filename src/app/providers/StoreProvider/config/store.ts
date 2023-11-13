@@ -6,28 +6,22 @@ import {
     Reducer,
     ReducersMapObject,
 } from "@reduxjs/toolkit";
-import { To } from "@remix-run/router";
-import { NavigateOptions } from "react-router/dist/lib/context";
 import { createReducerManager } from "./reducerManager";
 import { StateSchema, ThunkExtraArg } from "./StateSchema";
 
 export function createReduxStore(
     initialState?: StateSchema,
     asyncReducers?: ReducersMapObject<StateSchema>,
-    navigate?: (to: To, options?: NavigateOptions) => void,
 ) {
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         user: userReducer,
-        // auth: authReducer,
-        // signUp: signUpReducer,
     };
 
     const reducerManager = createReducerManager(rootReducers);
 
     const extraArg: ThunkExtraArg = {
         api: $api,
-        navigate,
     };
 
     // TODO:  убрал тут дженерик configureStore<StateSchema> чтобы не ругалось на middleware

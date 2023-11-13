@@ -27,7 +27,7 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
         (open: boolean) => {
             setIsOpen(open);
         },
-        [open, setIsOpen],
+        [setIsOpen],
     );
 
     const onProfileClick = useCallback(() => {

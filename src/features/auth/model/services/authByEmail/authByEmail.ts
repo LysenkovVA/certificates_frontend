@@ -1,7 +1,6 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { IUser } from "@/entities/User/model/types/IUser";
-import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -33,10 +32,6 @@ export const authByEmail = createAsyncThunk<
         dispatch(userActions.setAuthData(response.data));
         // Добавляем в стейт данные о профиле пользователя
         dispatch(userActions.setProfileData(response.data));
-
-        if (extra.navigate) {
-            extra.navigate(RoutePath.inspections);
-        }
 
         return response.data;
     } catch (e) {

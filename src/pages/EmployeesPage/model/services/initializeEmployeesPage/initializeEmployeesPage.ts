@@ -18,17 +18,9 @@ export const initializeEmployeesPage = createAsyncThunk<
 
     if (!isInitialized) {
         // Получаем параметры из строки запроса
-        const limitFromUrl = searchParams.get("limit");
-        const offsetFromUrl = searchParams.get("offset");
         const searchQueryFromUrl = searchParams.get("searchQuery");
 
         // Устанавливаем состояние
-        if (limitFromUrl) {
-            dispatch(employeesPageActions.setLimit(Number(limitFromUrl)));
-        }
-        if (offsetFromUrl) {
-            dispatch(employeesPageActions.setOffset(Number(offsetFromUrl)));
-        }
         if (searchQueryFromUrl) {
             dispatch(employeesPageActions.setSearchQuery(searchQueryFromUrl));
         }

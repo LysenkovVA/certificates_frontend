@@ -2,8 +2,11 @@ import { EmployeeCard } from "@/entities/Employee";
 import {
     getEmployees,
     getEmployeesError,
+    getEmployeesHasMore,
+    getEmployeesIsInitialized,
     getEmployeesIsLoading,
 } from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { fetchEmployeesNextPart } from "@/pages/EmployeesPage/model/services/fetchEmployeesNextPart/fetchEmployeesNextPart";
 import { initializeEmployeesPage } from "@/pages/EmployeesPage/model/services/initializeEmployeesPage/initializeEmployeesPage";
 import {
     employeesPageActions,
@@ -15,7 +18,7 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
-import { Flex, Skeleton } from "antd";
+import { Button, Flex, Skeleton } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -34,6 +37,10 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     const employees = useSelector(getEmployees.selectAll);
     const isLoading = useSelector(getEmployeesIsLoading);
     const error = useSelector(getEmployeesError);
+    const isInitialized = useSelector(getEmployeesIsInitialized);
+    const hasMore = useSelector(getEmployeesHasMore);
+
+    console.log("Employees page count: " + employees.length);
 
     // Получаем параметры из строки запроса
     const [searchParams] = useSearchParams();
@@ -41,10 +48,10 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if (__PROJECT_ENV__ !== "storybook") {
+        if (__PROJECT_ENV__ !== "storybook" && !isInitialized) {
             dispatch(initializeEmployeesPage(searchParams));
         }
-    }, [dispatch, searchParams]);
+    }, [dispatch, isInitialized, searchParams]);
 
     const navigate = useNavigate();
 
@@ -57,6 +64,10 @@ const EmployeesPage = (props: EmployeesPageProps) => {
         [navigate],
     );
 
+    const onMoreClick = useCallback(() => {
+        dispatch(fetchEmployeesNextPart());
+    }, [dispatch]);
+
     const onSearch = useCallback(
         (value: string | undefined) => {
             dispatch(employeesPageActions.setSearchQuery(value));
@@ -65,12 +76,14 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     );
 
     return (
-        <DynamicModuleLoader reducers={initialReducers}>
+        <DynamicModuleLoader
+            reducers={initialReducers}
+            removeAfterUnmount={false}
+        >
             {isLoading ? (
                 <Skeleton active />
             ) : (
                 <Flex vertical gap={16}>
-                    {/*<SearchBar searchQuery={searchQuery} onSearch={onSearch} />*/}
                     {error && "Ошибка: " + error}
                     <Flex wrap={"wrap"}>
                         {employees.length > 0
@@ -85,6 +98,9 @@ const EmployeesPage = (props: EmployeesPageProps) => {
                     </Flex>
                 </Flex>
             )}
+            <Button disabled={!hasMore} onClick={onMoreClick}>
+                More
+            </Button>
         </DynamicModuleLoader>
     );
 };

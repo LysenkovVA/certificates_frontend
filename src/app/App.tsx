@@ -37,7 +37,10 @@ export const App = () => {
                     </Sider>
                     <Content
                         className={classNames(cls.content)}
-                        // style={{ height: "100vh" }}
+                        style={{
+                            height: "100vh",
+                            overflowY: "auto",
+                        }}
                     >
                         <AppRouter />
                     </Content>

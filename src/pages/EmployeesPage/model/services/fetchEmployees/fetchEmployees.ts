@@ -13,11 +13,11 @@ export interface FetchEmployeesProps {
 }
 
 export const fetchEmployees = createAsyncThunk<
-    IEmployee[],
+    { count: number; rows: IEmployee[] },
     FetchEmployeesProps,
     ThunkConfig<string>
 >("employees/fetchEmployees", async (props, thunkApi) => {
-    const { dispatch, extra, rejectWithValue, getState } = thunkApi;
+    const { extra, rejectWithValue, getState } = thunkApi;
 
     // Получаем параметры из стейта
     const limit = getEmployeesLimit(getState());
@@ -27,13 +27,16 @@ export const fetchEmployees = createAsyncThunk<
     try {
         // Добавляем параметры в строку запроса
         addQueryParams({
-            limit: String(limit),
-            offset: String(offset),
+            // limit: String(limit),
+            // offset: String(offset),
             searchQuery,
         });
 
         // Отправляем запрос
-        const response = await extra.api.get<IEmployee[]>("/employees", {
+        const response = await extra.api.get<{
+            count: number;
+            rows: IEmployee[];
+        }>("/employees", {
             params: {
                 limit,
                 offset,

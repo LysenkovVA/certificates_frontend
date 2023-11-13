@@ -10,6 +10,7 @@ const initialState: EmployeesPageSchema = {
     error: undefined,
     limit: 10,
     offset: 0,
+    hasMore: true,
     searchQuery: "",
     _isInitialized: false,
 };
@@ -52,11 +53,14 @@ export const employeesPageSlice = createSlice({
                 // Если данные заменяются
                 if (action.meta.arg.replaceData) {
                     // Записываем новые данные
-                    employeesPageAdapter.setAll(state, action.payload);
+                    employeesPageAdapter.setAll(state, action.payload.rows);
                 } else {
                     // Добавляем порцию данных
-                    employeesPageAdapter.addMany(state, action.payload);
+                    employeesPageAdapter.addMany(state, action.payload.rows);
                 }
+
+                // Есть ли еще данные
+                state.hasMore = action.payload.count > state.ids.length;
             })
             .addCase(fetchEmployees.rejected, (state, action) => {
                 state.isLoading = false;

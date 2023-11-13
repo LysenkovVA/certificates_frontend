@@ -4,7 +4,7 @@ import { employeesPageAdapter } from "@/pages/EmployeesPage/model/adapter/employ
 
 export const getEmployees = employeesPageAdapter.getSelectors<StateSchema>(
     (state) =>
-        state.employeesPageSchema || employeesPageAdapter.getInitialState(),
+        state.employeesPageSchema ?? employeesPageAdapter.getInitialState(),
 );
 
 export const getEmployeesIsLoading = (state: StateSchema) =>
@@ -18,6 +18,9 @@ export const getEmployeesLimit = (state: StateSchema) =>
 
 export const getEmployeesOffset = (state: StateSchema) =>
     state?.employeesPageSchema?.offset ?? 0;
+
+export const getEmployeesHasMore = (state: StateSchema) =>
+    state?.employeesPageSchema?.hasMore ?? false;
 
 export const getEmployeesSearchQuery = (state: StateSchema) =>
     state?.employeesPageSchema?.searchQuery ?? "";
