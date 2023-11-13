@@ -1,11 +1,14 @@
 import { EmployeeCard } from "@/entities/Employee";
+import { SearchBar } from "@/features/searchBar";
 import {
     getEmployees,
     getEmployeesError,
     getEmployeesHasMore,
     getEmployeesIsInitialized,
     getEmployeesIsLoading,
+    getEmployeesSearchQuery,
 } from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees/fetchEmployees";
 import { fetchEmployeesNextPart } from "@/pages/EmployeesPage/model/services/fetchEmployeesNextPart/fetchEmployeesNextPart";
 import { initializeEmployeesPage } from "@/pages/EmployeesPage/model/services/initializeEmployeesPage/initializeEmployeesPage";
 import {
@@ -13,11 +16,12 @@ import {
     employeesPageReducer,
 } from "@/pages/EmployeesPage/model/slice/employeesPageSlice";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { useDebounce } from "@/shared/lib/hooks/useDebounce/useDebounce";
 import { Button, Flex, Skeleton } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -39,8 +43,7 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     const error = useSelector(getEmployeesError);
     const isInitialized = useSelector(getEmployeesIsInitialized);
     const hasMore = useSelector(getEmployeesHasMore);
-
-    console.log("Employees page count: " + employees.length);
+    const searchQuery = useSelector(getEmployeesSearchQuery);
 
     // Получаем параметры из строки запроса
     const [searchParams] = useSearchParams();
@@ -68,11 +71,18 @@ const EmployeesPage = (props: EmployeesPageProps) => {
         dispatch(fetchEmployeesNextPart());
     }, [dispatch]);
 
+    const fetchData = useCallback(() => {
+        dispatch(fetchEmployees({ replaceData: true }));
+    }, [dispatch]);
+
+    const debouncedFetchData = useDebounce(fetchData, 1000);
+
     const onSearch = useCallback(
         (value: string | undefined) => {
             dispatch(employeesPageActions.setSearchQuery(value));
+            debouncedFetchData();
         },
-        [dispatch],
+        [debouncedFetchData, dispatch],
     );
 
     return (
@@ -84,6 +94,11 @@ const EmployeesPage = (props: EmployeesPageProps) => {
                 <Skeleton active />
             ) : (
                 <Flex vertical gap={16}>
+                    <SearchBar
+                        placeholder={"Поиск сотрудников..."}
+                        searchQuery={searchQuery}
+                        onSearch={onSearch}
+                    />
                     {error && "Ошибка: " + error}
                     <Flex wrap={"wrap"}>
                         {employees.length > 0

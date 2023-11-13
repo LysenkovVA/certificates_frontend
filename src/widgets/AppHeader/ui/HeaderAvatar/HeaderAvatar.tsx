@@ -1,8 +1,8 @@
 import { getAuthenticatedUser } from "@/entities/User";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import { classNames } from "@/shared/lib/classNames/classNames";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Popover, Space } from "antd";
 import { memo, useCallback, useState } from "react";

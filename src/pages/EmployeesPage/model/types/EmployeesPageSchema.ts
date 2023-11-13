@@ -2,15 +2,15 @@ import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
 import { EntityState } from "@reduxjs/toolkit";
 
 export interface EmployeesPageSchema extends EntityState<IEmployee> {
+    // Состояния
     isLoading?: boolean;
     error?: string;
-    // pagination
+    // Пагинация
     limit: number;
     offset: number;
     hasMore: boolean;
-
-    // filters
+    // Фильтры
     searchQuery?: string;
-
+    // Флаг инициализации состояния из строки запроса
     _isInitialized: boolean;
 }

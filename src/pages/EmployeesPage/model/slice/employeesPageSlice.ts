@@ -32,6 +32,7 @@ export const employeesPageSlice = createSlice({
         },
         setSearchQuery: (state, action: PayloadAction<string | undefined>) => {
             state.searchQuery = action.payload;
+            state.offset = 0;
         },
     },
     extraReducers: (builder) => {

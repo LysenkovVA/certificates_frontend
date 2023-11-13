@@ -1,11 +1,11 @@
 import { getAuthenticatedUser } from "@/entities/User";
 import logo from "@/shared/assets/logo/crane.png";
 import { AppRoutes, RoutePath } from "@/shared/config/routeConfig/routeConfig";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";

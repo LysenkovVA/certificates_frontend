@@ -2,7 +2,7 @@ import { getAuthenticatedUser } from "@/entities/User";
 import { updateProfile } from "@/entities/User/model/services/updateProfileData";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { IUser } from "@/entities/User/model/types/IUser";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { SaveCancelButtons } from "@/shared/ui/SaveCancelButtons/SaveCancelButtons";
 import { Card } from "antd";
 import { memo, useCallback, useState } from "react";

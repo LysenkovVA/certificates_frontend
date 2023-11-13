@@ -6,11 +6,11 @@ import { getSignUpIsLoading } from "@/features/signUp/model/selectors/getSignUpI
 import { getSignUpPassword } from "@/features/signUp/model/selectors/getSignUpPassword/getSignUpPassword";
 import { getSignUpRepeatedPassword } from "@/features/signUp/model/selectors/getSignUpRepeatedPassword/getSignUpRepeatedPassword";
 import logo from "@/shared/assets/logo/crane.png";
-import { useAppDispatch } from "@/shared/hooks/useAppDispatch";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { Alert, Button, Flex, Image, Input } from "antd";
 import { memo, useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
