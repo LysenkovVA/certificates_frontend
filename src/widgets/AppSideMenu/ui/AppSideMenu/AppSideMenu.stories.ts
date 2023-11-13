@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { StateSchema } from "@/app/providers/StoreProvider";
+import { RouterDecorator } from "@/shared/config/storybook/RouterDecorator/RouterDecorator";
 import { StoreDecorator } from "@/shared/config/storybook/StoreDecorator/StoreDecorator";
 import { AppSideMenu } from "./AppSideMenu";
 
@@ -28,5 +29,8 @@ const initialState: DeepPartial<StateSchema> = {
 
 export const Primary: Story = {
     args: {},
-    decorators: [(S) => StoreDecorator(initialState as StateSchema, S)],
+    decorators: [
+        (S) => RouterDecorator(S),
+        (S) => StoreDecorator(initialState as StateSchema, S),
+    ],
 };

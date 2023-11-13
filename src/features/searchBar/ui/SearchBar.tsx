@@ -14,6 +14,7 @@ export const SearchBar = memo((props: SearchBarProps) => {
     return (
         <Input
             autoFocus
+            allowClear
             id={"searchBarInput"}
             placeholder={placeholder ?? "Поиск..."}
             value={searchQuery}
