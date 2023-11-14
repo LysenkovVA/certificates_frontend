@@ -1,5 +1,6 @@
 import { IBerth } from "@/entities/Berth/types/IBerth";
 import { IDepartment } from "@/entities/Department/types/IDepartment";
+import { IUser } from "@/entities/User/model/types/IUser";
 
 export interface IEmployee {
     id: string;
@@ -8,6 +9,7 @@ export interface IEmployee {
     hireDate?: string;
     dismissDate?: string;
     rank?: string;
-    department?: IDepartment;
     berth?: IBerth;
+    department?: IDepartment;
+    user?: IUser;
 }
