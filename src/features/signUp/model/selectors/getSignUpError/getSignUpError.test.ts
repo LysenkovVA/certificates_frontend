@@ -11,7 +11,7 @@ describe("getSignUpError.test", () => {
 
         expect(getSignUpError(state as StateSchema)).toEqual("error");
     });
-    test("Should work with empty state", () => {
+    test("Should return empty error with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
 
         expect(getSignUpError(state as StateSchema)).toEqual("");

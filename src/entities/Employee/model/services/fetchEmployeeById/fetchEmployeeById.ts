@@ -14,7 +14,6 @@ export const fetchEmployeeById = createAsyncThunk<
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
-        // TODO
         const response = await extra.api.get<IEmployee>(`/employees/${id}`);
 
         if (!response.data) {

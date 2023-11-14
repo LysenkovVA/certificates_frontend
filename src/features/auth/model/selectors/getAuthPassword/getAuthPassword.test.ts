@@ -11,7 +11,7 @@ describe("getAuthPassword.test", () => {
         expect(getAuthPassword(state as StateSchema)).toEqual("123");
     });
 
-    test("Should work with empty password", () => {
+    test("Should return empty password with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
         expect(getAuthPassword(state as StateSchema)).toEqual("");
     });

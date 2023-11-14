@@ -1,10 +1,8 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
-import {
-    getEmployeesHasMore,
-    getEmployeesIsLoading,
-    getEmployeesLimit,
-    getEmployeesOffset,
-} from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { getEmployeesHasMore } from "@/pages/EmployeesPage/model/selectors/getEmployeesHasMore/getEmployeesHasMore";
+import { getEmployeesIsLoading } from "@/pages/EmployeesPage/model/selectors/getEmployeesIsLoading/getEmployeesIsLoading";
+import { getEmployeesLimit } from "@/pages/EmployeesPage/model/selectors/getEmployeesLimit/getEmployeesLimit";
+import { getEmployeesOffset } from "@/pages/EmployeesPage/model/selectors/getEmployeesOffset/getEmployeesOffset";
 import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees/fetchEmployees";
 import { employeesPageActions } from "@/pages/EmployeesPage/model/slice/employeesPageSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";

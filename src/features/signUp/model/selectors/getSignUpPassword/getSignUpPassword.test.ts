@@ -2,7 +2,7 @@ import { StateSchema } from "@/app/providers/StoreProvider/config/StateSchema";
 import { getSignUpPassword } from "./getSignUpPassword";
 
 describe("getSignUpPassword.test", () => {
-    test("Should return value", () => {
+    test("Should return password", () => {
         const state: DeepPartial<StateSchema> = {
             signUp: {
                 password: "123",
@@ -11,7 +11,7 @@ describe("getSignUpPassword.test", () => {
         expect(getSignUpPassword(state as StateSchema)).toEqual("123");
     });
 
-    test("Should work with empty password", () => {
+    test("Should return empty password with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
         expect(getSignUpPassword(state as StateSchema)).toEqual("");
     });

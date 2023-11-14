@@ -35,6 +35,6 @@ export const authByEmail = createAsyncThunk<
 
         return response.data;
     } catch (e) {
-        return rejectWithValue("Не верный логин или пароль!");
+        return rejectWithValue("Неверный логин или пароль!");
     }
 });

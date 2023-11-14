@@ -2,7 +2,7 @@ import { StateSchema } from "@/app/providers/StoreProvider/config/StateSchema";
 import { getSignUpRepeatedPassword } from "./getSignUpRepeatedPassword";
 
 describe("getSignUpRepeatedPassword.test", () => {
-    test("Should return value", () => {
+    test("Should return repeated password", () => {
         const state: DeepPartial<StateSchema> = {
             signUp: {
                 repeatedPassword: "123",
@@ -11,7 +11,7 @@ describe("getSignUpRepeatedPassword.test", () => {
         expect(getSignUpRepeatedPassword(state as StateSchema)).toEqual("123");
     });
 
-    test("Should work with empty password", () => {
+    test("Should return empty repeated password with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
         expect(getSignUpRepeatedPassword(state as StateSchema)).toEqual("");
     });

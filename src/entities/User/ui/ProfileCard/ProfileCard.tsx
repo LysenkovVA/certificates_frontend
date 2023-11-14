@@ -1,5 +1,5 @@
 import { getAuthenticatedUser } from "@/entities/User";
-import { updateProfile } from "@/entities/User/model/services/updateProfileData";
+import { updateProfileData } from "@/entities/User/model/services/updateProfileData";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { IUser } from "@/entities/User/model/types/IUser";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
@@ -31,7 +31,10 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
         // Отправляем запрос на сервер
         if (userData?.id && profileData) {
             dispatch(
-                updateProfile({ userId: userData.id, userData: profileData }),
+                updateProfileData({
+                    userId: userData.id,
+                    userData: profileData,
+                }),
             );
         }
 

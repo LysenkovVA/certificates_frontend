@@ -1,13 +1,11 @@
 import { EmployeeCard } from "@/entities/Employee";
 import { SearchBar } from "@/features/searchBar";
-import {
-    getEmployees,
-    getEmployeesError,
-    getEmployeesHasMore,
-    getEmployeesIsInitialized,
-    getEmployeesIsLoading,
-    getEmployeesSearchQuery,
-} from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { getEmployees } from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { getEmployeesError } from "@/pages/EmployeesPage/model/selectors/getEmployeesError/getEmployeesError";
+import { getEmployeesHasMore } from "@/pages/EmployeesPage/model/selectors/getEmployeesHasMore/getEmployeesHasMore";
+import { getEmployeesIsInitialized } from "@/pages/EmployeesPage/model/selectors/getEmployeesIsInitialized/getEmployeesIsInitialized";
+import { getEmployeesIsLoading } from "@/pages/EmployeesPage/model/selectors/getEmployeesIsLoading/getEmployeesIsLoading";
+import { getEmployeesSearchQuery } from "@/pages/EmployeesPage/model/selectors/getEmployeesSearchQuery/getEmployeesSearchQuery";
 import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees/fetchEmployees";
 import { fetchEmployeesNextPart } from "@/pages/EmployeesPage/model/services/fetchEmployeesNextPart/fetchEmployeesNextPart";
 import { initializeEmployeesPage } from "@/pages/EmployeesPage/model/services/initializeEmployeesPage/initializeEmployeesPage";

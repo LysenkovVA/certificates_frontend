@@ -18,7 +18,7 @@ export class TestAsyncThunk<Return, Arg, RejectedValue> {
     // TODO
     api: jest.MockedFunctionDeep<AxiosStatic>;
     // api: jest.MockedFn<AxiosStatic>;
-    navigate: jest.MockedFn<any>;
+    // navigate: jest.MockedFn<any>;
 
     constructor(
         actionCreator: ActionCreatorType<Return, Arg, RejectedValue>,
@@ -28,14 +28,14 @@ export class TestAsyncThunk<Return, Arg, RejectedValue> {
         this.dispatch = jest.fn();
         this.getState = jest.fn(() => state as StateSchema);
         this.api = mockedAxios;
-        this.navigate = jest.fn();
+        // this.navigate = jest.fn();
     }
 
     async callThunk(arg: Arg) {
         const action = this.actionCreator(arg);
         const result = await action(this.dispatch, this.getState, {
             api: this.api,
-            navigate: this.navigate,
+            // navigate: this.navigate,
         });
 
         return result;

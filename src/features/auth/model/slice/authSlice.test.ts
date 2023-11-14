@@ -2,7 +2,7 @@ import { AuthSchema } from "../../index";
 import { authActions, authReducer } from "../../model/slice/authSlice";
 
 describe("authSlice.test", () => {
-    test("Test set email", () => {
+    test("Should set email", () => {
         const state: DeepPartial<AuthSchema> = { email: "" };
         expect(
             authReducer(
@@ -12,7 +12,7 @@ describe("authSlice.test", () => {
         ).toEqual({ email: "email@email.ru" });
     });
 
-    test("Test set password", () => {
+    test("Should set password", () => {
         const state: DeepPartial<AuthSchema> = { password: "" };
         expect(
             authReducer(state as AuthSchema, authActions.setPassword("123123")),

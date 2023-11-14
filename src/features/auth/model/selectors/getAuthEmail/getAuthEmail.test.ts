@@ -11,7 +11,7 @@ describe("getAuthEmail.test", () => {
         expect(getAuthEmail(state as StateSchema)).toEqual("email@email.ru");
     });
 
-    test("Should work with empty email", () => {
+    test("Should return empty email with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
         expect(getAuthEmail(state as StateSchema)).toEqual("");
     });

@@ -1,4 +1,4 @@
-import { updateProfile } from "@/entities/User/model/services/updateProfileData";
+import { updateProfileData } from "@/entities/User/model/services/updateProfileData";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../types/IUser";
@@ -52,14 +52,14 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(updateProfile.pending, (state, action) => {
+            .addCase(updateProfileData.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(updateProfile.fulfilled, (state, action) => {
+            .addCase(updateProfileData.fulfilled, (state, action) => {
                 state.isLoading = false;
             })
-            .addCase(updateProfile.rejected, (state, action) => {
+            .addCase(updateProfileData.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

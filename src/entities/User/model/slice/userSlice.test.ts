@@ -21,6 +21,13 @@ describe("userSlice.test", () => {
             },
         });
     });
+
+    // TODO - setProfileData
+
+    // TODO - initAuthData
+
+    // TODO - logout
+
     test("Test set registeredUserId", () => {
         const state: DeepPartial<UserSchema> = {};
         expect(

@@ -17,8 +17,13 @@ export const signUpByEmail = createAsyncThunk<
     try {
         // TODO какой запрос???
         const response = await extra.api.post<string>(
-            "/auth/register?type=user",
+            "/auth/register",
             signUpData,
+            {
+                params: {
+                    type: "user",
+                },
+            },
         );
 
         if (!response.data) {

@@ -31,4 +31,14 @@ describe("signUpSlice.test", () => {
             ),
         ).toEqual({ repeatedPassword: "123123" });
     });
+
+    test("Test set error", () => {
+        const state: DeepPartial<SignUpSchema> = { error: "" };
+        expect(
+            signUpReducer(
+                state as SignUpSchema,
+                signUpActions.setError("error"),
+            ),
+        ).toEqual({ error: "error" });
+    });
 });

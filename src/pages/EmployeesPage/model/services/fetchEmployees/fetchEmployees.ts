@@ -1,10 +1,8 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
-import {
-    getEmployeesLimit,
-    getEmployeesOffset,
-    getEmployeesSearchQuery,
-} from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { getEmployeesLimit } from "@/pages/EmployeesPage/model/selectors/getEmployeesLimit/getEmployeesLimit";
+import { getEmployeesOffset } from "@/pages/EmployeesPage/model/selectors/getEmployeesOffset/getEmployeesOffset";
+import { getEmployeesSearchQuery } from "@/pages/EmployeesPage/model/selectors/getEmployeesSearchQuery/getEmployeesSearchQuery";
 import { addQueryParams } from "@/shared/lib/url/addQueryParams";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -27,8 +25,6 @@ export const fetchEmployees = createAsyncThunk<
     try {
         // Добавляем параметры в строку запроса
         addQueryParams({
-            // limit: String(limit),
-            // offset: String(offset),
             searchQuery,
         });
 

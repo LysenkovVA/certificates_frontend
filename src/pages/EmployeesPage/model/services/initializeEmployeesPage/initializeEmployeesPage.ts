@@ -1,5 +1,5 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
-import { getEmployeesIsInitialized } from "@/pages/EmployeesPage/model/selectors/getEmployees/getEmployees";
+import { getEmployeesIsInitialized } from "@/pages/EmployeesPage/model/selectors/getEmployeesIsInitialized/getEmployeesIsInitialized";
 import { fetchEmployees } from "@/pages/EmployeesPage/model/services/fetchEmployees/fetchEmployees";
 import { employeesPageActions } from "@/pages/EmployeesPage/model/slice/employeesPageSlice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
