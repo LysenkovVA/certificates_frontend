@@ -1,6 +1,9 @@
 import { CertificateItem } from "@/entities/Certificate/ui/CertificateItem/CertificateItem";
 import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
+import emailFieldSvg from "@/shared/assets/svg/emailField.svg";
+import phoneFieldSvg from "@/shared/assets/svg/phoneField.svg";
 import { classNames } from "@/shared/lib/classNames/classNames";
+import { PreviewField } from "@/shared/ui/PreviewField";
 import { Avatar, Divider, Flex, Typography } from "antd";
 import { memo } from "react";
 import cls from "./EmployeeDetailsView.module.scss";
@@ -25,6 +28,16 @@ export const EmployeeDetailsView = memo((props: EmployeeDetailsViewProps) => {
                         <Typography.Text>{employee.name}</Typography.Text>
                     </Flex>
                 </Flex>
+                <PreviewField
+                    component={phoneFieldSvg}
+                    value={employee.phone}
+                />
+                <PreviewField
+                    component={emailFieldSvg}
+                    value={employee.email}
+                />
+                <Divider />
+                <Typography.Text>{"Удостоверения"}</Typography.Text>
                 <Divider />
                 <Flex>
                     {employee.certificates &&

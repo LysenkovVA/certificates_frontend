@@ -9,8 +9,9 @@ export interface IEmployee {
     hireDate?: string;
     dismissDate?: string;
     rank?: string;
+    phone?: string;
+    email?: string;
     berth?: IBerth;
     department?: IDepartment;
-    // user?: IUser;
     certificates?: ICertificate[];
 }
