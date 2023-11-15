@@ -38,7 +38,7 @@ module.exports = {
         "@typescript-eslint/quotes": ["error", "double"],
         "@typescript-eslint/semi": ["error", "always"],
         "@typescript-eslint/prefer-nullish-coalescing": "off",
-        "@typescript-eslint/indent": ["warn", 4],
+        "@typescript-eslint/indent": "off",
         "@typescript-eslint/comma-dangle": "off",
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/space-before-function-paren": "off",

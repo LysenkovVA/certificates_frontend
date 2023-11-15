@@ -1,6 +1,6 @@
 import berthSvg from "@/shared/assets/svg/berth.svg";
 import departmentSvg from "@/shared/assets/svg/department.svg";
-import Icon from "@ant-design/icons";
+import { PreviewField } from "@/shared/ui/PreviewField";
 import { Card, Flex, Image } from "antd";
 import { IEmployee } from "../../model/types/IEmployee";
 
@@ -40,24 +40,14 @@ export const EmployeeCard = (props: EmployeeCardProps) => {
                         <div>{employee.name}</div>
                     </Flex>
                 </Flex>
-                <Flex>
-                    <Icon
-                        component={berthSvg}
-                        width={30}
-                        height={30}
-                        style={{ paddingRight: 5 }}
-                    />
-                    <div>{employee.berth?.value}</div>
-                </Flex>
-                <Flex>
-                    <Icon
-                        component={departmentSvg}
-                        width={30}
-                        height={30}
-                        style={{ paddingRight: 5 }}
-                    />
-                    <div>{employee.department?.name}</div>
-                </Flex>
+                <PreviewField
+                    component={berthSvg}
+                    value={employee.berth?.value}
+                />
+                <PreviewField
+                    component={departmentSvg}
+                    value={employee.department?.name}
+                />
             </Flex>
         </Card>
     );

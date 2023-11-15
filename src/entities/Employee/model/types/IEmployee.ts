@@ -1,6 +1,6 @@
 import { IBerth } from "@/entities/Berth/types/IBerth";
+import { ICertificate } from "@/entities/Certificate/model/types/ICertificate";
 import { IDepartment } from "@/entities/Department/types/IDepartment";
-import { IUser } from "@/entities/User/model/types/IUser";
 
 export interface IEmployee {
     id: string;
@@ -11,5 +11,6 @@ export interface IEmployee {
     rank?: string;
     berth?: IBerth;
     department?: IDepartment;
-    user?: IUser;
+    // user?: IUser;
+    certificates?: ICertificate[];
 }
