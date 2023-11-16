@@ -26,6 +26,10 @@ export const Primary: Story = {
             department: {
                 id: "1",
                 name: "Участок 1",
+                organization: {
+                    id: "1",
+                    name: "ООО ССТ-М",
+                },
             },
             berth: {
                 id: "1",

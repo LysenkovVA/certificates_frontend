@@ -11,6 +11,7 @@ declare module "*.png";
 declare module "*.jpg";
 declare module "*.jpeg";
 
+// Чтобы был autocomplete по пропсам для svg
 declare module "*.svg" {
     import React from "react";
     const SVG: React.VFC<React.SVGProps<SVGSVGElement>>;
@@ -20,6 +21,8 @@ declare module "*.svg" {
 // Для плагина webpack.DefinePlugin
 // Режим разработки
 declare const __IS_DEV__: boolean;
+// Платформа
+declare const __PLATFORM__: "mobile" | "desktop";
 // Axios
 declare const __API__: string;
 // Среда разработки

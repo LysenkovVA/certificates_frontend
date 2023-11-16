@@ -1,7 +1,7 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
 import path from "path";
 import { Configuration, DefinePlugin, RuleSetRule } from "webpack";
-import { buildCssLoader } from "../build/loaders/buildCssLoader";
+import { buildSassLoader } from "../build/loaders/buildSassLoader";
 
 const config: StorybookConfig = {
     stories: [
@@ -57,7 +57,7 @@ const config: StorybookConfig = {
             use: ["@svgr/webpack"],
         });
 
-        config!.module!.rules!.push(buildCssLoader(true));
+        config!.module!.rules!.push(buildSassLoader(true));
 
         config!.plugins!.push(
             new DefinePlugin({

@@ -1,10 +1,10 @@
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
-export function buildCssLoader(isDev: boolean) {
+export function buildSassLoader(isDev: boolean) {
     return {
         test: /\.(sc|sa|c)ss$/,
         use: [
-            // В режиме разработки не будем генерить отдельно файлы со стилями
+            // Генерируем файлы CSS отдельно для для Production
             isDev ? "style-loader" : MiniCssExtractPlugin.loader,
             // Translates CSS into CommonJS
             {
@@ -15,13 +15,12 @@ export function buildCssLoader(isDev: boolean) {
                     modules: {
                         // auto: (resPath: string) =>
                         //     Boolean(resPath.includes(".module.")),
-                        auto: true,
+
+                        // auto: true,
                         // Имена стилей для разных режимов сборки:
-                        // Dev - понятное имя
-                        // Prod - Хеш
                         localIdentName: isDev
-                            ? "[path][name]-[hash:base64:5]"
-                            : "[hash:base64:8]",
+                            ? "[path][name]__[local]--[hash:base64:5]" // Dev - понятное имя
+                            : "[hash:base64:8]", // Prod - Хеш
                     },
                 },
             },

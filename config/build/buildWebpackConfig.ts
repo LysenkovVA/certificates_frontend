@@ -8,7 +8,9 @@ import { BuildOptions } from "./types/config";
 export function buildWebpackConfig(
     options: BuildOptions,
 ): webpack.Configuration {
-    const { mode, paths, isDev } = options;
+    const { mode, paths } = options;
+
+    const isDev = mode === "development";
 
     return {
         mode,
@@ -22,13 +24,15 @@ export function buildWebpackConfig(
             // Кешируем изменения
             filename: "[name].[contenthash].js",
             path: paths.build,
-            // Подчищаем старые файлы на выходе
+            // Очистка папки от файлов во время сборки
             clean: true,
             // Чтобы не грузились в качестве пути всевозможные
             // чанки и прочая хрень
             publicPath: "/",
         },
+        // Карты исходного кода (source-map), нужно для дебага
         devtool: isDev ? "inline-source-map" : undefined,
+        // Dev server
         devServer: isDev ? buildDevServer(options) : undefined,
         plugins: buildPlugins(options),
     };

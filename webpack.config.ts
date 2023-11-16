@@ -1,7 +1,11 @@
 import * as path from "path";
 import * as webpack from "webpack";
 import { buildWebpackConfig } from "./config/build/buildWebpackConfig";
-import { BuildEnv, BuildMode, BuildPaths } from "./config/build/types/config"; //to access built-in plugins
+import {
+    BuildMode,
+    BuildPaths,
+    EnvVariables,
+} from "./config/build/types/config"; //to access built-in plugins
 
 function getApiUrl(mode: BuildMode, apiUrl?: string) {
     if (apiUrl) {
@@ -17,29 +21,25 @@ function getApiUrl(mode: BuildMode, apiUrl?: string) {
 
 // Чтобы получать переменные окружения из скриптов возвращаем
 // не сам конфиг, а функцию, которая возвращает конфиг
-export default (env: BuildEnv) => {
+export default (env: EnvVariables): webpack.Configuration => {
+    // Основные пути
     const paths: BuildPaths = {
+        // Точка входа в приложение
         entry: path.resolve(__dirname, "src", "index.tsx"),
+        // Куда происходит сборка
         build: path.resolve(__dirname, "dist"),
         html: path.resolve(__dirname, "public", "index.html"),
+        public: path.resolve(__dirname, "public"),
         src: path.resolve(__dirname, "src"),
         node_modules: path.resolve(__dirname, "node_modules"),
     };
 
-    const mode = env?.mode || "development";
-    const PORT = env?.port || 3000;
-    const apiUrl = getApiUrl(mode, env?.apiUrl);
-
-    const isDev = mode === "development";
-
-    const config: webpack.Configuration = buildWebpackConfig({
-        mode,
+    return buildWebpackConfig({
+        mode: env?.mode ?? "development",
+        platform: env?.platform ?? "desktop",
+        port: env?.port ?? 3000,
         paths,
-        isDev,
-        port: PORT,
-        apiUrl,
+        apiUrl: getApiUrl(env?.mode ?? "development", env?.apiUrl),
         project_env: "frontend",
     });
-
-    return config;
 };

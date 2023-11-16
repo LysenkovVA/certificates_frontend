@@ -3,12 +3,16 @@ import { BuildOptions } from "./types/config";
 
 // ПРИ ИЗМЕНЕНИИ КОНФИГА - ПЕРЕЗАГРУЖАЙ СЕРВАК!
 
+/**
+ * Ребилд при изменении в коде
+ * @param options
+ */
 export function buildDevServer(options: BuildOptions): DevServerConfiguration {
     // Другие опции:
     // https://github.com/webpack/webpack-dev-server
 
     return {
-        port: options.port,
+        port: options.port ?? 3000,
         // Открывает в браузере страницу с приложением
         open: true,
         // Allows to proxy requests through a specified index page (by default 'index.html'),
