@@ -31,7 +31,7 @@ export function buildWebpackConfig(
             publicPath: "/",
         },
         // Карты исходного кода (source-map), нужно для дебага
-        devtool: isDev ? "inline-source-map" : undefined,
+        devtool: isDev ? "eval-cheap-source-map" : "source-map",
         // Dev server
         devServer: isDev ? buildDevServer(options) : undefined,
         plugins: buildPlugins(options),

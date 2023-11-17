@@ -1,6 +1,9 @@
-import ReactRefreshTypeScript from "react-refresh-typescript";
 import webpack from "webpack";
+import { buildBabelLoader } from "./loaders/buildBabelLoader";
+import { buildFileLoader } from "./loaders/buildFileLoader";
 import { buildSassLoader } from "./loaders/buildSassLoader";
+import { buildSvgLoader } from "./loaders/buildSvgLoader";
+import { buildTypeScriptLoader } from "./loaders/buildTypeScriptLoader";
 import { BuildOptions } from "./types/config";
 
 export function buildLoaders(
@@ -8,71 +11,19 @@ export function buildLoaders(
 ): webpack.ModuleOptions["rules"] {
     const isDev = options.mode === "development";
 
-    // const codeBabelLoader = buildBabelLoader({ ...options, isTsx: false });
-    // const tsxCodeBabelLoader = buildBabelLoader({ ...options, isTsx: true });
-
     // Лоадер для SVG
-    const svgLoader = {
-        test: /\.svg$/,
-        use: [
-            {
-                loader: "@svgr/webpack",
-                options: {
-                    icon: true, // Позволяет работать как с иконками (например, менять размеры)
-                    // Чтобы работать с изменением цветов иконки
-                    svgoConfig: {
-                        plugins: [
-                            {
-                                name: "convertColors",
-                                params: {
-                                    currentColor: true,
-                                },
-                            },
-                        ],
-                    },
-                },
-            },
-        ],
-    };
+    const svgLoader = buildSvgLoader(options);
 
     // Лоадер для файлов
-    const fileLoader = {
-        // SVG тут не обрабатывать!
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-            {
-                loader: "file-loader",
-            },
-        ],
-    };
+    const fileLoader = buildFileLoader(options);
 
     // Лоадер для scss
     const sassLoader = buildSassLoader(isDev);
 
-    // Лоадер для TS
-    // const typeScriptLoader = {
-    //     test: /\.tsx?$/,
-    //     use: "ts-loader",
-    //     exclude: /node_modules/,
-    // };
-    const typeScriptLoader = {
-        test: /\.tsx?$/,
-        use: [
-            {
-                loader: "ts-loader",
-                options: {
-                    // Опция для HMR, чтобы не обновлялась страница
-                    getCustomTransformers: () => ({
-                        before: [isDev && ReactRefreshTypeScript()].filter(
-                            Boolean,
-                        ),
-                    }),
-                    transpileOnly: isDev, // ускорение сборки
-                },
-            },
-        ],
-        exclude: /node_modules/,
-    };
+    // Babel лоадер
+    const babelLoader = buildBabelLoader(options);
+
+    const typeScriptLoader = buildTypeScriptLoader(options);
 
     /**
      * ВНИМАНИЕ! ПОРЯДОК ЛОАДЕРОВ ВАЖЕН!
@@ -82,8 +33,7 @@ export function buildLoaders(
         svgLoader,
         fileLoader,
         sassLoader,
-        // codeBabelLoader,
-        // tsxCodeBabelLoader,
-        typeScriptLoader,
+        // typeScriptLoader,
+        babelLoader,
     ];
 }

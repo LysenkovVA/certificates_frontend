@@ -1,42 +1,27 @@
 import { BuildOptions } from "../types/config";
 
-interface BuildBabelLoaderProps extends BuildOptions {
-    isTsx?: boolean;
-}
-
-export function buildBabelLoader({ isTsx, mode }: BuildBabelLoaderProps) {
+export function buildBabelLoader({ mode }: BuildOptions) {
     const isDev = mode === "development";
-    const isProd = !isDev;
+
     return {
-        test: isTsx ? /\.(jsx|tsx)$/ : /\.(js|ts)$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
             loader: "babel-loader",
             options: {
-                cacheDirectory: true,
+                // Все настройки пресетов можно указывать прям здесь, без
+                // использования конфигурационных файлов, поскольку используется
+                // webpack
                 presets: [
                     "@babel/preset-env",
-                    "@babel/preset-react",
-                    "@babel/preset-typescript",
-                ],
-                plugins: [
                     [
-                        "@babel/plugin-transform-typescript",
+                        "@babel/preset-react",
                         {
-                            isTsx,
+                            runtime: isDev ? "automatic" : "classic",
                         },
                     ],
-                    "@babel/plugin-transform-runtime",
-                    // isTsx &&
-                    //     isProd && [
-                    //         babelRemovePropsPlugin,
-                    //         {
-                    //             props: ["data-testid"],
-                    //         },
-                    //     ],
-
-                    // isDev && require.resolve("react-refresh/babel"),
-                ].filter(Boolean),
+                    "@babel/preset-typescript",
+                ],
             },
         },
     };

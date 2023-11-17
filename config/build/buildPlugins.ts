@@ -2,6 +2,7 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import path from "path";
 import webpack from "webpack";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import { BuildOptions } from "./types/config";
@@ -18,7 +19,7 @@ export function buildPlugins(
         // Встраиваем скрипты в файл шаблон
         new HtmlWebpackPlugin({
             template: paths.html,
-            // favicon: paths.favicon,
+            favicon: path.resolve(paths.public, "favicon.ico"),
         }),
 
         // Определяем глобальные константы, которые используются в коде
