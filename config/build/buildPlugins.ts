@@ -19,6 +19,7 @@ export function buildPlugins(
         // Встраиваем скрипты в файл шаблон
         new HtmlWebpackPlugin({
             template: paths.html,
+            publicPath: "/", // Без этого ссылка на иконку косячит
             favicon: path.resolve(paths.public, "favicon.ico"),
         }),
 
