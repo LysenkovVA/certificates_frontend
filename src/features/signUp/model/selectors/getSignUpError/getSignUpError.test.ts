@@ -4,7 +4,7 @@ import { getSignUpError } from "./getSignUpError";
 describe("getSignUpError.test", () => {
     test("Should return error", () => {
         const state: DeepPartial<StateSchema> = {
-            signUp: {
+            signUpSchema: {
                 error: "error",
             },
         };

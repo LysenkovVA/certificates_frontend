@@ -70,5 +70,6 @@ module.exports = {
         __IS_DEV__: true,
         __API__: true,
         __PROJECT_ENV__: true,
+        __PLATFORM__: true,
     },
 };

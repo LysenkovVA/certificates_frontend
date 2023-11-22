@@ -1,8 +1,11 @@
 import berthSvg from "@/shared/assets/svg/berth.svg";
 import departmentSvg from "@/shared/assets/svg/department.svg";
+import organizationSvg from "@/shared/assets/svg/organization.svg";
+import { classNames } from "@/shared/lib/classNames/classNames";
 import { PreviewField } from "@/shared/ui/PreviewField";
-import { Card, Flex, Image } from "antd";
+import { Card, Flex, Image, Typography } from "antd";
 import { IEmployee } from "../../model/types/IEmployee";
+import cls from "./EmployeeCard.module.scss";
 
 interface EmployeeCardProps {
     className?: string;
@@ -15,29 +18,19 @@ export const EmployeeCard = (props: EmployeeCardProps) => {
 
     return (
         <Card
+            className={classNames(cls.EmployeeCard, {}, [className])}
             hoverable
-            style={{
-                width: 250,
-                marginRight: 10,
-                marginBottom: 10,
-            }}
             bodyStyle={{ padding: 10, overflow: "hidden" }}
             onClick={(e) => onClick?.(employee?.id)}
         >
             <Flex vertical>
                 <Flex>
-                    <Image
-                        preview={false}
-                        style={{
-                            display: "block",
-                            width: 80,
-                            height: 80,
-                            marginRight: 10,
-                        }}
-                    />
+                    <Image rootClassName={cls.photo} preview={false} />
                     <Flex vertical align={"flex-start"}>
-                        <div>{employee.surname}</div>
-                        <div>{employee.name}</div>
+                        <Typography.Text className={cls.surname}>
+                            {employee.surname}
+                        </Typography.Text>
+                        <Typography.Text>{employee.name}</Typography.Text>
                     </Flex>
                 </Flex>
                 <PreviewField
@@ -47,6 +40,10 @@ export const EmployeeCard = (props: EmployeeCardProps) => {
                 <PreviewField
                     component={departmentSvg}
                     value={employee.department?.name}
+                />
+                <PreviewField
+                    component={organizationSvg}
+                    value={employee.department?.organization?.name}
                 />
             </Flex>
         </Card>

@@ -4,7 +4,7 @@ import { getAuthenticatedUserId } from "./getAuthenticatedUserId";
 describe("getAuthenticatedUserId.test", () => {
     test("Should return authenticated user id", () => {
         const state: DeepPartial<StateSchema> = {
-            user: {
+            userShema: {
                 authenticatedUser: {
                     id: "1",
                 },

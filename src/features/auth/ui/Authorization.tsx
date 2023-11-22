@@ -19,7 +19,7 @@ import { authByEmail } from "../model/services/authByEmail/authByEmail";
 import { authActions, authReducer } from "../model/slice/authSlice";
 
 // Редюсеры для компонента
-const initialReducers: ReducersList = { auth: authReducer };
+const initialReducers: ReducersList = { authSchema: authReducer };
 
 export const Authorization = memo(() => {
     // const dispatch = useDispatch<AppDispatch>();

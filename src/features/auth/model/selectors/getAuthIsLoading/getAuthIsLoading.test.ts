@@ -4,7 +4,7 @@ import { getAuthIsLoading } from "./getAuthIsLoading";
 describe("getAuthIsLoading.test", () => {
     test("Should return 'true' value", () => {
         const state: DeepPartial<StateSchema> = {
-            auth: {
+            authSchema: {
                 isLoading: true,
             },
         };
@@ -13,7 +13,7 @@ describe("getAuthIsLoading.test", () => {
 
     test("Should return 'false' value", () => {
         const state: DeepPartial<StateSchema> = {
-            auth: {
+            authSchema: {
                 isLoading: false,
             },
         };

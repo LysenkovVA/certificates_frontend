@@ -19,13 +19,14 @@ export const EmployeeDetailsView = memo((props: EmployeeDetailsViewProps) => {
         <div className={classNames(cls.EmployeeDetailsView, {}, [className])}>
             <Flex vertical>
                 <Flex gap={"large"}>
-                    <Avatar
-                        shape={"square"}
-                        style={{ width: 100, height: 100 }}
-                    />
+                    <Avatar className={cls.avatar} shape={"square"} />
                     <Flex vertical>
-                        <Typography.Text>{employee.surname}</Typography.Text>
-                        <Typography.Text>{employee.name}</Typography.Text>
+                        <Typography.Text className={cls.surname}>
+                            {employee.surname}
+                        </Typography.Text>
+                        <Typography.Text className={cls.name}>
+                            {employee.name}
+                        </Typography.Text>
                     </Flex>
                 </Flex>
                 <PreviewField
@@ -36,8 +37,9 @@ export const EmployeeDetailsView = memo((props: EmployeeDetailsViewProps) => {
                     component={emailFieldSvg}
                     value={employee.email}
                 />
-                <Divider />
-                <Typography.Text>{"Удостоверения"}</Typography.Text>
+                <Typography.Text className={cls.certificates_title}>
+                    {"Удостоверения"}
+                </Typography.Text>
                 <Divider />
                 <Flex>
                     {employee.certificates &&

@@ -4,7 +4,7 @@ import { getSignUpEmail } from "./getSignUpEmail";
 describe("getSignUpEmail.test", () => {
     test("Should return email", () => {
         const state: DeepPartial<StateSchema> = {
-            signUp: {
+            signUpSchema: {
                 email: "email@email.ru",
             },
         };

@@ -4,7 +4,7 @@ import { getAuthError } from "./getAuthError";
 describe("getAuthError.test", () => {
     test("Should return value", () => {
         const state: DeepPartial<StateSchema> = {
-            auth: {
+            authSchema: {
                 error: "error",
             },
         };

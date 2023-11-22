@@ -4,7 +4,7 @@ import { getSignUpIsLoading } from "./getSignUpIsLoading";
 describe("getSignUpIsLoading.test", () => {
     test("Should return 'true' value", () => {
         const state: DeepPartial<StateSchema> = {
-            signUp: {
+            signUpSchema: {
                 isLoading: true,
             },
         };
@@ -12,7 +12,7 @@ describe("getSignUpIsLoading.test", () => {
     });
     test("Should return 'false' value", () => {
         const state: DeepPartial<StateSchema> = {
-            signUp: {
+            signUpSchema: {
                 isLoading: false,
             },
         };

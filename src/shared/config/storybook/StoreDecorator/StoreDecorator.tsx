@@ -9,9 +9,9 @@ import { ReducersList } from "@/shared/lib/components/DynamicModuleLoader/Dynami
 
 // Дефолтные редюсеры для сторибука
 const defaultAsyncReducers: ReducersList = {
-    auth: authReducer,
-    signUp: signUpReducer,
-    user: userReducer,
+    authSchema: authReducer,
+    signUpSchema: signUpReducer,
+    userShema: userReducer,
     employeesPageSchema: employeesPageReducer,
     employeeDetailsSchema: employeeDetailsReducer,
 };

@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { signUpByEmail } from "../model/services/signUpByEmail/signUpByEmail";
 import { signUpActions, signUpReducer } from "../model/slice/signUpSlice";
 
-const initialReducers: ReducersList = { signUp: signUpReducer };
+const initialReducers: ReducersList = { signUpSchema: signUpReducer };
 
 export const SignUp = memo(() => {
     const dispatch = useAppDispatch();

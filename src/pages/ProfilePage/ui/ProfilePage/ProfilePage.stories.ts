@@ -17,9 +17,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const initialState: DeepPartial<StateSchema> = {
-    user: {
-        authenticatedUser: {
-            avatar: "",
+    profileSchema: {
+        profileData: {
             birthDate: new Date().toDateString(),
             surname: "Ivanov",
             name: "Ivan",

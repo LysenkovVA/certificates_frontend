@@ -17,16 +17,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const initialState: DeepPartial<StateSchema> = {
-    user: {
+    userShema: {
         authenticatedUser: {
             id: "1",
             email: "sb@mail.ru",
             token: "TOKEN",
-            avatar: "",
-            birthDate: new Date().toDateString(),
-            surname: "Ivanov",
-            name: "Ivan",
-            patronymic: "Ivanovich",
         },
     },
 };

@@ -18,7 +18,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const initialState: DeepPartial<StateSchema> = {
-    signUp: {
+    signUpSchema: {
         email: "email@email.ru",
         password: "123",
         repeatedPassword: "123",
@@ -34,7 +34,7 @@ export const Primary: Story = {
 };
 
 const initialStateIsLoading: DeepPartial<StateSchema> = {
-    signUp: {
+    signUpSchema: {
         email: "email@email.ru",
         password: "123",
         repeatedPassword: "123",
@@ -50,7 +50,7 @@ export const IsLoading: Story = {
 };
 
 const initialStateError: DeepPartial<StateSchema> = {
-    signUp: {
+    signUpSchema: {
         email: "email@email.ru",
         password: "123",
         repeatedPassword: "1234",
@@ -64,12 +64,12 @@ export const Error: Story = {
 };
 
 const initialStateSuccessRegistration: DeepPartial<StateSchema> = {
-    signUp: {
+    signUpSchema: {
         email: "email@email.ru",
         password: "123",
         repeatedPassword: "123",
     },
-    user: {
+    userShema: {
         registeredUserId: "1",
     },
 };

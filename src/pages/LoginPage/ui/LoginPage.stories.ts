@@ -18,7 +18,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const initialState: DeepPartial<StateSchema> = {
-    auth: {
+    authSchema: {
         email: "email@email.ru",
         password: "123",
     },
@@ -33,7 +33,7 @@ export const Primary: Story = {
 };
 
 const initialStateIsLoading: DeepPartial<StateSchema> = {
-    auth: {
+    authSchema: {
         email: "email@email.ru",
         password: "123",
         isLoading: true,
@@ -48,7 +48,7 @@ export const IsLoading: Story = {
 };
 
 const initialStateError: DeepPartial<StateSchema> = {
-    auth: {
+    authSchema: {
         email: "email@email.ru",
         password: "123",
         error: "Произошла ошибка!",

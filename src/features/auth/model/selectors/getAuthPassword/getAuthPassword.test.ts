@@ -4,7 +4,7 @@ import { getAuthPassword } from "./getAuthPassword";
 describe("getAuthPassword.test", () => {
     test("Should return value", () => {
         const state: DeepPartial<StateSchema> = {
-            auth: {
+            authSchema: {
                 password: "123",
             },
         };

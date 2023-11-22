@@ -4,7 +4,7 @@ import { getAuthEmail } from "./getAuthEmail";
 describe("getAuthEmail.test", () => {
     test("Should return value", () => {
         const state: DeepPartial<StateSchema> = {
-            auth: {
+            authSchema: {
                 email: "email@email.ru",
             },
         };

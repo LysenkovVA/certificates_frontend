@@ -1,4 +1,4 @@
-import { updateProfileData } from "@/entities/User/model/services/updateProfileData";
+import { updateProfileData } from "@/entities/Profile/model/services/updateProfileData/updateProfileData";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../types/IUser";
@@ -9,13 +9,7 @@ const initialState: UserSchema = {
         id: "",
         email: "",
         token: "",
-        surname: undefined,
-        name: undefined,
-        patronymic: undefined,
-        birthDate: undefined,
-        avatar: undefined,
     },
-    userProfile: {},
     registeredUserId: undefined,
     isLoading: false,
     error: "",
@@ -29,16 +23,11 @@ export const userSlice = createSlice({
         setAuthData: (state, action: PayloadAction<IUser>) => {
             state.authenticatedUser = action.payload;
         },
-        // Данные профиля
-        setProfileData: (state, action: PayloadAction<IUser>) => {
-            state.userProfile = action.payload;
-        },
         // Инициализация при отрытии приложения
         initAuthData: (state) => {
             const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
             if (user) {
                 state.authenticatedUser = JSON.parse(user);
-                state.userProfile = JSON.parse(user);
             }
         },
         // Выход из приложения

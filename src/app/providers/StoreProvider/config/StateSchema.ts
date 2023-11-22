@@ -1,5 +1,6 @@
 // Схема данных приложения
 import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
+import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
 import { AuthSchema } from "@/features/auth/model/types/AuthSchema";
 import { SignUpSchema } from "@/features/signUp/model/types/SignUpSchema";
@@ -14,11 +15,12 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { AxiosInstance } from "axios";
 
 export interface StateSchema {
-    user: UserSchema;
+    userShema: UserSchema;
     employeesPageSchema?: EmployeesPageSchema;
     // Асинхронные редюсеры
-    auth?: AuthSchema;
-    signUp?: SignUpSchema;
+    authSchema?: AuthSchema;
+    signUpSchema?: SignUpSchema;
+    profileSchema?: ProfileSchema;
     employeeDetailsSchema?: EmployeeDetailsSchema;
 }
 

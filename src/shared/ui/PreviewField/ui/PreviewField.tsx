@@ -1,7 +1,7 @@
 import { classNames } from "@/shared/lib/classNames/classNames";
 import Icon from "@ant-design/icons";
 import { CustomIconComponentProps } from "@ant-design/icons/lib/components/Icon";
-import { Flex } from "antd";
+import { Flex, Typography } from "antd";
 import * as React from "react";
 import { memo } from "react";
 import cls from "./PreviewField.module.scss";
@@ -31,7 +31,9 @@ export const PreviewField = memo((props: PreviewFieldProps) => {
                     style={{ paddingRight: 5 }}
                 />
             )}
-            <div>{value ?? "не задано"}</div>
+            <Typography.Text className={value ? cls.hasValue : cls.noValue}>
+                {value ?? "не задано"}
+            </Typography.Text>
         </Flex>
     );
 });

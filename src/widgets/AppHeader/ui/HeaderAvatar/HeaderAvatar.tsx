@@ -4,7 +4,7 @@ import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Popover, Space } from "antd";
+import { Avatar, Flex, Popover, Space, Typography } from "antd";
 import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -50,15 +50,22 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
 
     return (
         <Popover
-            title={user?.email}
+            // title={user?.email}
             content={content}
             open={isOpen}
             onOpenChange={showMenu}
             placement={"bottomLeft"}
         >
             <div className={classNames(cls.HeaderAvatar, {}, [className])}>
-                <Avatar icon={!user?.avatar && <UserOutlined />} />
-                {user?.email}
+                <Flex vertical justify={"center"} align={"center"}>
+                    <Avatar
+                        icon={!user.profile?.avatar && <UserOutlined />}
+                        // src={`${__API__}${user.profile?.avatar}`}
+                    />
+                    <Typography.Text keyboard type={"secondary"}>
+                        {user.email}
+                    </Typography.Text>
+                </Flex>
             </div>
         </Popover>
     );

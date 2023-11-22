@@ -4,7 +4,7 @@ import { getSignUpRepeatedPassword } from "./getSignUpRepeatedPassword";
 describe("getSignUpRepeatedPassword.test", () => {
     test("Should return repeated password", () => {
         const state: DeepPartial<StateSchema> = {
-            signUp: {
+            signUpSchema: {
                 repeatedPassword: "123",
             },
         };

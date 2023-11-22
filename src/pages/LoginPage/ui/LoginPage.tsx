@@ -1,4 +1,5 @@
 import { Authorization } from "@/features/auth";
+import { Flex } from "antd";
 import { memo } from "react";
 
 export interface LoginPageProps {
@@ -6,7 +7,11 @@ export interface LoginPageProps {
 }
 
 const LoginPage = (props: LoginPageProps) => {
-    return <Authorization />;
+    return (
+        <Flex justify={"center"} align={"center"}>
+            <Authorization />
+        </Flex>
+    );
 };
 
 export default memo(LoginPage);
