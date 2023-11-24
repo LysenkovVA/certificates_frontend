@@ -21,5 +21,5 @@ const employee: IEmployee = {
 };
 
 export const Primary: Story = {
-    args: { employee },
+    args: {},
 };

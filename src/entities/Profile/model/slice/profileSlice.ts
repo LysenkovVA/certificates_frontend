@@ -23,6 +23,7 @@ const initialState: ProfileSchema = {
     newAvatar: undefined,
     isLoading: false,
     error: "",
+    _isInitialized: false,
 };
 
 export const profileSlice = createSlice({
@@ -36,9 +37,9 @@ export const profileSlice = createSlice({
         setProfileFormData: (state, action: PayloadAction<IProfile>) => {
             state.profileFormData = action.payload;
         },
-        setNewAvatar: (state, action: PayloadAction<string | undefined>) => {
-            state.newAvatar = action.payload;
-        },
+        // setNewAvatar: (state, action: PayloadAction<string | undefined>) => {
+        //     state.newAvatar = action.payload;
+        // },
     },
     extraReducers: (builder) => {
         builder
@@ -48,6 +49,7 @@ export const profileSlice = createSlice({
             })
             .addCase(fetchProfileData.fulfilled, (state, action) => {
                 state.isLoading = false;
+                state._isInitialized = true;
             })
             .addCase(fetchProfileData.rejected, (state, action) => {
                 state.isLoading = false;

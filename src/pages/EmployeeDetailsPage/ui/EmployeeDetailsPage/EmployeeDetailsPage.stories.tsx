@@ -19,7 +19,7 @@ type Story = StoryObj<typeof meta>;
 const schema: StateSchema = {
     userShema: {},
     employeeDetailsSchema: {
-        data: {
+        employeeDetails: {
             id: "1",
             surname: "Ivanov",
             name: "Ivan",

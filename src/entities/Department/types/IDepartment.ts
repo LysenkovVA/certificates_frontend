@@ -1,4 +1,4 @@
-import { IOrganization } from "@/entities/Organization/types/IOrganization";
+import { IOrganization } from "@/entities/Organization/model/types/IOrganization";
 
 export interface IDepartment {
     id: string;

@@ -6,4 +6,5 @@ export interface ProfileSchema {
     newAvatar?: string;
     isLoading?: boolean;
     error?: string;
+    _isInitialized?: boolean;
 }

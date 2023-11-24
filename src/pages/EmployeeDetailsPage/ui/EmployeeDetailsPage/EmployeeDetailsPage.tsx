@@ -1,5 +1,5 @@
 import { EmployeeDetailsCard } from "@/entities/Employee";
-import { employeeDetailsReducer } from "@/entities/Employee/model/slice/employeeSlice";
+import { employeeDetailsReducer } from "@/entities/Employee/model/slice/employeeDetailsSlice";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import {
     DynamicModuleLoader,

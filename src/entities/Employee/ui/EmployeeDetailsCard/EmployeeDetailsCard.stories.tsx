@@ -17,7 +17,7 @@ type Story = StoryObj<typeof meta>;
 
 const initialState: DeepPartial<StateSchema> = {
     employeeDetailsSchema: {
-        data: {
+        employeeDetails: {
             id: "1",
             surname: "Ivanov",
             name: "Ivan",

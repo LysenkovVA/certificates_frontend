@@ -1,5 +1,5 @@
 import { userReducer } from "@/entities/User/model/slice/userSlice";
-import { $api } from "@/shared/api/axios";
+import $api from "@/shared/api/axios";
 import {
     CombinedState,
     configureStore,

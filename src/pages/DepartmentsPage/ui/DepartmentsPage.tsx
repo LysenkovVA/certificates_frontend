@@ -1,4 +1,5 @@
 import { classNames } from "@/shared/lib/classNames/classNames";
+import { Typography } from "antd";
 import { memo } from "react";
 import cls from "./DepartmentsPage.module.scss";
 
@@ -11,7 +12,7 @@ const DepartmentsPage = (props: DepartmentsPageProps) => {
 
     return (
         <div className={classNames(cls.DepartmentsPage, {}, [className])}>
-            {"Departments page"}
+            <Typography.Title level={1}>{"Участки"}</Typography.Title>
         </div>
     );
 };

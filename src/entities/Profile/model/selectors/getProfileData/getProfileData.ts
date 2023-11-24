@@ -20,3 +20,6 @@ export const getProfileDataAvatar = (state: StateSchema) =>
 
 export const getProfileDataUserEmail = (state: StateSchema) =>
     state?.profileSchema?.profileData?.user?.email ?? "";
+
+export const getProfileDataInitialized = (state: StateSchema) =>
+    state?.profileSchema?._isInitialized ?? false;

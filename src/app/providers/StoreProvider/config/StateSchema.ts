@@ -1,5 +1,6 @@
 // Схема данных приложения
 import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
+import { OrganizationsSchema } from "@/entities/Organization";
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
 import { AuthSchema } from "@/features/auth/model/types/AuthSchema";
@@ -22,6 +23,7 @@ export interface StateSchema {
     signUpSchema?: SignUpSchema;
     profileSchema?: ProfileSchema;
     employeeDetailsSchema?: EmployeeDetailsSchema;
+    organizationsSchema?: OrganizationsSchema;
 }
 
 // Для автокоплита

@@ -1,4 +1,5 @@
 import { fetchProfileData } from "@/entities/Profile/model/services/fetchProfileData/fetchProfileData";
+import { updateProfileAvatar } from "@/entities/Profile/model/services/updateProfileAvatar/updateProfileAvatar";
 import { updateProfileData } from "@/entities/Profile/model/services/updateProfileData/updateProfileData";
 import {
     profileActions,
@@ -11,11 +12,13 @@ import {
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { SaveCancelButtons } from "@/shared/ui/SaveCancelButtons/SaveCancelButtons";
-import { Card, UploadFile } from "antd";
-import { RcFile } from "antd/es/upload";
+import { Card } from "antd";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { getProfileData } from "../../model/selectors/getProfileData/getProfileData";
+import {
+    getProfileData,
+    getProfileDataInitialized,
+} from "../../model/selectors/getProfileData/getProfileData";
 import { getProfileFormData } from "../../model/selectors/getProfileFormData/getProfileFormData";
 import { ProfileCardForm } from "../ProfileCardForm/ProfileCardForm";
 import { ProfileCardView } from "../ProfileCardView/ProfileCardView";
@@ -34,17 +37,23 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
     const dispatch = useAppDispatch();
     const user = useSelector(getAuthenticatedUser);
 
-    useEffect(() => {
-        dispatch(fetchProfileData({ userId: user.id }));
-    }, [dispatch, user.id]);
-
     const profileData = useSelector(getProfileData);
     const profileFormData = useSelector(getProfileFormData);
-    const [avatar, setAvatar] = useState<
-        string | ArrayBuffer | null | undefined
-    >();
+    const isInitialized = useSelector(getProfileDataInitialized);
 
-    const [file, setFile] = useState<UploadFile>();
+    useEffect(() => {
+        if (!isInitialized) {
+            dispatch(fetchProfileData({ userId: user.id }));
+            setAvatar(`${__API__}files/download/${profileData?.id}/avatar`);
+        }
+    }, [dispatch, isInitialized, profileData?.id, user.id]);
+
+    const [avatar, setAvatar] = useState<string>();
+
+    console.log(
+        "RENDER PROFILE CARD: " +
+            `${__API__}files/download/${profileData?.id}/avatar`,
+    );
 
     const [readOnly, setReadOnly] = useState(true);
 
@@ -52,27 +61,34 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
         setReadOnly(false);
     }, [setReadOnly]);
 
-    const onSaveClick = useCallback(() => {
+    const onSaveClick = useCallback(async () => {
         // Отправляем запрос на сервер
         dispatch(
             updateProfileData({
                 profileData: profileFormData,
             }),
         );
-        // dispatch(
-        //     updateProfileAvatar({
-        //         profileId: profileFormData.id,
-        //         file,
-        //     }),
-        // );
+        if (avatar) {
+            // Конвертируем в картинку
+            const image = new Image();
+            image.src = avatar;
+
+            // Грузим картинку
+            const blob = await fetch(avatar).then((r) => r.blob());
+            const result = await dispatch(
+                updateProfileAvatar({ profileId: "1", image: blob }),
+            ).then((data) => data.payload);
+
+            console.log("PAYLOAD LOADING: " + JSON.stringify(result));
+        }
 
         setReadOnly(true);
-    }, [dispatch, file, profileFormData]);
+    }, [avatar, dispatch, profileFormData]);
 
     const onCancelClick = useCallback(() => {
         // Возвращаем обратно значения профиля
         dispatch(profileActions.setProfileFormData({ ...profileData }));
-        setAvatar(null);
+        setAvatar(`${__API__}files/download/${profileData?.id}/avatar`);
         setReadOnly(true);
     }, [dispatch, profileData]);
 
@@ -112,14 +128,8 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
         [dispatch, profileFormData],
     );
 
-    const onChangeAvatar = useCallback(
-        (value: string | ArrayBuffer | null | undefined) => {
-            setAvatar(value);
-        },
-        [],
-    );
-    const onChangeAvatar2 = useCallback((file: RcFile) => {
-        setFile(file);
+    const onChangeAvatar = useCallback((value: string) => {
+        setAvatar(value);
     }, []);
 
     const extraContent = (
@@ -143,12 +153,11 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
                 ) : (
                     <ProfileCardForm
                         profileData={profileFormData}
-                        updatedAvatar={avatar}
+                        avatar={avatar}
                         onChangeSurname={onChangeSurname}
                         onChangeName={onChangeName}
                         onChangeBirthDate={onChangeBirthDate}
                         onChangeAvatar={onChangeAvatar}
-                        onChangeAvatar2={onChangeAvatar2}
                     />
                 )}
             </Card>

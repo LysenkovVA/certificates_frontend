@@ -11,7 +11,7 @@ describe("getEmployeeDetails.test", () => {
 
         const state: DeepPartial<StateSchema> = {
             employeeDetailsSchema: {
-                data,
+                employeeDetails: data,
             },
         };
 

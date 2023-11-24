@@ -1,8 +1,10 @@
+import { getProfileDataInitialized } from "@/entities/Profile/model/selectors/getProfileData/getProfileData";
 import { IProfile } from "@/entities/Profile/model/types/IProfile";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { CalendarOutlined } from "@ant-design/icons";
 import { Avatar, Typography } from "antd";
 import { memo } from "react";
+import { useSelector } from "react-redux";
 import cls from "./ProfileCardView.module.scss";
 
 interface ProfileCardViewProps {
@@ -13,12 +15,18 @@ interface ProfileCardViewProps {
 export const ProfileCardView = memo((props: ProfileCardViewProps) => {
     const { className, profileData } = props;
 
+    const isInitialized = useSelector(getProfileDataInitialized);
+
     return (
         <>
             <div className={cls.avatar}>
                 <Avatar
                     size={100}
-                    src={`${__API__}files/download/${profileData?.id}/avatar`}
+                    src={
+                        isInitialized
+                            ? `${__API__}files/download/${profileData?.id}/avatar`
+                            : ""
+                    }
                 />
             </div>
 

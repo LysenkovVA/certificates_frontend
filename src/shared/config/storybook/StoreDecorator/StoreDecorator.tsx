@@ -1,6 +1,6 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
 import StoreProvider from "@/app/providers/StoreProvider/ui/StoreProvider";
-import { employeeDetailsReducer } from "@/entities/Employee/model/slice/employeeSlice";
+import { employeeDetailsReducer } from "@/entities/Employee/model/slice/employeeDetailsSlice";
 import { userReducer } from "@/entities/User/model/slice/userSlice";
 import { authReducer } from "@/features/auth/model/slice/authSlice";
 import { signUpReducer } from "@/features/signUp";
