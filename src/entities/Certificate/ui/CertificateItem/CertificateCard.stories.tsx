@@ -1,15 +1,15 @@
 import { ICertificate } from "@/entities/Certificate/model/types/ICertificate";
 import type { Meta, StoryObj } from "@storybook/react";
-import { CertificateItem } from "./CertificateItem";
+import { CertificateCard } from "./CertificateCard";
 
 const meta = {
     title: "entities/Certificate/CertificateItem",
-    component: CertificateItem,
+    component: CertificateCard,
     tags: ["autodocs"],
     parameters: {
         layout: "fullscreen",
     },
-} satisfies Meta<typeof CertificateItem>;
+} satisfies Meta<typeof CertificateCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

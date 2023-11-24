@@ -98,7 +98,7 @@ const EmployeesPage = (props: EmployeesPageProps) => {
                         onSearch={onSearch}
                     />
                     {error && "Ошибка: " + error}
-                    <Flex wrap={"wrap"}>
+                    <Flex vertical wrap={"wrap"}>
                         {employees.length > 0
                             ? employees.map((employee) => (
                                   <EmployeeCard

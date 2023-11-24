@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const schema: StateSchema = {
-    userShema: {},
+    userSchema: {},
     employeeDetailsSchema: {
         employeeDetails: {
             id: "1",

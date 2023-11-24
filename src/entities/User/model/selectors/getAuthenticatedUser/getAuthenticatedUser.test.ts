@@ -4,7 +4,7 @@ import { getAuthenticatedUser } from "@/entities/User";
 describe("getAuthenticatedUser.test", () => {
     test("Should return authenticated user", () => {
         const state: DeepPartial<StateSchema> = {
-            userShema: {
+            userSchema: {
                 authenticatedUser: {
                     id: "1",
                     email: "email@email.ru",

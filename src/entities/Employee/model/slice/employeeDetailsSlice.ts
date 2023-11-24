@@ -1,5 +1,5 @@
 import { IBerth } from "@/entities/Berth/types/IBerth";
-import { IDepartment } from "@/entities/Department/types/IDepartment";
+import { IDepartment } from "@/entities/Department/model/types/IDepartment";
 import { fetchEmployeeById } from "@/entities/Employee/model/services/fetchEmployeeById/fetchEmployeeById";
 import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
 import { IEmployee } from "@/entities/Employee/model/types/IEmployee";

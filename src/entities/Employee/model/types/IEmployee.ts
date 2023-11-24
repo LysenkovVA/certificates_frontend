@@ -1,6 +1,6 @@
 import { IBerth } from "@/entities/Berth/types/IBerth";
 import { ICertificate } from "@/entities/Certificate/model/types/ICertificate";
-import { IDepartment } from "@/entities/Department/types/IDepartment";
+import { IDepartment } from "@/entities/Department/model/types/IDepartment";
 
 export interface IEmployee {
     id: string;

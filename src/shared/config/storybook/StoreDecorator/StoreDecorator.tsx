@@ -11,7 +11,7 @@ import { ReducersList } from "@/shared/lib/components/DynamicModuleLoader/Dynami
 const defaultAsyncReducers: ReducersList = {
     authSchema: authReducer,
     signUpSchema: signUpReducer,
-    userShema: userReducer,
+    userSchema: userReducer,
     employeesPageSchema: employeesPageReducer,
     employeeDetailsSchema: employeeDetailsReducer,
 };

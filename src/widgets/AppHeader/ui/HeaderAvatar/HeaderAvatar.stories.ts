@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const initialState: DeepPartial<StateSchema> = {
-    userShema: {
+    userSchema: {
         authenticatedUser: {
             id: "1",
             email: "sb@mail.ru",

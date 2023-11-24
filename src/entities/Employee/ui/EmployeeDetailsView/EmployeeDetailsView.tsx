@@ -1,4 +1,4 @@
-import { CertificateItem } from "@/entities/Certificate/ui/CertificateItem/CertificateItem";
+import { CertificateCard } from "@/entities/Certificate/ui/CertificateItem/CertificateCard";
 import { getEmployeeDetails } from "@/entities/Employee/model/selectors/getEmployeeDetails/getEmployeeDetails";
 import emailFieldSvg from "@/shared/assets/svg/emailField.svg";
 import phoneFieldSvg from "@/shared/assets/svg/phoneField.svg";
@@ -59,7 +59,7 @@ export const EmployeeDetailsView = memo((props: EmployeeDetailsViewProps) => {
                         employee?.certificates?.length > 0 && (
                             <Flex gap={8} wrap={"wrap"} justify={"flex-start"}>
                                 {employee.certificates.map((certificate) => (
-                                    <CertificateItem
+                                    <CertificateCard
                                         className={classNames(cls.certificate)}
                                         key={certificate.id}
                                         certificate={certificate}

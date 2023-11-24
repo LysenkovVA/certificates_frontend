@@ -7,14 +7,14 @@ import { PreviewField } from "@/shared/ui/PreviewField";
 import { Card, Flex } from "antd";
 import dayjs from "dayjs";
 import { memo } from "react";
-import cls from "./CertificateItem.module.scss";
+import cls from "./CertificateCard.module.scss";
 
 interface CertificateItemProps {
     className?: string;
     certificate: ICertificate;
 }
 
-export const CertificateItem = memo((props: CertificateItemProps) => {
+export const CertificateCard = memo((props: CertificateItemProps) => {
     const { className, certificate } = props;
     return (
         <Card

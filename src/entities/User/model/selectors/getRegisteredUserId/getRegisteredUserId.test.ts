@@ -4,7 +4,7 @@ import { getRegisteredUserId } from "@/entities/User";
 describe("getRegisteredUserId.test", () => {
     test("Should return registered user id", () => {
         const state: DeepPartial<StateSchema> = {
-            userShema: {
+            userSchema: {
                 registeredUserId: "1",
             },
         };

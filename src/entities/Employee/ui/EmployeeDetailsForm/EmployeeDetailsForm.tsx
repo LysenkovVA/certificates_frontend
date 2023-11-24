@@ -1,5 +1,5 @@
 import { IBerth } from "@/entities/Berth/types/IBerth";
-import { IDepartment } from "@/entities/Department/types/IDepartment";
+import { IDepartment } from "@/entities/Department/model/types/IDepartment";
 import { getEmployeeDetailsForm } from "@/entities/Employee/model/selectors/getEmployeeDetails/getEmployeeDetails";
 import { employeeDetailsActions } from "@/entities/Employee/model/slice/employeeDetailsSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";

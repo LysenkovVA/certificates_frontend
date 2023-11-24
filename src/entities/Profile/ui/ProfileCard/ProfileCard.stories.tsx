@@ -17,7 +17,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const initialSchema: StateSchema = {
-    userShema: {
+    userSchema: {
         authenticatedUser: {},
     },
 };

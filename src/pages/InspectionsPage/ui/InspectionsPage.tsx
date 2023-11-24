@@ -1,83 +1,59 @@
+import { InspectionCard } from "@/entities/Inspection";
 import {
-    getOrganizations,
-    getOrganizationsError,
-    getOrganizationsIsLoading,
-} from "@/entities/Organization/model/selectors/organizationsSelectors";
-import { fetchOrganizations } from "@/entities/Organization/model/services/fetchOrganizations/fetchOrganizations";
-import { organizationsReducer } from "@/entities/Organization/model/slice/organization.slice";
-import { classNames } from "@/shared/lib/classNames/classNames";
+    getInspections,
+    getInspectionsError,
+    getInspectionsIsInited,
+    getInspectionsIsLoading,
+} from "@/entities/Inspection/model/selectors/inspectionsSelectors";
+import { fetchInspections } from "@/entities/Inspection/model/services/fetchInspections/fetchInspections";
+import { inspectionsReducer } from "@/entities/Inspection/model/slice/inspectionsSlice";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { SelectField } from "@/shared/ui/SelectField/SelectField";
 import { Flex, Typography } from "antd";
-import { memo, useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
-import cls from "./InspectionsPage.module.scss";
 
 export interface InspectionsPageProps {
     className?: string;
 }
 
 const reducers: ReducersList = {
-    organizationsSchema: organizationsReducer,
+    inspectionsSchema: inspectionsReducer,
 };
 
 const InspectionsPage = (props: InspectionsPageProps) => {
     const { className } = props;
 
     const dispatch = useAppDispatch();
+    const inspections = useSelector(getInspections.selectAll);
+    const isLoading = useSelector(getInspectionsIsLoading);
+    const error = useSelector(getInspectionsError);
+    const isInited = useSelector(getInspectionsIsInited);
 
     useEffect(() => {
-        console.log("Fetching organizations...");
-        dispatch(fetchOrganizations({ replaceData: true }));
-    }, [dispatch]);
-
-    const isLoading = useSelector(getOrganizationsIsLoading);
-    const error = useSelector(getOrganizationsError);
-    const organizations = useSelector(getOrganizations.selectAll);
-
-    const [organization, setOrganization] = useState<string>();
-
-    console.log("org " + organization);
-
-    const onChange = useCallback(
-        (value: string) => {
-            console.log("Change: " + value);
-            setOrganization(value);
-        },
-        [setOrganization],
-    );
-
-    const mapToList = useMemo(() => {
-        return organizations.map((value) => {
-            return { id: value.id, label: value.name };
-        });
-    }, [organizations]);
+        if (!isInited) {
+            dispatch(fetchInspections({ replaceData: true }));
+        }
+    }, [dispatch, isInited]);
 
     return (
-        <div className={classNames(cls.InspectionsPage, {}, [className])}>
-            <Typography.Title level={1}>{"Проверки"}</Typography.Title>
-            <Flex justify={"center"} align={"center"}>
-                <DynamicModuleLoader reducers={reducers}>
-                    <SelectField
-                        options={mapToList}
-                        value={organization!}
-                        onChange={onChange}
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+            <Flex vertical gap={8}>
+                {inspections?.map((inspection) => (
+                    <InspectionCard
+                        key={inspection.id}
+                        inspection={inspection}
                     />
-                </DynamicModuleLoader>
-                {isLoading && (
-                    <Typography.Text type={"secondary"}>
-                        {"Loading..."}
-                    </Typography.Text>
-                )}
+                ))}
+                {isLoading && <div>{"Загрузка..."}</div>}
                 {error && (
                     <Typography.Text type={"danger"}>{error}</Typography.Text>
                 )}
             </Flex>
-        </div>
+        </DynamicModuleLoader>
     );
 };
 

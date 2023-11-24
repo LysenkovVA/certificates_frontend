@@ -2,7 +2,7 @@ import { ICertificateType } from "@/entities/CertificateType/types/ICertificateT
 import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
 
 export interface ICertificate {
-    id?: string;
+    id: string;
     number?: string;
     startDate?: Date;
     group?: string;

@@ -69,7 +69,7 @@ const initialStateSuccessRegistration: DeepPartial<StateSchema> = {
         password: "123",
         repeatedPassword: "123",
     },
-    userShema: {
+    userSchema: {
         registeredUserId: "1",
     },
 };

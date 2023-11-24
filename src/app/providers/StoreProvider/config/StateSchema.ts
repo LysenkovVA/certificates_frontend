@@ -1,9 +1,13 @@
 // Схема данных приложения
+import { CertificatesSchema } from "@/entities/Certificate";
+import { ConstructionObjectsSchema } from "@/entities/ConstructionObject";
+import { DepartmentsSchema } from "@/entities/Department";
 import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
+import { InspectionsSchema } from "@/entities/Inspection";
 import { OrganizationsSchema } from "@/entities/Organization";
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
-import { AuthSchema } from "@/features/auth/model/types/AuthSchema";
+import { AuthSchema } from "@/features/auth";
 import { SignUpSchema } from "@/features/signUp/model/types/SignUpSchema";
 import { EmployeesPageSchema } from "@/pages/EmployeesPage/model/types/EmployeesPageSchema";
 import {
@@ -16,7 +20,7 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { AxiosInstance } from "axios";
 
 export interface StateSchema {
-    userShema: UserSchema;
+    userSchema: UserSchema;
     employeesPageSchema?: EmployeesPageSchema;
     // Асинхронные редюсеры
     authSchema?: AuthSchema;
@@ -24,6 +28,10 @@ export interface StateSchema {
     profileSchema?: ProfileSchema;
     employeeDetailsSchema?: EmployeeDetailsSchema;
     organizationsSchema?: OrganizationsSchema;
+    departmentsSchema?: DepartmentsSchema;
+    constructionObjectsSchema?: ConstructionObjectsSchema;
+    certificatesSchema?: CertificatesSchema;
+    inspectionsSchema?: InspectionsSchema;
 }
 
 // Для автокоплита
