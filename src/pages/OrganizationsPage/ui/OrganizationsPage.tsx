@@ -40,7 +40,7 @@ const OrganizationsPage = (props: OrganizationsPageProps) => {
     }, [dispatch, organizationsIsInited]);
 
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+        <DynamicModuleLoader reducers={reducers}>
             <Flex vertical>
                 {organizations?.map((organization) => (
                     <OrganizationCard

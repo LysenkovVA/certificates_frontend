@@ -1,4 +1,5 @@
 import { getAuthenticatedUser } from "@/entities/User";
+import { getUserIsInited } from "@/entities/User/model/selectors/getUserIsInited/getAuthenticatedUserId";
 import { userActions } from "@/entities/User/model/slice/userSlice";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { AppFooter } from "@/widgets/AppFooter";
@@ -16,13 +17,14 @@ import "./styles/index.scss";
 export const App = () => {
     const dispatch = useDispatch();
     const authenticatedUser = useSelector(getAuthenticatedUser);
+    const userIsInited = useSelector(getUserIsInited);
 
     // Загружаем информацию об авторизованном пользователе
     useEffect(() => {
         dispatch(userActions.initAuthData());
     }, [dispatch]);
 
-    if (authenticatedUser?.token) {
+    if (authenticatedUser?.id) {
         return (
             <Layout>
                 <Header
@@ -42,7 +44,7 @@ export const App = () => {
                             overflowY: "auto",
                         }}
                     >
-                        <AppRouter />
+                        {userIsInited && <AppRouter />}
                     </Content>
                 </Layout>
                 <Layout>
@@ -54,9 +56,7 @@ export const App = () => {
         );
     } else {
         return (
-            <div className="content-page">
-                <AppRouter />
-            </div>
+            <div className="content-page">{userIsInited && <AppRouter />}</div>
         );
     }
 };

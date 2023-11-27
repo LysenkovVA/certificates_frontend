@@ -40,7 +40,7 @@ const CertificatesPage = (props: CertificatesPageProps) => {
     }, [dispatch, isInited]);
 
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+        <DynamicModuleLoader reducers={reducers}>
             <Flex vertical gap={8}>
                 {certificates?.map((certificate) => (
                     <CertificateCard

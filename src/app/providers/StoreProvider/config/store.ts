@@ -1,13 +1,13 @@
 import { userReducer } from "@/entities/User/model/slice/userSlice";
-import $api from "@/shared/api/axios";
+import { $api, $publicApi } from "@/shared/api/axios";
 import {
     CombinedState,
-    configureStore,
     Reducer,
     ReducersMapObject,
+    configureStore,
 } from "@reduxjs/toolkit";
-import { createReducerManager } from "./reducerManager";
 import { StateSchema, ThunkExtraArg } from "./StateSchema";
+import { createReducerManager } from "./reducerManager";
 
 export function createReduxStore(
     initialState?: StateSchema,
@@ -21,6 +21,7 @@ export function createReduxStore(
     const reducerManager = createReducerManager(rootReducers);
 
     const extraArg: ThunkExtraArg = {
+        publicApi: $publicApi,
         api: $api,
     };
 

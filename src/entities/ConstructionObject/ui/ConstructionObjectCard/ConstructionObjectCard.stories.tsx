@@ -1,8 +1,9 @@
+import { IConstructionObject } from "@/entities/ConstructionObject";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ConstructionObjectCard } from "./ConstructionObjectCard";
 
 const meta = {
-    title: "entities/ConstructionObjectCard",
+    title: "entities/ConstructionObject/ConstructionObjectCard",
     component: ConstructionObjectCard,
     tags: ["autodocs"],
     parameters: {
@@ -13,6 +14,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const constructionObject: IConstructionObject = {
+    id: "1",
+    name: "Туннель",
+    address: "Москва, ул. Яблочкина, д.25",
+    startDate: new Date(),
+    endDate: new Date(),
+    organization: { id: "1", name: "ООО 'ССТ-М'" },
+};
+
 export const Primary: Story = {
-    args: {},
+    args: { constructionObject },
 };

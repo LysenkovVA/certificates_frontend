@@ -1,6 +1,10 @@
 import { IConstructionObject } from "@/entities/ConstructionObject";
+import addressSvg from "@/shared/assets/svg/addressField.svg";
+import endDateSvg from "@/shared/assets/svg/dateEnd.svg";
+import startDateSvg from "@/shared/assets/svg/dateStart.svg";
 import { classNames } from "@/shared/lib/classNames/classNames";
-import { Card, Flex, Typography } from "antd";
+import { PreviewField } from "@/shared/ui/PreviewField";
+import { Card, Flex } from "antd";
 import dayjs from "dayjs";
 import { memo } from "react";
 import cls from "./ConstructionObjectCard.module.scss";
@@ -18,20 +22,26 @@ export const ConstructionObjectCard = memo(
                 className={classNames(cls.DepartmentCard, {}, [className])}
                 title={constructionObject?.name}
             >
-                <Flex vertical>
-                    <Typography.Text>
-                        {constructionObject?.address}
-                    </Typography.Text>
-                    <Typography.Text>
-                        {dayjs(constructionObject?.startDate).format(
-                            "DD.MM.YYYY",
-                        )}
-                    </Typography.Text>
-                    <Typography.Text>
-                        {dayjs(constructionObject?.endDate).format(
-                            "DD.MM.YYYY",
-                        )}
-                    </Typography.Text>
+                <Flex vertical gap={8}>
+                    <PreviewField
+                        component={addressSvg}
+                        value={constructionObject?.address}
+                    />
+                    <Flex gap={"small"}>
+                        <PreviewField
+                            component={startDateSvg}
+                            value={dayjs(constructionObject?.startDate).format(
+                                "DD.MM.YYYY",
+                            )}
+                        />
+                        {" - "}
+                        <PreviewField
+                            component={endDateSvg}
+                            value={dayjs(constructionObject?.endDate).format(
+                                "DD.MM.YYYY",
+                            )}
+                        />
+                    </Flex>
                 </Flex>
             </Card>
         );

@@ -1,7 +1,12 @@
 import { getAuthenticatedUser } from "@/entities/User";
-import { userActions } from "@/entities/User/model/slice/userSlice";
+import { authLogout } from "@/features/logout/model/services/logout/authLogout";
+import { logoutReducer } from "@/features/logout/model/slice/logoutSlice";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import { classNames } from "@/shared/lib/classNames/classNames";
+import {
+    DynamicModuleLoader,
+    ReducersList,
+} from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Flex, Popover, Space, Typography } from "antd";
@@ -13,6 +18,10 @@ import cls from "./HeaderAvatar.module.scss";
 export interface HeaderAvatarProps {
     className?: string;
 }
+
+const reducers: ReducersList = {
+    logoutSchema: logoutReducer,
+};
 
 export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     const { className } = props;
@@ -35,9 +44,9 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     }, [navigate]);
 
     const onLogout = useCallback(() => {
-        dispatch(userActions.logout());
-        navigate(RoutePath.login);
-    }, [dispatch, navigate]);
+        dispatch(authLogout());
+        // navigate(RoutePath.login); <-- это не отрабатывало
+    }, [dispatch]);
 
     const content = (
         <div>
@@ -49,24 +58,27 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     );
 
     return (
-        <Popover
-            // title={user?.email}
-            content={content}
-            open={isOpen}
-            onOpenChange={showMenu}
-            placement={"bottomLeft"}
-        >
-            <div className={classNames(cls.HeaderAvatar, {}, [className])}>
-                <Flex vertical justify={"center"} align={"center"}>
-                    <Avatar
-                        icon={!user.profile?.avatar && <UserOutlined />}
-                        // src={`${__API__}${user.profile?.avatar}`}
-                    />
-                    <Typography.Text keyboard type={"secondary"}>
-                        {user.email}
-                    </Typography.Text>
-                </Flex>
-            </div>
-        </Popover>
+        // TODO Редюсер демонтируется до fulfilled
+        <DynamicModuleLoader reducers={reducers}>
+            <Popover
+                // title={user?.email}
+                content={content}
+                open={isOpen}
+                onOpenChange={showMenu}
+                placement={"bottomLeft"}
+            >
+                <div className={classNames(cls.HeaderAvatar, {}, [className])}>
+                    <Flex vertical justify={"center"} align={"center"}>
+                        <Avatar
+                            icon={!user.profile?.avatar && <UserOutlined />}
+                            // src={`${__API__}${user.profile?.avatar}`}
+                        />
+                        <Typography.Text keyboard type={"secondary"}>
+                            {user.email}
+                        </Typography.Text>
+                    </Flex>
+                </div>
+            </Popover>
+        </DynamicModuleLoader>
     );
 });

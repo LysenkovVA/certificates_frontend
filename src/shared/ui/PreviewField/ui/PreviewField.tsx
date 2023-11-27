@@ -8,14 +8,14 @@ import cls from "./PreviewField.module.scss";
 
 interface PreviewFieldProps {
     className?: string;
-    component?:
+    component:
         | React.ComponentType<
               CustomIconComponentProps | React.SVGProps<SVGSVGElement>
           >
         | React.ForwardRefExoticComponent<CustomIconComponentProps>;
     componentWidth?: number;
     componentHeight?: number;
-    value?: string;
+    value: string | undefined;
 }
 
 export const PreviewField = memo((props: PreviewFieldProps) => {

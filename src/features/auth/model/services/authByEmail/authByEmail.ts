@@ -1,6 +1,6 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { userActions } from "@/entities/User/model/slice/userSlice";
-import { IUser } from "@/entities/User/model/types/IUser";
+import { IAuth } from "@/features/auth/model/types/IAuth";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -10,26 +10,28 @@ export interface LoginByEmailProps {
 }
 
 export const authByEmail = createAsyncThunk<
-    IUser,
+    IAuth,
     LoginByEmailProps,
     ThunkConfig<string>
->("auth/authByEmail", async (authData, thunkApi) => {
+>("auth/login", async (authData, thunkApi) => {
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
         // TODO
-        const response = await extra.api.post<IUser>("/auth/login", authData);
+        const response = await extra.api.post<IAuth>("/auth/login", authData);
 
-        if (!response.data) {
-            return rejectWithValue("Ответ от сервера не получен");
+        if (response.status === 200) {
+            // Записываем токен
+            localStorage.setItem(
+                USER_LOCALSTORAGE_KEY,
+                JSON.stringify({
+                    user: response.data.user,
+                    accessToken: response.data.accessToken,
+                }),
+            );
+            // Добавляем в стейт данные об авторизованном пользователе
+            dispatch(userActions.setAuthData(response.data.user));
         }
-
-        localStorage.setItem(
-            USER_LOCALSTORAGE_KEY,
-            JSON.stringify(response.data),
-        );
-        // Добавляем в стейт данные об авторизованном пользователе
-        dispatch(userActions.setAuthData(response.data));
 
         return response.data;
     } catch (e) {

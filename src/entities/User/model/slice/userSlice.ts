@@ -13,6 +13,7 @@ const initialState: UserSchema = {
     registeredUserId: undefined,
     isLoading: false,
     error: "",
+    _isInited: false,
 };
 
 export const userSlice = createSlice({
@@ -25,15 +26,13 @@ export const userSlice = createSlice({
         },
         // Инициализация при отрытии приложения
         initAuthData: (state) => {
-            const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
-            if (user) {
-                state.authenticatedUser = JSON.parse(user);
+            const data = localStorage.getItem(USER_LOCALSTORAGE_KEY);
+            if (data) {
+                state.authenticatedUser = JSON.parse(data).user;
+            } else {
+                state.authenticatedUser = {};
             }
-        },
-        // Выход из приложения
-        logout: (state) => {
-            state.authenticatedUser = undefined;
-            localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+            state._isInited = true;
         },
         setRegisteredData: (state, action: PayloadAction<string>) => {
             state.registeredUserId = action.payload;

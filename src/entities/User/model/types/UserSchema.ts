@@ -7,4 +7,5 @@ export interface UserSchema {
     registeredUserId?: string;
     isLoading?: boolean;
     error?: string;
+    _isInited?: boolean;
 }

@@ -40,7 +40,7 @@ const InspectionsPage = (props: InspectionsPageProps) => {
     }, [dispatch, isInited]);
 
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+        <DynamicModuleLoader reducers={reducers}>
             <Flex vertical gap={8}>
                 {inspections?.map((inspection) => (
                     <InspectionCard

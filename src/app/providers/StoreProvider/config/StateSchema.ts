@@ -8,6 +8,7 @@ import { OrganizationsSchema } from "@/entities/Organization";
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
 import { AuthSchema } from "@/features/auth";
+import { LogoutSchema } from "@/features/logout/model/types/LogoutSchema";
 import { SignUpSchema } from "@/features/signUp/model/types/SignUpSchema";
 import { EmployeesPageSchema } from "@/pages/EmployeesPage/model/types/EmployeesPageSchema";
 import {
@@ -24,6 +25,7 @@ export interface StateSchema {
     employeesPageSchema?: EmployeesPageSchema;
     // Асинхронные редюсеры
     authSchema?: AuthSchema;
+    logoutSchema?: LogoutSchema;
     signUpSchema?: SignUpSchema;
     profileSchema?: ProfileSchema;
     employeeDetailsSchema?: EmployeeDetailsSchema;
@@ -54,6 +56,7 @@ export interface ReduxStoreWithManager extends ToolkitStore<StateSchema> {
 }
 
 export interface ThunkExtraArg {
+    publicApi: AxiosInstance;
     api: AxiosInstance;
 }
 

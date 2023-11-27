@@ -40,7 +40,7 @@ const ConstructionObjectsPage = (props: ConstructionObjectsPageProps) => {
     }, [dispatch, isInited]);
 
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+        <DynamicModuleLoader reducers={reducers}>
             <Flex vertical gap={8}>
                 {constructionObjects?.map((constructionObject) => (
                     <ConstructionObjectCard

@@ -34,9 +34,8 @@ export const Authorization = memo(() => {
 
     const navigate = useNavigate();
 
-    // Без этого страница авторизации впиливается
     useEffect(() => {
-        if (user?.token) {
+        if (user?.id) {
             navigate(RoutePath.inspections);
         }
     }, [user, navigate, dispatch]);

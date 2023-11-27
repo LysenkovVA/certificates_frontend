@@ -1,8 +1,9 @@
+import emailSvg from "@/shared/assets/test/storybook/emailField.svg";
 import type { Meta, StoryObj } from "@storybook/react";
 import { PreviewField } from "./PreviewField";
 
 const meta = {
-    title: "shared/PreviewField",
+    title: "shared/UI/PreviewField",
     component: PreviewField,
     tags: ["autodocs"],
     parameters: {
@@ -14,5 +15,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
-    args: {},
+    args: { component: emailSvg, value: "email@email.com" },
 };

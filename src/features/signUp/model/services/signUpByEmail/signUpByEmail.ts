@@ -1,5 +1,7 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { userActions } from "@/entities/User/model/slice/userSlice";
+import { ISignUp } from "@/features/signUp/model/types/ISignUp";
+import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export interface SignUpByEmailProps {
@@ -8,15 +10,14 @@ export interface SignUpByEmailProps {
 }
 
 export const signUpByEmail = createAsyncThunk<
-    string,
+    ISignUp,
     SignUpByEmailProps,
     ThunkConfig<string>
 >("signUp/signUpByEmail", async (signUpData, thunkApi) => {
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
-        // TODO какой запрос???
-        const response = await extra.api.post<string>(
+        const response = await extra.api.post<ISignUp>(
             "/auth/register",
             signUpData,
             {
@@ -30,8 +31,17 @@ export const signUpByEmail = createAsyncThunk<
             return rejectWithValue("Ответ от сервера не получен");
         }
 
+        // Записываем токен
+        localStorage.setItem(
+            USER_LOCALSTORAGE_KEY,
+            JSON.stringify({
+                user: response.data.user,
+                accessToken: response.data.accessToken,
+            }),
+        );
+
         // Добавляем в стейт данные об авторизованном пользователе
-        dispatch(userActions.setRegisteredData(response.data));
+        dispatch(userActions.setRegisteredData(String(response.data.user.id)));
 
         return response.data;
     } catch (e) {

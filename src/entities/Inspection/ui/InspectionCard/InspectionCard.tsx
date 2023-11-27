@@ -17,26 +17,43 @@ export const InspectionCard = memo((props: InspectionCardProps) => {
             className={classNames(cls.DepartmentCard, {}, [className])}
             title={dayjs(inspection?.date).format("DD.MM.YYYY")}
         >
-            <Flex vertical>
+            <Flex vertical gap={0}>
+                <Flex gap={4}>
+                    {inspection?.inspectionType?.value &&
+                    inspection.inspectionType.value === "Плановая" ? (
+                        <Typography.Text keyboard>
+                            {inspection?.inspectionType?.value}
+                        </Typography.Text>
+                    ) : (
+                        <Typography.Text keyboard type={"danger"}>
+                            {inspection?.inspectionType?.value}
+                        </Typography.Text>
+                    )}
+                    {inspection?.isCommitional && (
+                        <Typography.Text type={"success"} keyboard>
+                            {"Комиссионная"}
+                        </Typography.Text>
+                    )}
+                </Flex>
                 <Typography.Text>
                     {inspection?.constructionObject?.address}
                 </Typography.Text>
                 <Typography.Text>
                     {inspection?.constructionObject?.name}
                 </Typography.Text>
-                <Typography.Text>
-                    {inspection?.inspectionType?.value}
-                </Typography.Text>
-                {inspection?.isCommitional && (
-                    <Typography.Text>{"Комиссионная"}</Typography.Text>
-                )}
-                <Typography.Text>
-                    {inspection?.resultDocumentType?.value}
-                </Typography.Text>
-                <Typography.Text>{inspection?.documentNumber}</Typography.Text>
-                <Typography.Text>
-                    {dayjs(inspection?.documentDate).format("DD.MM.YYYY")}
-                </Typography.Text>
+                <Flex gap={8}>
+                    <Typography.Text>
+                        {inspection?.resultDocumentType?.value}
+                    </Typography.Text>
+                    <Typography.Text>
+                        {inspection?.documentNumber}
+                    </Typography.Text>
+                    <Typography.Text>
+                        {`от ${dayjs(inspection?.documentDate).format(
+                            "DD.MM.YYYY",
+                        )}`}
+                    </Typography.Text>
+                </Flex>
             </Flex>
         </Card>
     );

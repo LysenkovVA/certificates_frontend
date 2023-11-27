@@ -40,7 +40,7 @@ const DepartmentsPage = (props: DepartmentsPageProps) => {
     }, [dispatch, isInited]);
 
     return (
-        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+        <DynamicModuleLoader reducers={reducers}>
             <Flex vertical gap={8}>
                 {departments?.map((department) => (
                     <DepartmentCard

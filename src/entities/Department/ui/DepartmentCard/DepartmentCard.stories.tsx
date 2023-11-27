@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { DepartmentCard } from "./DepartmentCard";
 
 const meta = {
-    title: "entities/DepartmentCard",
+    title: "entities/Department/DepartmentCard",
     component: DepartmentCard,
     tags: ["autodocs"],
     parameters: {

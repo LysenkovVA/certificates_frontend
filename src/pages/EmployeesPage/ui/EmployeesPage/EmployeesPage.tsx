@@ -84,10 +84,7 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     );
 
     return (
-        <DynamicModuleLoader
-            reducers={initialReducers}
-            removeAfterUnmount={false}
-        >
+        <DynamicModuleLoader reducers={initialReducers}>
             {isLoading ? (
                 <Skeleton active />
             ) : (
