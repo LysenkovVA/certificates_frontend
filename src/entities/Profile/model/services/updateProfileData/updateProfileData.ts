@@ -1,10 +1,10 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { fetchProfileData } from "@/entities/Profile/model/services/fetchProfileData/fetchProfileData";
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
+import { Profile } from "@/entities/Profile/model/types/Profile";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export interface UpdateProfileDataProps {
-    profileData: IProfile;
+    profileData: Profile;
 }
 
 export const updateProfileData = createAsyncThunk<

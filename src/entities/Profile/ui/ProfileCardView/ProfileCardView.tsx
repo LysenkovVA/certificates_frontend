@@ -1,5 +1,5 @@
 import { getProfileDataInitialized } from "@/entities/Profile/model/selectors/getProfileData/getProfileData";
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
+import { Profile } from "@/entities/Profile/model/types/Profile";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { CalendarOutlined } from "@ant-design/icons";
 import { Avatar, Typography } from "antd";
@@ -9,7 +9,7 @@ import cls from "./ProfileCardView.module.scss";
 
 interface ProfileCardViewProps {
     className?: string;
-    profileData?: IProfile;
+    profileData?: Profile;
 }
 
 export const ProfileCardView = memo((props: ProfileCardViewProps) => {

@@ -1,2 +1,3 @@
-export { EmployeeCard } from "./ui/EmployeeCard/EmployeeCard";
+export { EmployeeItem } from "@/entities/Employee/ui/EmployeeItem/EmployeeItem";
+export type { Employee } from "./model/types/Employee";
 export { EmployeeDetailsCard } from "./ui/EmployeeDetailsCard/EmployeeDetailsCard";

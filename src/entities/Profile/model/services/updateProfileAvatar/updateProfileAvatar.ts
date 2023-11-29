@@ -1,5 +1,5 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
-import { IFile } from "@/entities/File";
+import { File } from "@/entities/File";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosHeaders } from "axios";
 
@@ -9,7 +9,7 @@ export interface LoadProfileAvatarProps {
 }
 
 export const updateProfileAvatar = createAsyncThunk<
-    IFile,
+    File,
     LoadProfileAvatarProps,
     ThunkConfig<string>
 >("profile/updateProfileAvatar", async ({ profileId, image }, thunkApi) => {
@@ -26,7 +26,7 @@ export const updateProfileAvatar = createAsyncThunk<
         const headers = new AxiosHeaders();
         headers.setContentType("multipart/form-data");
 
-        const response = await extra.api.post<IFile>(
+        const response = await extra.api.post<File>(
             `/files/upload/${profileId}/avatar`,
             formData,
             {

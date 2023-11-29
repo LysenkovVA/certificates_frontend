@@ -1,2 +1,2 @@
-export type { IProfile } from "./model/types/IProfile";
+export type { Profile } from "./model/types/Profile";
 export { ProfileCard } from "./ui/ProfileCard/ProfileCard";

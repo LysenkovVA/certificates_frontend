@@ -1,5 +1,5 @@
 import { getProfileDataInitialized } from "@/entities/Profile/model/selectors/getProfileData/getProfileData";
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
+import { Profile } from "@/entities/Profile/model/types/Profile";
 import { EditableAvatar } from "@/shared/ui/EditableAvatar/EditableAvatar";
 import { DatePicker, Form, Input } from "antd";
 import dayjs from "dayjs";
@@ -9,7 +9,7 @@ import cls from "./ProfileCardForm.module.scss";
 
 interface ProfileCardFormProps {
     className?: string;
-    profileData?: IProfile;
+    profileData?: Profile;
     avatar?: string | undefined;
     onChangeSurname?: (value: string) => void;
     onChangeName?: (value: string) => void;

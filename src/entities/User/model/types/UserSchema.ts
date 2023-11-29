@@ -1,8 +1,8 @@
-import { IUser } from "./IUser";
+import { User } from "./User";
 
 export interface UserSchema {
     // Авторизованный пользователь
-    authenticatedUser?: IUser;
+    authenticatedUser?: User;
     // Только что зарегистрированный пользователь
     registeredUserId?: string;
     isLoading?: boolean;

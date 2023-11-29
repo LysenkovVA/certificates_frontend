@@ -1,5 +1,5 @@
-import { IBerth } from "@/entities/Berth/types/IBerth";
-import { IDepartment } from "@/entities/Department/model/types/IDepartment";
+import { Berth } from "@/entities/Berth/types/Berth";
+import { Department } from "@/entities/Department";
 import { getEmployeeDetailsForm } from "@/entities/Employee/model/selectors/getEmployeeDetails/getEmployeeDetails";
 import { employeeDetailsActions } from "@/entities/Employee/model/slice/employeeDetailsSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
@@ -72,14 +72,14 @@ export const EmployeeDetailsForm = memo((props: EmployeeDetailsFormProps) => {
     );
 
     const onChangeBerth = useCallback(
-        (value: IBerth) => {
+        (value: Berth) => {
             dispatch(employeeDetailsActions.setFormBerth(value));
         },
         [dispatch],
     );
 
     const onChangeDepartment = useCallback(
-        (value: IDepartment) => {
+        (value: Department) => {
             dispatch(employeeDetailsActions.setFormDepartment(value));
         },
         [dispatch],

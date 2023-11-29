@@ -1,4 +1,4 @@
-import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
+import { Employee } from "@/entities/Employee";
 import type { Meta, StoryObj } from "@storybook/react";
 import { EmployeeDetailsView } from "./EmployeeDetailsView";
 
@@ -14,7 +14,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const employee: IEmployee = {
+const employee: Employee = {
     id: "1",
     surname: "Ivanov",
     name: "Ivan",

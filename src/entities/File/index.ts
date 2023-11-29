@@ -1,1 +1,1 @@
-export type { IFile } from "./model/types/IFile";
+export type { File } from "./model/types/File";

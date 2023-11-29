@@ -15,6 +15,8 @@ export function useDebounce(callback: (...args: any[]) => void, delay: number) {
                 clearTimeout(timer.current);
             }
             timer.current = setTimeout(() => {
+                console.log("debounce");
+                // eslint-disable-next-line n/no-callback-literal
                 callback(...args);
             }, delay);
         },

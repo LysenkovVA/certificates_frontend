@@ -1,7 +1,7 @@
-import { IUser } from "@/entities/User";
+import { User } from "@/entities/User";
 
 export interface ISignUp {
-    user: IUser;
+    user: User;
     accessToken: string;
     refreshToken: string;
 }

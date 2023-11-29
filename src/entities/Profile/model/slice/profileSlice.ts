@@ -1,5 +1,5 @@
 import { fetchProfileData } from "@/entities/Profile/model/services/fetchProfileData/fetchProfileData";
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
+import { Profile } from "@/entities/Profile/model/types/Profile";
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -31,10 +31,10 @@ export const profileSlice = createSlice({
     initialState,
     reducers: {
         // Новые данные
-        setProfileData: (state, action: PayloadAction<IProfile>) => {
+        setProfileData: (state, action: PayloadAction<Profile>) => {
             state.profileData = action.payload;
         },
-        setProfileFormData: (state, action: PayloadAction<IProfile>) => {
+        setProfileFormData: (state, action: PayloadAction<Profile>) => {
             state.profileFormData = action.payload;
         },
         // setNewAvatar: (state, action: PayloadAction<string | undefined>) => {

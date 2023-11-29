@@ -1,4 +1,4 @@
-import { IDepartment } from "@/entities/Department/model/types/IDepartment";
+import { Department } from "@/entities/Department/model/types/Department";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { Card, Typography } from "antd";
 import { memo } from "react";
@@ -6,7 +6,7 @@ import cls from "./DepartmentCard.module.scss";
 
 interface DepartmentCardProps {
     className?: string;
-    department: IDepartment;
+    department: Department;
 }
 
 export const DepartmentCard = memo((props: DepartmentCardProps) => {

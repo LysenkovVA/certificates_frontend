@@ -1,5 +1,5 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
-import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
+import { Employee } from "@/entities/Employee/model/types/Employee";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export interface FetchEmployeeByIdProps {
@@ -7,14 +7,14 @@ export interface FetchEmployeeByIdProps {
 }
 
 export const fetchEmployeeById = createAsyncThunk<
-    IEmployee,
+    Employee,
     FetchEmployeeByIdProps,
     ThunkConfig<string>
 >("employee/fetchEmployeeById", async ({ id }, thunkApi) => {
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
-        const response = await extra.api.get<IEmployee>(`/employees/${id}`);
+        const response = await extra.api.get<Employee>(`/employees/${id}`);
 
         if (!response.data) {
             return rejectWithValue("Ответ от сервера не получен");

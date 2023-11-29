@@ -1,1 +1,1 @@
-export type { IResultDocumentType } from "./model/types/IResultDocumentType";
+export type { ResultDocumentType } from "./model/types/ResultDocumentType";

@@ -1,8 +1,8 @@
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
+import { Profile } from "@/entities/Profile/model/types/Profile";
 
 export interface ProfileSchema {
-    profileData?: IProfile;
-    profileFormData?: IProfile;
+    profileData?: Profile;
+    profileFormData?: Profile;
     newAvatar?: string;
     isLoading?: boolean;
     error?: string;

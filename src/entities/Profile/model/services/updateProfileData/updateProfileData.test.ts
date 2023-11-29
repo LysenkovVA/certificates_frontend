@@ -1,10 +1,10 @@
 import { updateProfileData } from "@/entities/Profile/model/services/updateProfileData/updateProfileData";
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
+import { Profile } from "@/entities/Profile/model/types/Profile";
 import { TestAsyncThunk } from "@/shared/lib/tests/TestAsyncThunk/TestAsyncThunk";
 
 describe("updateProfileData.test", () => {
     test("Should update profile data", async () => {
-        const userData: IProfile = {
+        const userData: Profile = {
             id: "1",
             surname: "Lysenkov",
             name: "Viktor",
@@ -35,7 +35,7 @@ describe("updateProfileData.test", () => {
     });
 
     test("Should fail update profile data", async () => {
-        const userData: IProfile = {
+        const userData: Profile = {
             id: "1",
             surname: "Lysenkov",
             name: "Viktor",

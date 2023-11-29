@@ -1,3 +1,2 @@
-export type { ConstructionObjectsSchema } from "./model/types/ConstructionObjectsSchema";
-export type { IConstructionObject } from "./model/types/IConstructionObject";
-export { ConstructionObjectCard } from "./ui/ConstructionObjectCard/ConstructionObjectCard";
+export type { ConstructionObject } from "./model/types/ConstructionObject";
+export { ConstructionObjectItem } from "./ui/ConstructionObjectCard/ConstructionObjectItem";

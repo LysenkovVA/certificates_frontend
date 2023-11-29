@@ -1,15 +1,39 @@
+import { useDebounce } from "@/shared/lib/hooks/useDebounce/useDebounce";
 import { Input } from "antd";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 interface SearchBarProps {
     className?: string;
     placeholder?: string;
-    searchQuery: string;
-    onSearch?: (value: string | undefined) => void;
+    currentSearchQuery: string;
+    onChangeValue: (value: string | undefined) => void;
+    searchCallbackForDebounce: (...args: any[]) => void;
 }
 
+const DEBOUNCE_DELAY = 1000;
+
 export const SearchBar = memo((props: SearchBarProps) => {
-    const { className, searchQuery, onSearch, placeholder } = props;
+    const {
+        className,
+        currentSearchQuery,
+        onChangeValue,
+        placeholder,
+        searchCallbackForDebounce,
+    } = props;
+
+    const debouncedFetchData = useDebounce(
+        searchCallbackForDebounce,
+        DEBOUNCE_DELAY,
+    );
+
+    const onChange = useCallback(
+        (value: string) => {
+            console.log("search change value");
+            onChangeValue?.(value);
+            debouncedFetchData();
+        },
+        [debouncedFetchData, onChangeValue],
+    );
 
     return (
         <Input
@@ -17,8 +41,8 @@ export const SearchBar = memo((props: SearchBarProps) => {
             allowClear
             id={"searchBarInput"}
             placeholder={placeholder ?? "Поиск..."}
-            value={searchQuery}
-            onChange={(e) => onSearch?.(e.target.value)}
+            value={currentSearchQuery}
+            onChange={(e) => onChange(e.target.value)}
         />
     );
 });

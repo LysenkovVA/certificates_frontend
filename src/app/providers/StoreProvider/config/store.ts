@@ -1,5 +1,5 @@
 import { userReducer } from "@/entities/User/model/slice/userSlice";
-import { $api, $publicApi } from "@/shared/api/axios";
+import { $api } from "@/shared/api/axios";
 import {
     CombinedState,
     Reducer,
@@ -21,7 +21,6 @@ export function createReduxStore(
     const reducerManager = createReducerManager(rootReducers);
 
     const extraArg: ThunkExtraArg = {
-        publicApi: $publicApi,
         api: $api,
     };
 

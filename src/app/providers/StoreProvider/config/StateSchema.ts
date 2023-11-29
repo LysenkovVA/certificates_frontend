@@ -1,16 +1,17 @@
 // Схема данных приложения
-import { CertificatesSchema } from "@/entities/Certificate";
-import { ConstructionObjectsSchema } from "@/entities/ConstructionObject";
-import { DepartmentsSchema } from "@/entities/Department";
 import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
-import { InspectionsSchema } from "@/entities/Inspection";
-import { OrganizationsSchema } from "@/entities/Organization";
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
+import { CertificatesSchema } from "@/features/Certificates/certificatesList";
+import { ConstructionObjectsSchema } from "@/features/ConstructionObjects/constructionObjectsList";
+
+import { DepartmentsSchema } from "@/features/Departments/departmentsList";
+import { EmployeesPageSchema } from "@/features/Employees/employeesList";
+import { InspectionsSchema } from "@/features/Inspections/inspectionsList";
+import { OrganizationsSchema } from "@/features/Organizations/organizationsList/model/types/OrganizationsSchema";
 import { AuthSchema } from "@/features/auth";
 import { LogoutSchema } from "@/features/logout/model/types/LogoutSchema";
 import { SignUpSchema } from "@/features/signUp/model/types/SignUpSchema";
-import { EmployeesPageSchema } from "@/pages/EmployeesPage/model/types/EmployeesPageSchema";
 import {
     AnyAction,
     CombinedState,
@@ -56,7 +57,6 @@ export interface ReduxStoreWithManager extends ToolkitStore<StateSchema> {
 }
 
 export interface ThunkExtraArg {
-    publicApi: AxiosInstance;
     api: AxiosInstance;
 }
 

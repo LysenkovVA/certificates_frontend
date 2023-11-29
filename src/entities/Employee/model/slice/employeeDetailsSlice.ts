@@ -1,8 +1,8 @@
-import { IBerth } from "@/entities/Berth/types/IBerth";
-import { IDepartment } from "@/entities/Department/model/types/IDepartment";
+import { Berth } from "@/entities/Berth/types/Berth";
+import { Department } from "@/entities/Department/model/types/Department";
 import { fetchEmployeeById } from "@/entities/Employee/model/services/fetchEmployeeById/fetchEmployeeById";
+import { Employee } from "@/entities/Employee/model/types/Employee";
 import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
-import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: EmployeeDetailsSchema = {
@@ -32,12 +32,12 @@ export const employeeDetailsSlice = createSlice({
                 state.employeeDetailsForm.email = action.payload;
             }
         },
-        setFormBerth: (state, action: PayloadAction<IBerth>) => {
+        setFormBerth: (state, action: PayloadAction<Berth>) => {
             if (state?.employeeDetailsForm) {
                 state.employeeDetailsForm.berth = action.payload;
             }
         },
-        setFormDepartment: (state, action: PayloadAction<IDepartment>) => {
+        setFormDepartment: (state, action: PayloadAction<Department>) => {
             if (state?.employeeDetailsForm) {
                 state.employeeDetailsForm.department = action.payload;
             }
@@ -71,7 +71,7 @@ export const employeeDetailsSlice = createSlice({
             })
             .addCase(
                 fetchEmployeeById.fulfilled,
-                (state, action: PayloadAction<IEmployee>) => {
+                (state, action: PayloadAction<Employee>) => {
                     state.isLoading = false;
                     state.employeeDetails = action.payload;
                     state.employeeDetailsForm = action.payload;

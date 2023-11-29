@@ -1,7 +1,7 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
 import { profileActions } from "@/entities/Profile/model/slice/profileSlice";
-import { IProfile } from "@/entities/Profile/model/types/IProfile";
-import { IUser } from "@/entities/User/model/types/IUser";
+import { Profile } from "@/entities/Profile/model/types/Profile";
+import { User } from "@/entities/User/model/types/User";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export interface FetchProfileDataProps {
@@ -9,7 +9,7 @@ export interface FetchProfileDataProps {
 }
 
 export const fetchProfileData = createAsyncThunk<
-    IUser,
+    User,
     FetchProfileDataProps,
     ThunkConfig<string>
 >("profile/fetchProfileData", async ({ userId }, thunkApi) => {
@@ -17,7 +17,7 @@ export const fetchProfileData = createAsyncThunk<
 
     try {
         // TODO
-        const response = await extra.api.get<IProfile>(`/profiles/${userId}`);
+        const response = await extra.api.get<Profile>(`/profiles/${userId}`);
 
         if (!response.data) {
             return rejectWithValue("Ответ от сервера не получен");

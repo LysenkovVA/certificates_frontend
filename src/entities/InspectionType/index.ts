@@ -1,1 +1,1 @@
-export type { IInspectionType } from "./model/types/IInspectionType";
+export type { InspectionType } from "./model/types/InspectionType";

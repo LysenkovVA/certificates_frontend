@@ -1,7 +1,7 @@
 import { updateProfileData } from "@/entities/Profile/model/services/updateProfileData/updateProfileData";
 import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../types/IUser";
+import { User } from "../types/User";
 import { UserSchema } from "../types/UserSchema";
 
 const initialState: UserSchema = {
@@ -21,7 +21,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         // Новые данные
-        setAuthData: (state, action: PayloadAction<IUser>) => {
+        setAuthData: (state, action: PayloadAction<User>) => {
             state.authenticatedUser = action.payload;
         },
         // Инициализация при отрытии приложения

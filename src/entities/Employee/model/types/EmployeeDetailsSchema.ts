@@ -1,9 +1,9 @@
-import { IEmployee } from "@/entities/Employee/model/types/IEmployee";
+import { Employee } from "@/entities/Employee";
 
 export interface EmployeeDetailsSchema {
     isLoading?: boolean;
     error?: string;
-    employeeDetails?: IEmployee;
-    employeeDetailsForm?: IEmployee;
+    employeeDetails?: Employee;
+    employeeDetailsForm?: Employee;
     _isInited?: boolean;
 }
