@@ -1,4 +1,4 @@
-import { initializeEmployeesPage } from "@/pages/EmployeesPage/model/services/initializeEmployeesPage/initializeEmployeesPage";
+import { initializeEmployeesPage } from "@/features/Employees/employeesList/model/services/initializeEmployeesPage/initializeEmployeesPage";
 import { TestAsyncThunk } from "@/shared/lib/tests/TestAsyncThunk/TestAsyncThunk";
 
 describe("initializeEmployeesPage.test", () => {

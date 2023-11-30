@@ -1,4 +1,5 @@
 import { userReducer } from "@/entities/User/model/slice/userSlice";
+import { UIReducer } from "@/features/UI";
 import { $api } from "@/shared/api/axios";
 import {
     CombinedState,
@@ -16,6 +17,7 @@ export function createReduxStore(
     const rootReducers: ReducersMapObject<StateSchema> = {
         ...asyncReducers,
         userSchema: userReducer,
+        ui: UIReducer,
     };
 
     const reducerManager = createReducerManager(rootReducers);

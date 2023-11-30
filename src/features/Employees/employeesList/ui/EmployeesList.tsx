@@ -1,12 +1,17 @@
 import { EmployeeItem } from "@/entities/Employee";
+import { getEmployeesListLimit } from "@/features/Employees/employeesList/model/selectors/getEmployeesLimit/getEmployeesLimit";
+import { getEmployeesListOffset } from "@/features/Employees/employeesList/model/selectors/getEmployeesOffset/getEmployeesOffset";
+import { fetchEmployees } from "@/features/Employees/employeesList/model/services/fetchEmployees/fetchEmployees";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { Button, Flex, Skeleton } from "antd";
-import { memo, useCallback, useEffect } from "react";
+import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
+import { Flex, Skeleton } from "antd";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getEmployeesList } from "../model/selectors/getEmployees/getEmployees";
@@ -14,9 +19,11 @@ import { getEmployeesListError } from "../model/selectors/getEmployeesError/getE
 import { getEmployeeListsHasMore } from "../model/selectors/getEmployeesHasMore/getEmployeesHasMore";
 import { getEmployeesListIsInitialized } from "../model/selectors/getEmployeesIsInitialized/getEmployeesIsInitialized";
 import { getEmployeesListIsLoading } from "../model/selectors/getEmployeesIsLoading/getEmployeesIsLoading";
-import { fetchEmployeesNextPart } from "../model/services/fetchEmployeesNextPart/fetchEmployeesNextPart";
 import { initializeEmployeesPage } from "../model/services/initializeEmployeesPage/initializeEmployeesPage";
-import { employeesPageReducer } from "../model/slice/employeesPageSlice";
+import {
+    employeesPageActions,
+    employeesPageReducer,
+} from "../model/slice/employeesPageSlice";
 
 interface EmployeesListProps {
     className?: string;
@@ -28,25 +35,33 @@ const initialReducers: ReducersList = {
 
 export const EmployeesList = memo((props: EmployeesListProps) => {
     const { className } = props;
-    const employees = useSelector(getEmployeesList.selectAll);
-    const isLoading = useSelector(getEmployeesListIsLoading);
-    const error = useSelector(getEmployeesListError);
-    const isInitialized = useSelector(getEmployeesListIsInitialized);
-    const hasMore = useSelector(getEmployeeListsHasMore);
-    // const searchQuery = useSelector(getEmployeesListSearchQuery);
 
     // Получаем параметры из строки запроса
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        if (__PROJECT_ENV__ !== "storybook" && !isInitialized) {
+    const employees = useSelector(getEmployeesList.selectAll);
+    const isLoading = useSelector(getEmployeesListIsLoading);
+    const error = useSelector(getEmployeesListError);
+    const limit = useSelector(getEmployeesListLimit);
+    const offset = useSelector(getEmployeesListOffset);
+    const hasMore = useSelector(getEmployeeListsHasMore);
+    const isInitialized = useSelector(getEmployeesListIsInitialized);
+
+    useInitialEffect(() => {
+        if (!isInitialized) {
             dispatch(initializeEmployeesPage(searchParams));
         }
-    }, [dispatch, isInitialized, searchParams]);
+    });
 
-    const navigate = useNavigate();
+    const onLoadNextPart = useCallback(() => {
+        if (isInitialized && hasMore) {
+            dispatch(employeesPageActions.setOffset(limit + offset));
+            dispatch(fetchEmployees({ replaceData: false }));
+        }
+    }, [dispatch, hasMore, isInitialized, limit, offset]);
 
     const onClick = useCallback(
         (id: string | undefined) => {
@@ -57,38 +72,31 @@ export const EmployeesList = memo((props: EmployeesListProps) => {
         [navigate],
     );
 
-    const onMoreClick = useCallback(() => {
-        dispatch(fetchEmployeesNextPart());
-    }, [dispatch]);
-
     return (
-        <DynamicModuleLoader reducers={initialReducers}>
-            {isLoading ? (
-                <Skeleton active />
-            ) : (
-                <Flex vertical gap={16}>
-                    {/*<SearchBar*/}
-                    {/*    placeholder={"Поиск сотрудников..."}*/}
-                    {/*    searchQuery={searchQuery}*/}
-                    {/*    onSearch={onSearch}*/}
-                    {/*/>*/}
-                    {error && "Ошибка: " + error}
-                    <Flex vertical wrap={"wrap"}>
-                        {employees.length > 0
-                            ? employees.map((employee) => (
-                                  <EmployeeItem
-                                      key={employee.id}
-                                      employee={employee}
-                                      onClick={onClick}
-                                  />
-                              ))
-                            : "Пусто"}
+        <DynamicModuleLoader
+            reducers={initialReducers}
+            removeAfterUnmount={false}
+        >
+            <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
+                {isLoading ? (
+                    <Skeleton active />
+                ) : (
+                    <Flex vertical gap={16}>
+                        {error && "Ошибка: " + error}
+                        <Flex vertical wrap={"wrap"}>
+                            {employees.length > 0
+                                ? employees.map((employee) => (
+                                      <EmployeeItem
+                                          key={employee.id}
+                                          employee={employee}
+                                          onClick={onClick}
+                                      />
+                                  ))
+                                : "Пусто"}
+                        </Flex>
                     </Flex>
-                </Flex>
-            )}
-            <Button disabled={!hasMore} onClick={onMoreClick}>
-                More
-            </Button>
+                )}
+            </InfiniteScrollPage>
         </DynamicModuleLoader>
     );
 });

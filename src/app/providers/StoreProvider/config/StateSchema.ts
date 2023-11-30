@@ -9,6 +9,7 @@ import { DepartmentsSchema } from "@/features/Departments/departmentsList";
 import { EmployeesPageSchema } from "@/features/Employees/employeesList";
 import { InspectionsSchema } from "@/features/Inspections/inspectionsList";
 import { OrganizationsSchema } from "@/features/Organizations/organizationsList/model/types/OrganizationsSchema";
+import { UISchema } from "@/features/UI";
 import { AuthSchema } from "@/features/auth";
 import { LogoutSchema } from "@/features/logout/model/types/LogoutSchema";
 import { SignUpSchema } from "@/features/signUp/model/types/SignUpSchema";
@@ -23,6 +24,7 @@ import { AxiosInstance } from "axios";
 
 export interface StateSchema {
     userSchema: UserSchema;
+    ui: UISchema;
     employeesPageSchema?: EmployeesPageSchema;
     // Асинхронные редюсеры
     authSchema?: AuthSchema;

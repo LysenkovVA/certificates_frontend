@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeesOffset } from "@/pages/EmployeesPage/model/selectors/getEmployeesOffset/getEmployeesOffset";
+import { getEmployeesListOffset } from "@/features/Employees/employeesList/model/selectors/getEmployeesOffset/getEmployeesOffset";
 
 describe("getEmployeesOffset.test", () => {
     test("Should return value", () => {
@@ -9,12 +9,12 @@ describe("getEmployeesOffset.test", () => {
             },
         };
 
-        expect(getEmployeesOffset(state as StateSchema)).toEqual(10);
+        expect(getEmployeesListOffset(state as StateSchema)).toEqual(10);
     });
 
     test("Should return default offset (0) for empty state", () => {
         const state: DeepPartial<StateSchema> = {};
 
-        expect(getEmployeesOffset(state as StateSchema)).toEqual(0);
+        expect(getEmployeesListOffset(state as StateSchema)).toEqual(0);
     });
 });

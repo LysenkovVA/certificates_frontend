@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeesError } from "@/pages/EmployeesPage/model/selectors/getEmployeesError/getEmployeesError";
+import { getEmployeesListError } from "@/features/Employees/employeesList/model/selectors/getEmployeesError/getEmployeesError";
 
 describe("getEmployeesError.test", () => {
     test("Should return error", () => {
@@ -9,12 +9,12 @@ describe("getEmployeesError.test", () => {
             },
         };
 
-        expect(getEmployeesError(state as StateSchema)).toEqual("error");
+        expect(getEmployeesListError(state as StateSchema)).toEqual("error");
     });
 
     test("Should return empty string with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
 
-        expect(getEmployeesError(state as StateSchema)).toEqual("");
+        expect(getEmployeesListError(state as StateSchema)).toEqual("");
     });
 });

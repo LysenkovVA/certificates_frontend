@@ -4,17 +4,25 @@ import {
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
 import { Flex, Typography } from "antd";
-import { memo, useEffect } from "react";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
     getCertificatesList,
     getCertificatesListError,
+    getCertificatesListHasMore,
     getCertificatesListIsInitialized,
     getCertificatesListIsLoading,
+    getCertificatesListLimit,
+    getCertificatesListOffset,
 } from "../model/selectors/certificatesListSelectors";
 import { fetchCertificates } from "../model/services/fetchCertificates/fetchCertificates";
-import { certificatesReducer } from "../model/slice/certificatesListSlice";
+import {
+    certificatesActions,
+    certificatesReducer,
+} from "../model/slice/certificatesListSlice";
 
 interface CertificatesListProps {
     className?: string;
@@ -30,28 +38,42 @@ export const CertificatesList = memo((props: CertificatesListProps) => {
     const certificates = useSelector(getCertificatesList.selectAll);
     const isLoading = useSelector(getCertificatesListIsLoading);
     const error = useSelector(getCertificatesListError);
-    const isInited = useSelector(getCertificatesListIsInitialized);
+    const limit = useSelector(getCertificatesListLimit);
+    const offset = useSelector(getCertificatesListOffset);
+    const hasMore = useSelector(getCertificatesListHasMore);
+    const isInitialized = useSelector(getCertificatesListIsInitialized);
 
-    useEffect(() => {
-        if (__PROJECT_ENV__ !== "storybook" && !isInited) {
+    useInitialEffect(() => {
+        if (!isInitialized) {
             dispatch(fetchCertificates({ replaceData: true }));
         }
-    }, [dispatch, isInited]);
+    });
+
+    const onLoadNextPart = useCallback(() => {
+        if (isInitialized && hasMore) {
+            dispatch(certificatesActions.setOffset(limit + offset));
+            dispatch(fetchCertificates({ replaceData: false }));
+        }
+    }, [dispatch, hasMore, isInitialized, limit, offset]);
 
     return (
-        <DynamicModuleLoader reducers={reducers}>
-            <Flex vertical gap={8}>
-                {certificates?.map((certificate) => (
-                    <CertificateItem
-                        key={certificate.id}
-                        certificate={certificate}
-                    />
-                ))}
-                {isLoading && <div>{"Загрузка..."}</div>}
-                {error && (
-                    <Typography.Text type={"danger"}>{error}</Typography.Text>
-                )}
-            </Flex>
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+            <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
+                <Flex vertical gap={8}>
+                    {certificates?.map((certificate) => (
+                        <CertificateItem
+                            key={certificate.id}
+                            certificate={certificate}
+                        />
+                    ))}
+                    {isLoading && <div>{"Загрузка..."}</div>}
+                    {error && (
+                        <Typography.Text type={"danger"}>
+                            {error}
+                        </Typography.Text>
+                    )}
+                </Flex>
+            </InfiniteScrollPage>
         </DynamicModuleLoader>
     );
 });

@@ -4,17 +4,25 @@ import {
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
 import { Flex, Typography } from "antd";
-import { memo, useEffect } from "react";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
     getConstructionObjectsList,
     getConstructionObjectsListError,
+    getConstructionObjectsListHasMore,
     getConstructionObjectsListIsInitialized,
     getConstructionObjectsListIsLoading,
+    getConstructionObjectsListLimit,
+    getConstructionObjectsListOffset,
 } from "../model/selectors/constructionObjectsListSelectors";
 import { fetchConstructionObjects } from "../model/services/fetchConstructionObjects/fetchConstructionObjects";
-import { constructionObjectsReducer } from "../model/slice/constructionObjectsSlice";
+import {
+    constructionObjectsActions,
+    constructionObjectsReducer,
+} from "../model/slice/constructionObjectsSlice";
 
 interface ConstructionObjectsListProps {
     className?: string;
@@ -33,30 +41,44 @@ export const ConstructionObjectsList = memo(
         );
         const isLoading = useSelector(getConstructionObjectsListIsLoading);
         const error = useSelector(getConstructionObjectsListError);
-        const isInited = useSelector(getConstructionObjectsListIsInitialized);
+        const limit = useSelector(getConstructionObjectsListLimit);
+        const offset = useSelector(getConstructionObjectsListOffset);
+        const hasMore = useSelector(getConstructionObjectsListHasMore);
+        const isInitialized = useSelector(
+            getConstructionObjectsListIsInitialized,
+        );
 
-        useEffect(() => {
-            if (__PROJECT_ENV__ !== "storybook" && !isInited) {
+        useInitialEffect(() => {
+            if (!isInitialized) {
                 dispatch(fetchConstructionObjects({ replaceData: true }));
             }
-        }, [dispatch, isInited]);
+        });
+
+        const onLoadNextPart = useCallback(() => {
+            if (isInitialized && hasMore) {
+                dispatch(constructionObjectsActions.setOffset(limit + offset));
+                dispatch(fetchConstructionObjects({ replaceData: false }));
+            }
+        }, [dispatch, hasMore, isInitialized, limit, offset]);
 
         return (
-            <DynamicModuleLoader reducers={reducers}>
-                <Flex vertical gap={8}>
-                    {constructionObjects?.map((constructionObject) => (
-                        <ConstructionObjectItem
-                            key={constructionObject.id}
-                            constructionObject={constructionObject}
-                        />
-                    ))}
-                    {isLoading && <div>{"Загрузка..."}</div>}
-                    {error && (
-                        <Typography.Text type={"danger"}>
-                            {error}
-                        </Typography.Text>
-                    )}
-                </Flex>
+            <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+                <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
+                    <Flex vertical gap={8}>
+                        {constructionObjects?.map((constructionObject) => (
+                            <ConstructionObjectItem
+                                key={constructionObject.id}
+                                constructionObject={constructionObject}
+                            />
+                        ))}
+                        {isLoading && <div>{"Загрузка..."}</div>}
+                        {error && (
+                            <Typography.Text type={"danger"}>
+                                {error}
+                            </Typography.Text>
+                        )}
+                    </Flex>
+                </InfiniteScrollPage>
             </DynamicModuleLoader>
         );
     },

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { constructionObjectsListAdapter } from "../adapter/constructionObjectsListAdapter";
 import { fetchConstructionObjects } from "../services/fetchConstructionObjects/fetchConstructionObjects";
 import { ConstructionObjectsSchema } from "../types/ConstructionObjectsSchema";
@@ -17,7 +17,11 @@ const initialState: ConstructionObjectsSchema = {
 export const constructionObjectsSlice = createSlice({
     name: "constructionObjectsSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        setOffset: (state, action: PayloadAction<number>) => {
+            state.offset = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchConstructionObjects.pending, (state, action) => {

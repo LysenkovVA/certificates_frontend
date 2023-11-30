@@ -4,8 +4,10 @@ import {
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { Button, Flex, Typography } from "antd";
-import { memo, useCallback, useEffect } from "react";
+import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
+import { Flex, Typography } from "antd";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
     getInspectionListOffset,
@@ -43,36 +45,37 @@ export const InspectionsList = memo((props: InspectionsListProps) => {
     const hasMore = useSelector(getInspectionsListHasMore);
     const isInitialized = useSelector(getInspectionsListIsInitialized);
 
-    useEffect(() => {
-        if (__PROJECT_ENV__ !== "storybook" && !isInitialized) {
+    useInitialEffect(() => {
+        if (!isInitialized) {
             dispatch(fetchInspections({ replaceData: true }));
         }
-    }, [dispatch, isInitialized]);
+    });
 
     const onLoadNextPart = useCallback(() => {
-        if (hasMore) {
+        if (isInitialized && hasMore) {
             dispatch(inspectionsActions.setOffset(limit + offset));
             dispatch(fetchInspections({ replaceData: false }));
         }
-    }, [dispatch, hasMore, limit, offset]);
+    }, [dispatch, hasMore, isInitialized, limit, offset]);
 
     return (
-        <DynamicModuleLoader reducers={reducers}>
-            <Flex vertical gap={8}>
-                {inspections?.map((inspection) => (
-                    <InspectionItem
-                        key={inspection.id}
-                        inspection={inspection}
-                    />
-                ))}
-                {isLoading && <div>{"Загрузка данных..."}</div>}
-                {error && (
-                    <Typography.Text type={"danger"}>{error}</Typography.Text>
-                )}
-                <Button disabled={!hasMore} onClick={onLoadNextPart}>
-                    Load next part
-                </Button>
-            </Flex>
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+            <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
+                <Flex vertical gap={8}>
+                    {inspections?.map((inspection) => (
+                        <InspectionItem
+                            key={inspection.id}
+                            inspection={inspection}
+                        />
+                    ))}
+                    {isLoading && <div>{"Загрузка данных..."}</div>}
+                    {error && (
+                        <Typography.Text type={"danger"}>
+                            {error}
+                        </Typography.Text>
+                    )}
+                </Flex>
+            </InfiniteScrollPage>
         </DynamicModuleLoader>
     );
 });

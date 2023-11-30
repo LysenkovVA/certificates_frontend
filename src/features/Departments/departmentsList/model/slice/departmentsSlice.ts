@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { departmentsListAdapter } from "../adapter/departmentsListAdapter";
 import { fetchDepartments } from "../services/fetchDepartments/fetchDepartments";
 import { DepartmentsSchema } from "../types/DepartmentsSchema";
@@ -17,7 +17,11 @@ const initialState: DepartmentsSchema = {
 export const departmentsSlice = createSlice({
     name: "departmentsSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        setOffset: (state, action: PayloadAction<number>) => {
+            state.offset = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchDepartments.pending, (state, action) => {

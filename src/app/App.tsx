@@ -34,15 +34,28 @@ export const App = () => {
                     <AppHeader />
                 </Header>
                 <Layout hasSider>
-                    <Sider theme={"light"}>
+                    <Sider
+                        theme={"light"}
+                        // style={{
+                        //     overflow: "auto",
+                        //     height: "100vh",
+                        //     position: "fixed",
+                        //     left: 0,
+                        //     top: 0,
+                        //     bottom: 0,
+                        // }}
+                    >
                         <AppSideMenu />
                     </Sider>
                     <Content
                         className={classNames(cls.content)}
-                        style={{
-                            height: "100vh",
-                            overflowY: "auto",
-                        }}
+                        style={
+                            {
+                                //overflow: "initial",
+                                // height: "100vh",
+                                //overflowY: "auto",
+                            }
+                        }
                     >
                         {userIsInited && <AppRouter />}
                     </Content>

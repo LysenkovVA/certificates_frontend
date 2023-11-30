@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeesSearchQuery } from "@/pages/EmployeesPage/model/selectors/getEmployeesSearchQuery/getEmployeesSearchQuery";
+import { getEmployeesListSearchQuery } from "@/features/Employees/employeesList/model/selectors/getEmployeesSearchQuery/getEmployeesSearchQuery";
 
 describe("getEmployeesSearchQuery.test", () => {
     test("Should return value", () => {
@@ -9,7 +9,9 @@ describe("getEmployeesSearchQuery.test", () => {
             },
         };
 
-        expect(getEmployeesSearchQuery(state as StateSchema)).toEqual("search");
+        expect(getEmployeesListSearchQuery(state as StateSchema)).toEqual(
+            "search",
+        );
     });
 
     test("Should return empty string for undefined", () => {
@@ -19,12 +21,12 @@ describe("getEmployeesSearchQuery.test", () => {
             },
         };
 
-        expect(getEmployeesSearchQuery(state as StateSchema)).toEqual("");
+        expect(getEmployeesListSearchQuery(state as StateSchema)).toEqual("");
     });
 
     test("Should return empty string for empty state", () => {
         const state: DeepPartial<StateSchema> = {};
 
-        expect(getEmployeesSearchQuery(state as StateSchema)).toEqual("");
+        expect(getEmployeesListSearchQuery(state as StateSchema)).toEqual("");
     });
 });

@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeesHasMore } from "@/pages/EmployeesPage/model/selectors/getEmployeesHasMore/getEmployeesHasMore";
+import { getEmployeeListsHasMore } from "@/features/Employees/employeesList/model/selectors/getEmployeesHasMore/getEmployeesHasMore";
 
 describe("getEmployeesHasMore.test", () => {
     test("Should return 'true' value", () => {
@@ -9,7 +9,7 @@ describe("getEmployeesHasMore.test", () => {
             },
         };
 
-        expect(getEmployeesHasMore(state as StateSchema)).toEqual(true);
+        expect(getEmployeeListsHasMore(state as StateSchema)).toEqual(true);
     });
 
     test("Should return 'false' value", () => {
@@ -19,12 +19,12 @@ describe("getEmployeesHasMore.test", () => {
             },
         };
 
-        expect(getEmployeesHasMore(state as StateSchema)).toEqual(false);
+        expect(getEmployeeListsHasMore(state as StateSchema)).toEqual(false);
     });
 
     test("Should return 'false' with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
 
-        expect(getEmployeesHasMore(state as StateSchema)).toEqual(false);
+        expect(getEmployeeListsHasMore(state as StateSchema)).toEqual(false);
     });
 });

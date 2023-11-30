@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { certificatesListAdapter } from "../adapter/certificatesListAdapter";
 import { fetchCertificates } from "../services/fetchCertificates/fetchCertificates";
 import { CertificatesSchema } from "../types/CertificatesSchema";
@@ -17,7 +17,11 @@ const initialState: CertificatesSchema = {
 export const certificatesListSlice = createSlice({
     name: "certificatesSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        setOffset: (state, action: PayloadAction<number>) => {
+            state.offset = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchCertificates.pending, (state, action) => {

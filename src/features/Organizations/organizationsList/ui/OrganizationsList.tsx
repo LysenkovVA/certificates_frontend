@@ -4,17 +4,25 @@ import {
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
 import { Flex, Typography } from "antd";
-import { memo, useEffect } from "react";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import {
     getOrganizationsList,
     getOrganizationsListError,
+    getOrganizationsListHasMore,
     getOrganizationsListIsInitialized,
     getOrganizationsListIsLoading,
+    getOrganizationsListLimit,
+    getOrganizationsListOffset,
 } from "../model/selectors/organizationsListSelectors";
 import { fetchOrganizations } from "../model/services/fetchOrganizations/fetchOrganizations";
-import { organizationsReducer } from "../model/slice/organizationsListSlice";
+import {
+    organizationsActions,
+    organizationsReducer,
+} from "../model/slice/organizationsListSlice";
 
 interface OrganizationsListProps {
     className?: string;
@@ -29,30 +37,42 @@ export const OrganizationsList = memo((props: OrganizationsListProps) => {
     const organizations = useSelector(getOrganizationsList.selectAll);
     const isLoading = useSelector(getOrganizationsListIsLoading);
     const error = useSelector(getOrganizationsListError);
-    const organizationsIsInited = useSelector(
-        getOrganizationsListIsInitialized,
-    );
+    const limit = useSelector(getOrganizationsListLimit);
+    const offset = useSelector(getOrganizationsListOffset);
+    const hasMore = useSelector(getOrganizationsListHasMore);
+    const isInitialized = useSelector(getOrganizationsListIsInitialized);
 
-    useEffect(() => {
-        if (__PROJECT_ENV__ !== "storybook" && !organizationsIsInited) {
+    useInitialEffect(() => {
+        if (!isInitialized) {
             dispatch(fetchOrganizations({ replaceData: true }));
         }
-    }, [dispatch, organizationsIsInited]);
+    });
+
+    const onLoadNextPart = useCallback(() => {
+        if (isInitialized && hasMore) {
+            dispatch(organizationsActions.setOffset(limit + offset));
+            dispatch(fetchOrganizations({ replaceData: false }));
+        }
+    }, [dispatch, hasMore, isInitialized, limit, offset]);
 
     return (
-        <DynamicModuleLoader reducers={reducers}>
-            <Flex vertical>
-                {organizations?.map((organization) => (
-                    <OrganizationItem
-                        key={organization.id}
-                        organization={organization}
-                    />
-                ))}
-                {isLoading && <div>{"Загрузка..."}</div>}
-                {error && (
-                    <Typography.Text type={"danger"}>{error}</Typography.Text>
-                )}
-            </Flex>
+        <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+            <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
+                <Flex vertical>
+                    {organizations?.map((organization) => (
+                        <OrganizationItem
+                            key={organization.id}
+                            organization={organization}
+                        />
+                    ))}
+                    {isLoading && <div>{"Загрузка..."}</div>}
+                    {error && (
+                        <Typography.Text type={"danger"}>
+                            {error}
+                        </Typography.Text>
+                    )}
+                </Flex>
+            </InfiniteScrollPage>
         </DynamicModuleLoader>
     );
 });

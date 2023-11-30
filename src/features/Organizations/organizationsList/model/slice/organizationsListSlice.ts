@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { organizationsListAdapter } from "../adapter/organizationsListAdapter";
 import { fetchOrganizations } from "../services/fetchOrganizations/fetchOrganizations";
 import { OrganizationsSchema } from "../types/OrganizationsSchema";
@@ -17,7 +17,11 @@ const initialState: OrganizationsSchema = {
 export const organizationsListSlice = createSlice({
     name: "organizationsListSlice",
     initialState,
-    reducers: {},
+    reducers: {
+        setOffset: (state, action: PayloadAction<number>) => {
+            state.offset = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchOrganizations.pending, (state, action) => {

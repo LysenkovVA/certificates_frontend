@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeesIsInitialized } from "@/pages/EmployeesPage/model/selectors/getEmployeesIsInitialized/getEmployeesIsInitialized";
+import { getEmployeesListIsInitialized } from "@/features/Employees/employeesList/model/selectors/getEmployeesIsInitialized/getEmployeesIsInitialized";
 
 describe("getEmployeesInitialized.test", () => {
     test("Should return 'true' value", () => {
@@ -9,7 +9,9 @@ describe("getEmployeesInitialized.test", () => {
             },
         };
 
-        expect(getEmployeesIsInitialized(state as StateSchema)).toEqual(true);
+        expect(getEmployeesListIsInitialized(state as StateSchema)).toEqual(
+            true,
+        );
     });
 
     test("Should return 'false' value", () => {
@@ -19,12 +21,16 @@ describe("getEmployeesInitialized.test", () => {
             },
         };
 
-        expect(getEmployeesIsInitialized(state as StateSchema)).toEqual(false);
+        expect(getEmployeesListIsInitialized(state as StateSchema)).toEqual(
+            false,
+        );
     });
 
     test("Should return 'false' with empty state", () => {
         const state: DeepPartial<StateSchema> = {};
 
-        expect(getEmployeesIsInitialized(state as StateSchema)).toEqual(false);
+        expect(getEmployeesListIsInitialized(state as StateSchema)).toEqual(
+            false,
+        );
     });
 });

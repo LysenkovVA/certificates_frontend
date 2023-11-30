@@ -1,8 +1,8 @@
+import { EmployeesPageSchema } from "@/features/Employees/employeesList";
 import {
     employeesPageActions,
     employeesPageReducer,
-} from "@/pages/EmployeesPage/model/slice/employeesPageSlice";
-import { EmployeesPageSchema } from "@/pages/EmployeesPage/model/types/EmployeesPageSchema";
+} from "@/features/Employees/employeesList/model/slice/employeesPageSlice";
 
 describe("employeePageSlice.test", () => {
     test("Should set initialized", () => {
