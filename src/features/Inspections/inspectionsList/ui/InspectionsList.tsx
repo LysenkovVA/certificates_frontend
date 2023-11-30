@@ -52,11 +52,11 @@ export const InspectionsList = memo((props: InspectionsListProps) => {
     });
 
     const onLoadNextPart = useCallback(() => {
-        if (isInitialized && hasMore) {
+        if (isInitialized && hasMore && !isLoading) {
             dispatch(inspectionsActions.setOffset(limit + offset));
             dispatch(fetchInspections({ replaceData: false }));
         }
-    }, [dispatch, hasMore, isInitialized, limit, offset]);
+    }, [dispatch, hasMore, isInitialized, isLoading, limit, offset]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>

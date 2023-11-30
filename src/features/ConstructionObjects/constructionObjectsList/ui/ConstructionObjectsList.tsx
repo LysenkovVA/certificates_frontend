@@ -55,11 +55,11 @@ export const ConstructionObjectsList = memo(
         });
 
         const onLoadNextPart = useCallback(() => {
-            if (isInitialized && hasMore) {
+            if (isInitialized && hasMore && !isLoading) {
                 dispatch(constructionObjectsActions.setOffset(limit + offset));
                 dispatch(fetchConstructionObjects({ replaceData: false }));
             }
-        }, [dispatch, hasMore, isInitialized, limit, offset]);
+        }, [dispatch, hasMore, isInitialized, isLoading, limit, offset]);
 
         return (
             <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>

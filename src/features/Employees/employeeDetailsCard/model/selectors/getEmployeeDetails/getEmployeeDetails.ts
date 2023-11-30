@@ -6,5 +6,5 @@ export const getEmployeeDetails = (state: StateSchema) =>
 export const getEmployeeDetailsForm = (state: StateSchema) =>
     state.employeeDetailsSchema?.employeeDetailsForm ?? undefined;
 
-export const getEmployeeDetailsIsInited = (state: StateSchema) =>
-    state.employeeDetailsSchema?._isInited ?? false;
+export const getEmployeeDetailsIsInitialized = (state: StateSchema) =>
+    state.employeeDetailsSchema?._isInitialized ?? false;

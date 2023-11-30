@@ -50,11 +50,11 @@ export const CertificatesList = memo((props: CertificatesListProps) => {
     });
 
     const onLoadNextPart = useCallback(() => {
-        if (isInitialized && hasMore) {
+        if (isInitialized && hasMore && !isLoading) {
             dispatch(certificatesActions.setOffset(limit + offset));
             dispatch(fetchCertificates({ replaceData: false }));
         }
-    }, [dispatch, hasMore, isInitialized, limit, offset]);
+    }, [dispatch, hasMore, isInitialized, isLoading, limit, offset]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>

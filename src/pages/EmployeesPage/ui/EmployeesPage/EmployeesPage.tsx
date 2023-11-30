@@ -2,9 +2,7 @@ import { EmployeesList } from "@/features/Employees/employeesList";
 import { getEmployeesListSearchQuery } from "@/features/Employees/employeesList/model/selectors/getEmployeesSearchQuery/getEmployeesSearchQuery";
 import { fetchEmployees } from "@/features/Employees/employeesList/model/services/fetchEmployees/fetchEmployees";
 import { employeesPageActions } from "@/features/Employees/employeesList/model/slice/employeesPageSlice";
-import { SearchBar } from "@/features/searchBar";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { Flex } from "antd";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 
@@ -30,14 +28,14 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     );
 
     return (
-        <Flex vertical gap={8}>
-            <SearchBar
-                currentSearchQuery={searchQuery}
-                onChangeValue={onChange}
-                searchCallbackForDebounce={fetchData}
-            />
-            <EmployeesList />
-        </Flex>
+        // <Flex vertical gap={8}>
+        //     <SearchBar
+        //         currentSearchQuery={searchQuery}
+        //         onChangeValue={onChange}
+        //         searchCallbackForDebounce={fetchData}
+        //     />
+        <EmployeesList />
+        // {/*</Flex>*/}
     );
 };
 

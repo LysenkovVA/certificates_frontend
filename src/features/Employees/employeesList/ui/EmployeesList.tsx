@@ -10,7 +10,7 @@ import {
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
 import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
-import { Flex, Skeleton } from "antd";
+import { Flex, Typography } from "antd";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -57,11 +57,11 @@ export const EmployeesList = memo((props: EmployeesListProps) => {
     });
 
     const onLoadNextPart = useCallback(() => {
-        if (isInitialized && hasMore) {
+        if (isInitialized && hasMore && !isLoading) {
             dispatch(employeesPageActions.setOffset(limit + offset));
             dispatch(fetchEmployees({ replaceData: false }));
         }
-    }, [dispatch, hasMore, isInitialized, limit, offset]);
+    }, [dispatch, hasMore, isInitialized, isLoading, limit, offset]);
 
     const onClick = useCallback(
         (id: string | undefined) => {
@@ -78,24 +78,23 @@ export const EmployeesList = memo((props: EmployeesListProps) => {
             removeAfterUnmount={false}
         >
             <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
-                {isLoading ? (
-                    <Skeleton active />
-                ) : (
-                    <Flex vertical gap={16}>
-                        {error && "Ошибка: " + error}
-                        <Flex vertical wrap={"wrap"}>
-                            {employees.length > 0
-                                ? employees.map((employee) => (
-                                      <EmployeeItem
-                                          key={employee.id}
-                                          employee={employee}
-                                          onClick={onClick}
-                                      />
-                                  ))
-                                : "Пусто"}
-                        </Flex>
+                <Flex vertical gap={16}>
+                    <Flex vertical wrap={"wrap"}>
+                        {employees.map((employee) => (
+                            <EmployeeItem
+                                key={employee.id}
+                                employee={employee}
+                                onClick={onClick}
+                            />
+                        ))}
+                        {isLoading && <div>{"Загрузка..."}</div>}
+                        {error && (
+                            <Typography.Text type={"danger"}>
+                                {error}
+                            </Typography.Text>
+                        )}
                     </Flex>
-                )}
+                </Flex>
             </InfiniteScrollPage>
         </DynamicModuleLoader>
     );

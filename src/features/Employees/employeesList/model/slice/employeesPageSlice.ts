@@ -17,9 +17,10 @@ const initialState: EmployeesPageSchema = {
 
 export const employeesPageSlice = createSlice({
     name: "employees",
-    initialState: employeesPageAdapter.getInitialState<EmployeesPageSchema>({
-        ...initialState,
-    }),
+    // initialState: employeesPageAdapter.getInitialState<EmployeesPageSchema>({
+    //     ...initialState,
+    // }),
+    initialState,
     reducers: {
         initializeState: (state) => {
             state._isInitialized = true;

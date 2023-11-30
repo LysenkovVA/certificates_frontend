@@ -29,6 +29,6 @@ export const initializeEmployeesPage = createAsyncThunk<
         dispatch(employeesPageActions.initializeState());
 
         // Получаем сотрудников
-        dispatch(fetchEmployees({}));
+        dispatch(fetchEmployees({ replaceData: true }));
     }
 });

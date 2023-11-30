@@ -1,12 +1,12 @@
 import { Berth } from "@/entities/Berth/types/Berth";
 import { Department } from "@/entities/Department";
-import { getEmployeeDetailsForm } from "@/entities/Employee/model/selectors/getEmployeeDetails/getEmployeeDetails";
-import { employeeDetailsActions } from "@/entities/Employee/model/slice/employeeDetailsSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { DatePicker, Flex, Form, Input, Switch, Typography } from "antd";
 import dayjs from "dayjs";
 import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
+import { getEmployeeDetailsForm } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
+import { employeeDetailsActions } from "../../model/slice/employeeDetailsSlice";
 
 interface EmployeeDetailsFormProps {
     className?: string;

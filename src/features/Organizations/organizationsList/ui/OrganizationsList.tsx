@@ -49,11 +49,11 @@ export const OrganizationsList = memo((props: OrganizationsListProps) => {
     });
 
     const onLoadNextPart = useCallback(() => {
-        if (isInitialized && hasMore) {
+        if (isInitialized && hasMore && !isLoading) {
             dispatch(organizationsActions.setOffset(limit + offset));
             dispatch(fetchOrganizations({ replaceData: false }));
         }
-    }, [dispatch, hasMore, isInitialized, limit, offset]);
+    }, [dispatch, hasMore, isInitialized, isLoading, limit, offset]);
 
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>

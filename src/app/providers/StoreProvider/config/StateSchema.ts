@@ -1,11 +1,11 @@
 // Схема данных приложения
-import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
 import { CertificatesSchema } from "@/features/Certificates/certificatesList";
 import { ConstructionObjectsSchema } from "@/features/ConstructionObjects/constructionObjectsList";
 
 import { DepartmentsSchema } from "@/features/Departments/departmentsList";
+import { EmployeeDetailsSchema } from "@/features/Employees/employeeDetailsCard";
 import { EmployeesPageSchema } from "@/features/Employees/employeesList";
 import { InspectionsSchema } from "@/features/Inspections/inspectionsList";
 import { OrganizationsSchema } from "@/features/Organizations/organizationsList/model/types/OrganizationsSchema";
@@ -53,7 +53,6 @@ export interface ReducerManager {
 }
 
 // Тип для стора с менеджером
-// TODO: extends EnhancedStore?
 export interface ReduxStoreWithManager extends ToolkitStore<StateSchema> {
     reducerManager: ReducerManager;
 }

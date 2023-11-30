@@ -3,15 +3,9 @@ import { UIActions, getUIScrollByPath } from "@/features/UI";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInfiniteScroll } from "@/shared/lib/hooks/useInfiniteScroll/useInfiniteScroll";
+import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
 import { useThrottle } from "@/shared/lib/hooks/useThrottle/useThrottle";
-import {
-    MutableRefObject,
-    ReactNode,
-    UIEvent,
-    memo,
-    useEffect,
-    useRef,
-} from "react";
+import { MutableRefObject, ReactNode, UIEvent, memo, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import cls from "./InfiniteScrollPage.module.scss";
@@ -39,11 +33,8 @@ export const InfiniteScrollPage = memo((props: PageProps) => {
         wrapperRef,
     });
 
-    useEffect(() => {
-        if (__PROJECT_ENV__ === "frontend") {
-            // Устанавливаем позицию скрола
-            wrapperRef.current.scrollTop = scrollPosition;
-        }
+    useInitialEffect(() => {
+        wrapperRef.current.scrollTop = scrollPosition;
     });
 
     const onScroll = useThrottle((e: UIEvent<HTMLDivElement>) => {

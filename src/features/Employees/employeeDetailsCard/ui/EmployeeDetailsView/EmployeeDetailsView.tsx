@@ -1,5 +1,4 @@
 import { CertificateItem } from "@/entities/Certificate/ui/CertificateItem/CertificateItem";
-import { getEmployeeDetails } from "@/entities/Employee/model/selectors/getEmployeeDetails/getEmployeeDetails";
 import emailFieldSvg from "@/shared/assets/svg/emailField.svg";
 import phoneFieldSvg from "@/shared/assets/svg/phoneField.svg";
 import { classNames } from "@/shared/lib/classNames/classNames";
@@ -7,6 +6,7 @@ import { PreviewField } from "@/shared/ui/PreviewField";
 import { Avatar, Divider, Flex, Typography } from "antd";
 import { memo } from "react";
 import { useSelector } from "react-redux";
+import { getEmployeeDetails } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
 import cls from "./EmployeeDetailsView.module.scss";
 
 interface EmployeeDetailsViewProps {

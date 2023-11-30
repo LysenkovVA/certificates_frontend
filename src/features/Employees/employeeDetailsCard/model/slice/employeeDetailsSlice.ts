@@ -1,16 +1,16 @@
 import { Berth } from "@/entities/Berth/types/Berth";
 import { Department } from "@/entities/Department/model/types/Department";
-import { fetchEmployeeById } from "@/entities/Employee/model/services/fetchEmployeeById/fetchEmployeeById";
 import { Employee } from "@/entities/Employee/model/types/Employee";
-import { EmployeeDetailsSchema } from "@/entities/Employee/model/types/EmployeeDetailsSchema";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { fetchEmployeeById } from "../services/fetchEmployeeById/fetchEmployeeById";
+import { EmployeeDetailsSchema } from "../types/EmployeeDetailsSchema";
 
 const initialState: EmployeeDetailsSchema = {
     isLoading: false,
     error: undefined,
     employeeDetails: undefined,
     employeeDetailsForm: undefined,
-    _isInited: false,
+    _isInitialized: false,
 };
 
 export const employeeDetailsSlice = createSlice({
@@ -75,7 +75,7 @@ export const employeeDetailsSlice = createSlice({
                     state.isLoading = false;
                     state.employeeDetails = action.payload;
                     state.employeeDetailsForm = action.payload;
-                    state._isInited = true;
+                    state._isInitialized = true;
                 },
             )
             .addCase(fetchEmployeeById.rejected, (state, action) => {

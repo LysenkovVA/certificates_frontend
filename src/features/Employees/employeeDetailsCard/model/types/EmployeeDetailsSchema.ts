@@ -5,5 +5,5 @@ export interface EmployeeDetailsSchema {
     error?: string;
     employeeDetails?: Employee;
     employeeDetailsForm?: Employee;
-    _isInited?: boolean;
+    _isInitialized?: boolean;
 }

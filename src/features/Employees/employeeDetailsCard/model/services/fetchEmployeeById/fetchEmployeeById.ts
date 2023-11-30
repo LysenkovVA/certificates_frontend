@@ -15,15 +15,23 @@ export const fetchEmployeeById = createAsyncThunk<
 
     try {
         const response = await extra.api.get<Employee>(`/employees/${id}`);
+        // .then((value) => {
+        //     return value.data;
+        // })
+        // .catch(() => {
+        //     return rejectWithValue("Сотрудник не найден!");
+        // });
 
         if (!response.data) {
             return rejectWithValue("Ответ от сервера не получен");
         }
 
+        if (response.status === 403) {
+            return rejectWithValue("Сотрудник не найден!");
+        }
+
         return response.data;
     } catch (e) {
-        return rejectWithValue(
-            "Произошла ошибка при получении данных сотрудника!",
-        );
+        return rejectWithValue("Сотрудник не найден!");
     }
 });
