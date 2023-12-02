@@ -1,6 +1,7 @@
 import { Berth } from "@/entities/Berth/types/Berth";
 import { Department } from "@/entities/Department";
 import { BerthSelector } from "@/features/Berthes/berthSelector/ui/BerthSelector/BerthSelector";
+import { OrganizationSelector } from "@/features/Organizations/organizationSelector";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { DatePicker, Flex, Form, Input, Switch, Typography } from "antd";
 import dayjs from "dayjs";
@@ -163,6 +164,12 @@ export const EmployeeDetailsForm = memo((props: EmployeeDetailsFormProps) => {
                 <BerthSelector
                     value={employeeDetailsForm?.berth}
                     onValueChanged={onChangeBerth}
+                />
+            </Form.Item>
+            <Form.Item label={"Организация"}>
+                <OrganizationSelector
+                    value={undefined}
+                    onValueChanged={() => {}}
                 />
             </Form.Item>
         </Form>

@@ -1,4 +1,4 @@
-import { OrganizationsInfiniteList } from "@/features/Organizations/organizationsList";
+import { OrganizationsInfiniteList } from "@/features/Organizations/organizationsInfiniteList";
 import { memo } from "react";
 
 interface OrganizationsPageProps {

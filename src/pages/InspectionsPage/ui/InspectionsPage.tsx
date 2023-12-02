@@ -1,4 +1,4 @@
-import { InspectionsInfiniteList } from "@/features/Inspections/inspectionsList";
+import { InspectionsInfiniteList } from "@/features/Inspections/inspectionsInfiniteList";
 import { Flex } from "antd";
 import { memo } from "react";
 

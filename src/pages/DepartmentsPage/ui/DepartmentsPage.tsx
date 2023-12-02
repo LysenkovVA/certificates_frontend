@@ -1,4 +1,4 @@
-import { DepartmentsInfiniteList } from "@/features/Departments/departmentsList";
+import { DepartmentsInfiniteList } from "@/features/Departments/departmentsInfiniteList";
 import { memo } from "react";
 
 export interface DepartmentsPageProps {

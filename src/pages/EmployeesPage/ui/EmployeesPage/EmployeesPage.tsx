@@ -1,7 +1,7 @@
-import { EmployeesInfiniteList } from "@/features/Employees/employeesList";
-import { getEmployeesInfiniteListSearchQuery } from "@/features/Employees/employeesList/model/selectors/getEmployeesInfiniteListSearchQuery/getEmployeesInfiniteListSearchQuery";
-import { fetchEmployeesInfiniteList } from "@/features/Employees/employeesList/model/services/fetchEmployeesInfiniteList/fetchEmployeesInfiniteList";
-import { employeesInfiniteListActions } from "@/features/Employees/employeesList/model/slice/employeesInfiniteListSlice";
+import { EmployeesInfiniteList } from "@/features/Employees/employeesInfiniteList";
+import { getEmployeesInfiniteListSearchQuery } from "@/features/Employees/employeesInfiniteList/model/selectors/getEmployeesInfiniteListSearchQuery/getEmployeesInfiniteListSearchQuery";
+import { fetchEmployeesInfiniteList } from "@/features/Employees/employeesInfiniteList/model/services/fetchEmployeesInfiniteList/fetchEmployeesInfiniteList";
+import { employeesInfiniteListActions } from "@/features/Employees/employeesInfiniteList/model/slice/employeesInfiniteListSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";

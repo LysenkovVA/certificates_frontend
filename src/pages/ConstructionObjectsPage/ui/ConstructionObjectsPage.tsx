@@ -1,4 +1,4 @@
-import { ConstructionObjectsInfiniteList } from "@/features/ConstructionObjects/constructionObjectsList";
+import { ConstructionObjectsInfiniteList } from "@/features/ConstructionObjects/constructionObjectsInfiniteList";
 import { memo } from "react";
 
 export interface ConstructionObjectsPageProps {

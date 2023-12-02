@@ -1,4 +1,4 @@
-import { CertificatesInfiniteList } from "@/features/Certificates/certificatesList";
+import { CertificatesInfiniteList } from "@/features/Certificates/certificatesInfiniteList";
 import { memo } from "react";
 
 export interface CertificatesPageProps {

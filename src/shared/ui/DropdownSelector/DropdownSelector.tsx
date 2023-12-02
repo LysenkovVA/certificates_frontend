@@ -2,7 +2,7 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
-import { Flex, Select, SelectProps, Spin, Typography } from "antd";
+import { Flex, Select, SelectProps, Spin } from "antd";
 import { memo, useCallback } from "react";
 
 interface DropdownSelectorType {
@@ -50,6 +50,18 @@ export const DropdownSelector = memo((props: DropdownSelectorProps) => {
         onValueChanged(undefined);
     }, [onValueChanged]);
 
+    const disabled = useCallback(() => {
+        if (isLoading) {
+            return true;
+        }
+
+        if (error) {
+            return true;
+        }
+
+        return false;
+    }, [error, isLoading]);
+
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Flex vertical gap={8}>
@@ -70,11 +82,14 @@ export const DropdownSelector = memo((props: DropdownSelectorProps) => {
                     value={value}
                     onChange={onChange}
                     onClear={onClear}
+                    loading={isLoading}
+                    disabled={disabled()}
+                    placeholder={error}
                     {...otherProps}
                 />
-                {error && (
-                    <Typography.Text type={"danger"}>{error}</Typography.Text>
-                )}
+                {/*{error && (*/}
+                {/*    <Typography.Text type={"danger"}>{error}</Typography.Text>*/}
+                {/*)}*/}
             </Flex>
         </DynamicModuleLoader>
     );

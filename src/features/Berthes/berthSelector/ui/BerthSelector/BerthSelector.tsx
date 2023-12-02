@@ -80,7 +80,6 @@ export const BerthSelector = memo((props: BerthSelectorProps) => {
     return (
         <Flex vertical gap={8}>
             <DropdownSelector
-                disabled={isLoading}
                 reducers={reducers}
                 value={convertBerthToSelectObject(value)}
                 isLoading={isLoading}

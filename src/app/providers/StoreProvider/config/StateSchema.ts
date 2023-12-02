@@ -1,15 +1,13 @@
 // Схема данных приложения
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
-import { CertificatesInfiniteListSchema } from "@/features/Certificates/certificatesList";
-import { ConstructionObjectsInfiniteListSchema } from "@/features/ConstructionObjects/constructionObjectsList";
+import { CertificatesInfiniteListSchema } from "src/features/Certificates/certificatesInfiniteList";
+import { ConstructionObjectsInfiniteListSchema } from "src/features/ConstructionObjects/constructionObjectsInfiniteList";
 
 import { AllBerthesSchema } from "@/features/Berthes/berthSelector";
-import { DepartmentsInfiniteListSchema } from "@/features/Departments/departmentsList";
 import { EmployeeDetailsSchema } from "@/features/Employees/employeeDetailsCard";
-import { EmployeesInfiniteListSchema } from "@/features/Employees/employeesList";
-import { InspectionsInfiniteListSchema } from "@/features/Inspections/inspectionsList";
-import { OrganizationsInfiniteListSchema } from "@/features/Organizations/organizationsList/model/types/OrganizationsInfiniteListSchema";
+import { AllOrganizationsSchema } from "@/features/Organizations/organizationSelector";
+import { OrganizationsInfiniteListSchema } from "@/features/Organizations/organizationsInfiniteList/model/types/OrganizationsInfiniteListSchema";
 import { UISchema } from "@/features/UI";
 import { AuthSchema } from "@/features/auth";
 import { LogoutSchema } from "@/features/logout/model/types/LogoutSchema";
@@ -22,6 +20,9 @@ import {
 } from "@reduxjs/toolkit";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { AxiosInstance } from "axios";
+import { DepartmentsInfiniteListSchema } from "src/features/Departments/departmentsInfiniteList";
+import { EmployeesInfiniteListSchema } from "src/features/Employees/employeesInfiniteList";
+import { InspectionsInfiniteListSchema } from "src/features/Inspections/inspectionsInfiniteList";
 
 export interface StateSchema {
     /**
@@ -49,6 +50,7 @@ export interface StateSchema {
     // ДЕТАЛИ РАБОТНИКА
     employeeDetailsSchema?: EmployeeDetailsSchema;
     allBerthesSchema?: AllBerthesSchema;
+    allOrganizationsSchema?: AllOrganizationsSchema;
 }
 
 // Для автокоплита
