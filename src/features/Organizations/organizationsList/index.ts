@@ -1,2 +1,2 @@
-export type {} from "./model/types/OrganizationsSchema";
-export { OrganizationsList } from "./ui/OrganizationsList";
+export type {} from "./model/types/OrganizationsInfiniteListSchema";
+export { OrganizationsInfiniteList } from "./ui/OrganizationsInfiniteList";

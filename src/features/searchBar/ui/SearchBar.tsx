@@ -2,17 +2,17 @@ import { useDebounce } from "@/shared/lib/hooks/useDebounce/useDebounce";
 import { Input } from "antd";
 import { memo, useCallback } from "react";
 
-interface SearchBarProps {
+interface SearchBarProps<T> {
     className?: string;
     placeholder?: string;
-    currentSearchQuery: string;
-    onChangeValue: (value: string | undefined) => void;
+    currentSearchQuery: T;
+    onChangeValue: (value: T) => void;
     searchCallbackForDebounce: (...args: any[]) => void;
 }
 
 const DEBOUNCE_DELAY = 1000;
 
-export const SearchBar = memo((props: SearchBarProps) => {
+export const SearchBar = memo((props: SearchBarProps<string>) => {
     const {
         className,
         currentSearchQuery,
@@ -28,7 +28,6 @@ export const SearchBar = memo((props: SearchBarProps) => {
 
     const onChange = useCallback(
         (value: string) => {
-            console.log("search change value");
             onChangeValue?.(value);
             debouncedFetchData();
         },

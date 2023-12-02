@@ -1,58 +1,58 @@
-import { EmployeesPageSchema } from "@/features/Employees/employeesList";
+import { EmployeesInfiniteListSchema } from "@/features/Employees/employeesList";
 import {
-    employeesPageActions,
-    employeesPageReducer,
-} from "@/features/Employees/employeesList/model/slice/employeesPageSlice";
+    employeesInfiniteListActions,
+    employeesInfiniteListReducer,
+} from "@/features/Employees/employeesList/model/slice/employeesInfiniteListSlice";
 
 describe("employeePageSlice.test", () => {
     test("Should set initialized", () => {
-        const state: DeepPartial<EmployeesPageSchema> = {
+        const state: DeepPartial<EmployeesInfiniteListSchema> = {
             _isInitialized: false,
         };
         expect(
-            employeesPageReducer(
-                state as EmployeesPageSchema,
-                employeesPageActions.initializeState(),
+            employeesInfiniteListReducer(
+                state as EmployeesInfiniteListSchema,
+                employeesInfiniteListActions.initializeState(),
             ),
         ).toEqual({ _isInitialized: true });
     });
 
     test("Should set limit", () => {
-        const state: DeepPartial<EmployeesPageSchema> = {
+        const state: DeepPartial<EmployeesInfiniteListSchema> = {
             limit: 10,
         };
 
         expect(
-            employeesPageReducer(
-                state as EmployeesPageSchema,
-                employeesPageActions.setLimit(5),
+            employeesInfiniteListReducer(
+                state as EmployeesInfiniteListSchema,
+                employeesInfiniteListActions.setLimit(5),
             ),
         ).toEqual({ limit: 5 });
     });
 
     test("Should set offset", () => {
-        const state: DeepPartial<EmployeesPageSchema> = {
+        const state: DeepPartial<EmployeesInfiniteListSchema> = {
             offset: 0,
         };
 
         expect(
-            employeesPageReducer(
-                state as EmployeesPageSchema,
-                employeesPageActions.setOffset(10),
+            employeesInfiniteListReducer(
+                state as EmployeesInfiniteListSchema,
+                employeesInfiniteListActions.setOffset(10),
             ),
         ).toEqual({ offset: 10 });
     });
 
     test("Should set search query", () => {
-        const state: DeepPartial<EmployeesPageSchema> = {
+        const state: DeepPartial<EmployeesInfiniteListSchema> = {
             searchQuery: "",
             offset: 10,
         };
 
         expect(
-            employeesPageReducer(
-                state as EmployeesPageSchema,
-                employeesPageActions.setSearchQuery("search"),
+            employeesInfiniteListReducer(
+                state as EmployeesInfiniteListSchema,
+                employeesInfiniteListActions.setSearchQuery("search"),
             ),
         ).toEqual({ searchQuery: "search", offset: 0 });
     });

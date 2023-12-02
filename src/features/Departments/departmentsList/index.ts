@@ -1,2 +1,2 @@
-export type { DepartmentsSchema } from "./model/types/DepartmentsSchema";
-export { DepartmentsList } from "./ui/DepartmentsList";
+export type { DepartmentsInfiniteListSchema } from "./model/types/DepartmentsInfiniteListSchema";
+export { DepartmentsInfiniteList } from "./ui/DepartmentsInfiniteList";

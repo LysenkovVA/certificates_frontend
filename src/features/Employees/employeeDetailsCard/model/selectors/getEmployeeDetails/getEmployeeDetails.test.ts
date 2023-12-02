@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeeDetails } from "@/entities/Employee/model/selectors/getEmployeeDetails/getEmployeeDetails";
+import { getEmployeeDetails } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetails/getEmployeeDetails";
 
 describe("getEmployeeDetails.test", () => {
     test("Should return employee details", () => {

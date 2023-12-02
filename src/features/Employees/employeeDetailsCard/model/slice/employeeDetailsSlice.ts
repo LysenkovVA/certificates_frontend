@@ -1,8 +1,8 @@
 import { Berth } from "@/entities/Berth/types/Berth";
 import { Department } from "@/entities/Department/model/types/Department";
 import { Employee } from "@/entities/Employee/model/types/Employee";
+import { fetchEmployeeDetailsById } from "@/features/Employees/employeeDetailsCard/model/services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchEmployeeById } from "../services/fetchEmployeeById/fetchEmployeeById";
 import { EmployeeDetailsSchema } from "../types/EmployeeDetailsSchema";
 
 const initialState: EmployeeDetailsSchema = {
@@ -32,7 +32,7 @@ export const employeeDetailsSlice = createSlice({
                 state.employeeDetailsForm.email = action.payload;
             }
         },
-        setFormBerth: (state, action: PayloadAction<Berth>) => {
+        setFormBerth: (state, action: PayloadAction<Berth | undefined>) => {
             if (state?.employeeDetailsForm) {
                 state.employeeDetailsForm.berth = action.payload;
             }
@@ -65,20 +65,21 @@ export const employeeDetailsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchEmployeeById.pending, (state) => {
+            .addCase(fetchEmployeeDetailsById.pending, (state) => {
                 state.isLoading = true;
                 state.error = undefined;
             })
             .addCase(
-                fetchEmployeeById.fulfilled,
+                fetchEmployeeDetailsById.fulfilled,
                 (state, action: PayloadAction<Employee>) => {
                     state.isLoading = false;
+
                     state.employeeDetails = action.payload;
                     state.employeeDetailsForm = action.payload;
                     state._isInitialized = true;
                 },
             )
-            .addCase(fetchEmployeeById.rejected, (state, action) => {
+            .addCase(fetchEmployeeDetailsById.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             });

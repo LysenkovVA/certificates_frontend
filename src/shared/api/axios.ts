@@ -27,9 +27,9 @@ $api.interceptors.request.use(
 
             if (accessToken) {
                 config.headers.set("Authorization", `Bearer ${accessToken}`);
-                console.log(
-                    "AXIOS (onFulfilled): Authorization header is set successfully!",
-                );
+                // console.log(
+                //     "AXIOS (onFulfilled): Authorization header is set successfully!",
+                // );
             }
         }
 
@@ -43,9 +43,6 @@ $api.interceptors.request.use(
 
 $api.interceptors.response.use(
     (response) => {
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
-        // console.log("AXIOS response: " + JSON.stringify(response));
         return response;
     },
     async function (error) {
@@ -95,4 +92,4 @@ $api.interceptors.response.use(
     },
 );
 
-export { $api, $publicApi };
+export { $api };

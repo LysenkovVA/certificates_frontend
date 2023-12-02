@@ -1,4 +1,5 @@
-import { InspectionsList } from "@/features/Inspections/inspectionsList";
+import { InspectionsInfiniteList } from "@/features/Inspections/inspectionsList";
+import { Flex } from "antd";
 import { memo } from "react";
 
 export interface InspectionsPageProps {
@@ -8,7 +9,11 @@ export interface InspectionsPageProps {
 const InspectionsPage = (props: InspectionsPageProps) => {
     const { className } = props;
 
-    return <InspectionsList />;
+    return (
+        <Flex vertical gap={8}>
+            <InspectionsInfiniteList />;
+        </Flex>
+    );
 };
 
 export default memo(InspectionsPage);

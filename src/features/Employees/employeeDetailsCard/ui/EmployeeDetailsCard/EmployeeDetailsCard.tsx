@@ -1,6 +1,7 @@
 import { getEmployeeDetailsError } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsError/getEmployeeDetailsError";
+import { fetchEmployeeDetailsById } from "@/features/Employees/employeeDetailsCard/model/services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
 import { employeeDetailsReducer } from "@/features/Employees/employeeDetailsCard/model/slice/employeeDetailsSlice";
-import { getEmployeesListIsLoading } from "@/features/Employees/employeesList/model/selectors/getEmployeesIsLoading/getEmployeesIsLoading";
+import { getEmployeesInfiniteListIsLoading } from "@/features/Employees/employeesList/model/selectors/getEmployeesInfiniteListIsLoading/getEmployeesInfiniteListIsLoading";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import {
     DynamicModuleLoader,
@@ -8,8 +9,10 @@ import {
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { ErrorInfo } from "@/shared/ui/ErrorInfo/ErrorInfo";
 import { SaveCancelButtons } from "@/shared/ui/SaveCancelButtons/SaveCancelButtons";
-import { Card, Typography } from "antd";
+import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
+import { Card } from "antd";
 import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -17,7 +20,6 @@ import {
     getEmployeeDetailsForm,
     getEmployeeDetailsIsInitialized,
 } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
-import { fetchEmployeeById } from "../../model/services/fetchEmployeeById/fetchEmployeeById";
 import { EmployeeDetailsForm } from "../EmployeeDetailsForm/EmployeeDetailsForm";
 import { EmployeeDetailsView } from "../EmployeeDetailsView/EmployeeDetailsView";
 import cls from "./EmployeeDetailsCard.module.scss";
@@ -41,13 +43,13 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
 
     const dispatch = useAppDispatch();
     const employee = useSelector(getEmployeeDetailsForm);
-    const isLoading = useSelector(getEmployeesListIsLoading);
+    const isLoading = useSelector(getEmployeesInfiniteListIsLoading);
     const error = useSelector(getEmployeeDetailsError);
     const isInited = useSelector(getEmployeeDetailsIsInitialized);
 
     useInitialEffect(() => {
         if (!isInited && employeeId) {
-            dispatch(fetchEmployeeById({ id: employeeId }));
+            dispatch(fetchEmployeeDetailsById({ id: employeeId }));
         }
     });
 
@@ -78,24 +80,26 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
 
     return (
         <DynamicModuleLoader reducers={reducers}>
-            {error && (
-                <Typography.Text type={"danger"}>{error}</Typography.Text>
-            )}
-            {!error && (
-                <Card
-                    extra={extraContent}
-                    title={`${employee?.surname} ${employee?.name}`}
-                    className={classNames(cls.EmployeeDetailsCard, {}, [
-                        className,
-                    ])}
-                >
-                    {!canEdit ? (
-                        <EmployeeDetailsForm />
-                    ) : (
-                        <EmployeeDetailsView />
-                    )}
-                </Card>
-            )}
+            <InfiniteScrollPage>
+                {error && (
+                    <ErrorInfo status={"error"} title={error} subtitle={""} />
+                )}
+                {!error && (
+                    <Card
+                        extra={extraContent}
+                        title={`${employee?.surname} ${employee?.name}`}
+                        className={classNames(cls.EmployeeDetailsCard, {}, [
+                            className,
+                        ])}
+                    >
+                        {!canEdit ? (
+                            <EmployeeDetailsForm />
+                        ) : (
+                            <EmployeeDetailsView />
+                        )}
+                    </Card>
+                )}
+            </InfiniteScrollPage>
         </DynamicModuleLoader>
     );
 });

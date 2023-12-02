@@ -4,7 +4,7 @@ import { getEmployeeListsHasMore } from "@/features/Employees/employeesList/mode
 describe("getEmployeesHasMore.test", () => {
     test("Should return 'true' value", () => {
         const state: DeepPartial<StateSchema> = {
-            employeesPageSchema: {
+            employeesInfiniteListSchema: {
                 hasMore: true,
             },
         };
@@ -14,7 +14,7 @@ describe("getEmployeesHasMore.test", () => {
 
     test("Should return 'false' value", () => {
         const state: DeepPartial<StateSchema> = {
-            employeesPageSchema: {
+            employeesInfiniteListSchema: {
                 hasMore: false,
             },
         };

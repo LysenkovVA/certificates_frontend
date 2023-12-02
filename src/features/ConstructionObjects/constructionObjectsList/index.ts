@@ -1,2 +1,2 @@
-export type { ConstructionObjectsSchema } from "./model/types/ConstructionObjectsSchema";
-export { ConstructionObjectsList } from "./ui/ConstructionObjectsList";
+export type { ConstructionObjectsInfiniteListSchema } from "./model/types/ConstructionObjectsInfiniteListSchema";
+export { ConstructionObjectsInfiniteList } from "./ui/ConstructionObjectsInfiniteList";

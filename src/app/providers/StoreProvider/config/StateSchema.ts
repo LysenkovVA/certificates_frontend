@@ -1,14 +1,15 @@
 // Схема данных приложения
 import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
-import { CertificatesSchema } from "@/features/Certificates/certificatesList";
-import { ConstructionObjectsSchema } from "@/features/ConstructionObjects/constructionObjectsList";
+import { CertificatesInfiniteListSchema } from "@/features/Certificates/certificatesList";
+import { ConstructionObjectsInfiniteListSchema } from "@/features/ConstructionObjects/constructionObjectsList";
 
-import { DepartmentsSchema } from "@/features/Departments/departmentsList";
+import { AllBerthesSchema } from "@/features/Berthes/berthSelector";
+import { DepartmentsInfiniteListSchema } from "@/features/Departments/departmentsList";
 import { EmployeeDetailsSchema } from "@/features/Employees/employeeDetailsCard";
-import { EmployeesPageSchema } from "@/features/Employees/employeesList";
-import { InspectionsSchema } from "@/features/Inspections/inspectionsList";
-import { OrganizationsSchema } from "@/features/Organizations/organizationsList/model/types/OrganizationsSchema";
+import { EmployeesInfiniteListSchema } from "@/features/Employees/employeesList";
+import { InspectionsInfiniteListSchema } from "@/features/Inspections/inspectionsList";
+import { OrganizationsInfiniteListSchema } from "@/features/Organizations/organizationsList/model/types/OrganizationsInfiniteListSchema";
 import { UISchema } from "@/features/UI";
 import { AuthSchema } from "@/features/auth";
 import { LogoutSchema } from "@/features/logout/model/types/LogoutSchema";
@@ -23,20 +24,31 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { AxiosInstance } from "axios";
 
 export interface StateSchema {
+    /**
+     * ПОСТОЯННЫЕ РЕДЮСЕРЫ
+     */
     userSchema: UserSchema;
     ui: UISchema;
-    employeesPageSchema?: EmployeesPageSchema;
-    // Асинхронные редюсеры
+
+    /**
+     * АСИНХРОННЫЕ РЕДЮСЕРЫ
+     */
+    // ПОЛЬЗОВАТЕЛЬ
     authSchema?: AuthSchema;
     logoutSchema?: LogoutSchema;
     signUpSchema?: SignUpSchema;
+    // ПРОФИЛЬ
     profileSchema?: ProfileSchema;
+    // ГЛАВНЫЕ СТРАНИЦЫ
+    inspectionsInfiniteListSchema?: InspectionsInfiniteListSchema;
+    certificatesInfiniteListSchema?: CertificatesInfiniteListSchema;
+    organizationsInfiniteListSchema?: OrganizationsInfiniteListSchema;
+    constructionObjectsInfiniteListSchema?: ConstructionObjectsInfiniteListSchema;
+    departmentsInfiniteListSchema?: DepartmentsInfiniteListSchema;
+    employeesInfiniteListSchema?: EmployeesInfiniteListSchema;
+    // ДЕТАЛИ РАБОТНИКА
     employeeDetailsSchema?: EmployeeDetailsSchema;
-    organizationsSchema?: OrganizationsSchema;
-    departmentsSchema?: DepartmentsSchema;
-    constructionObjectsSchema?: ConstructionObjectsSchema;
-    certificatesSchema?: CertificatesSchema;
-    inspectionsSchema?: InspectionsSchema;
+    allBerthesSchema?: AllBerthesSchema;
 }
 
 // Для автокоплита

@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeeDetailsIsLoading } from "@/entities/Employee/model/selectors/getEmployeeDetailsIsLoading/getEmployeeDetailsIsLoading";
+import { getEmployeeDetailsIsLoading } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsIsLoading/getEmployeeDetailsIsLoading";
 
 describe("getEmployeeDetailsIsLoading.test", () => {
     test("Should return 'true' value", () => {

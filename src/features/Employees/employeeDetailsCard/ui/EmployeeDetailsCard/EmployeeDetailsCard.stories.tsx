@@ -26,6 +26,6 @@ const initialState: DeepPartial<StateSchema> = {
 };
 
 export const Primary: Story = {
-    args: { employeeId: "1" },
+    args: {},
     decorators: [(S) => StoreDecorator(initialState as StateSchema, S)],
 };

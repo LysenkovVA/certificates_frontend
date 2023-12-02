@@ -1,4 +1,4 @@
-import { ConstructionObjectsList } from "@/features/ConstructionObjects/constructionObjectsList";
+import { ConstructionObjectsInfiniteList } from "@/features/ConstructionObjects/constructionObjectsList";
 import { memo } from "react";
 
 export interface ConstructionObjectsPageProps {
@@ -8,7 +8,7 @@ export interface ConstructionObjectsPageProps {
 const ConstructionObjectsPage = (props: ConstructionObjectsPageProps) => {
     const { className } = props;
 
-    return <ConstructionObjectsList />;
+    return <ConstructionObjectsInfiniteList />;
 };
 
 export default memo(ConstructionObjectsPage);

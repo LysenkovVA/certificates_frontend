@@ -1,2 +1,2 @@
-export type { InspectionsSchema } from "./model/types/InspectionsSchema";
-export { InspectionsList } from "./ui/InspectionsList";
+export type { InspectionsInfiniteListSchema } from "./model/types/InspectionsInfiniteListSchema";
+export { InspectionsInfiniteList } from "./ui/InspectionsInfiniteList";

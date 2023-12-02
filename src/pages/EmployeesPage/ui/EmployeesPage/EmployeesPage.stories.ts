@@ -18,7 +18,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const schema: DeepPartial<StateSchema> = {
-    employeesPageSchema: {
+    employeesInfiniteListSchema: {
         ids: ["1", "2"],
         entities: {
             1: { id: "1", surname: "Ivanov", name: "Ivan" },

@@ -1,5 +1,5 @@
 import { StateSchema } from "@/app/providers/StoreProvider";
-import { getEmployeeDetailsError } from "@/entities/Employee/model/selectors/getEmployeeDetailsError/getEmployeeDetailsError";
+import { getEmployeeDetailsError } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsError/getEmployeeDetailsError";
 
 describe("getEmployeeDetailsError.test", () => {
     test("Should return error", () => {

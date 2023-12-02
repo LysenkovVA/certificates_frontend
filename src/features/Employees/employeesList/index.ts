@@ -1,2 +1,2 @@
-export type { EmployeesPageSchema } from "./model/types/EmployeesPageSchema";
-export { EmployeesList } from "./ui/EmployeesList";
+export type { EmployeesInfiniteListSchema } from "./model/types/EmployeesInfiniteListSchema";
+export { EmployeesInfiniteList } from "./ui/EmployeesInfiniteList";

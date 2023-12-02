@@ -1,7 +1,7 @@
-import { EmployeesList } from "@/features/Employees/employeesList";
-import { getEmployeesListSearchQuery } from "@/features/Employees/employeesList/model/selectors/getEmployeesSearchQuery/getEmployeesSearchQuery";
-import { fetchEmployees } from "@/features/Employees/employeesList/model/services/fetchEmployees/fetchEmployees";
-import { employeesPageActions } from "@/features/Employees/employeesList/model/slice/employeesPageSlice";
+import { EmployeesInfiniteList } from "@/features/Employees/employeesList";
+import { getEmployeesInfiniteListSearchQuery } from "@/features/Employees/employeesList/model/selectors/getEmployeesInfiniteListSearchQuery/getEmployeesInfiniteListSearchQuery";
+import { fetchEmployeesInfiniteList } from "@/features/Employees/employeesList/model/services/fetchEmployeesInfiniteList/fetchEmployeesInfiniteList";
+import { employeesInfiniteListActions } from "@/features/Employees/employeesList/model/slice/employeesInfiniteListSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -14,15 +14,15 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     const { className } = props;
 
     const dispatch = useAppDispatch();
-    const searchQuery = useSelector(getEmployeesListSearchQuery);
+    const searchQuery = useSelector(getEmployeesInfiniteListSearchQuery);
 
     const fetchData = useCallback(() => {
-        dispatch(fetchEmployees({ replaceData: true }));
+        dispatch(fetchEmployeesInfiniteList({ replaceData: true }));
     }, [dispatch]);
 
     const onChange = useCallback(
         (value: string | undefined) => {
-            dispatch(employeesPageActions.setSearchQuery(value));
+            dispatch(employeesInfiniteListActions.setSearchQuery(value));
         },
         [dispatch],
     );
@@ -34,7 +34,7 @@ const EmployeesPage = (props: EmployeesPageProps) => {
         //         onChangeValue={onChange}
         //         searchCallbackForDebounce={fetchData}
         //     />
-        <EmployeesList />
+        <EmployeesInfiniteList />
         // {/*</Flex>*/}
     );
 };

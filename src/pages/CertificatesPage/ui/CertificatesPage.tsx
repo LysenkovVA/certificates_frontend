@@ -1,4 +1,4 @@
-import { CertificatesList } from "@/features/Certificates/certificatesList";
+import { CertificatesInfiniteList } from "@/features/Certificates/certificatesList";
 import { memo } from "react";
 
 export interface CertificatesPageProps {
@@ -8,7 +8,7 @@ export interface CertificatesPageProps {
 const CertificatesPage = (props: CertificatesPageProps) => {
     const { className } = props;
 
-    return <CertificatesList />;
+    return <CertificatesInfiniteList />;
 };
 
 export default memo(CertificatesPage);
