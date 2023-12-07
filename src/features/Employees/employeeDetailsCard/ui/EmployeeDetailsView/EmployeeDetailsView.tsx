@@ -16,55 +16,74 @@ interface EmployeeDetailsViewProps {
 export const EmployeeDetailsView = memo((props: EmployeeDetailsViewProps) => {
     const { className } = props;
 
-    const employee = useSelector(getEmployeeDetails);
+    const employeeDetails = useSelector(getEmployeeDetails);
 
     return (
         <div className={classNames(cls.EmployeeDetailsView, {}, [className])}>
             <Flex vertical>
                 <Flex gap={"large"}>
                     <Avatar className={cls.avatar} shape={"square"} />
-                    <Flex vertical>
-                        <Typography.Text className={cls.surname}>
-                            {employee?.surname}
-                        </Typography.Text>
-                        <Typography.Text className={cls.name}>
-                            {employee?.name}
-                        </Typography.Text>
-                        <Typography.Text type={"warning"} className={cls.name}>
-                            {employee?.department?.organization?.name}
-                        </Typography.Text>
-                        <Typography.Text
-                            type={"secondary"}
-                            className={cls.name}
-                        >
-                            {employee?.department?.name}
-                        </Typography.Text>
+                    <Flex
+                        align={"start"}
+                        flex={"content"}
+                        justify={"space-between"}
+                    >
+                        <Flex vertical>
+                            <Typography.Text className={cls.surname}>
+                                {employeeDetails?.surname}
+                            </Typography.Text>
+                            <Typography.Text className={cls.name}>
+                                {employeeDetails?.name}
+                            </Typography.Text>
+                            <Typography.Text type={"secondary"}>
+                                {employeeDetails?.berth?.value}
+                            </Typography.Text>
+                        </Flex>
+                        <Flex vertical justify={"flex-end"} align={"flex-end"}>
+                            <Typography.Text
+                                type={"warning"}
+                                className={cls.name}
+                            >
+                                {
+                                    employeeDetails?.department?.organization
+                                        ?.name
+                                }
+                            </Typography.Text>
+                            <Typography.Text
+                                type={"secondary"}
+                                className={cls.name}
+                            >
+                                {employeeDetails?.department?.name}
+                            </Typography.Text>
+                        </Flex>
                     </Flex>
                 </Flex>
                 <PreviewField
                     component={phoneFieldSvg}
-                    value={employee?.phone}
+                    value={employeeDetails?.phone}
                 />
                 <PreviewField
                     component={emailFieldSvg}
-                    value={employee?.email}
+                    value={employeeDetails?.email}
                 />
-
-                <Typography.Text className={cls.certificates_title}>
-                    {"Удостоверения"}
-                </Typography.Text>
-                <Divider />
+                <Divider orientation={"left"} orientationMargin={0}>
+                    Удостоверения
+                </Divider>
                 <Flex>
-                    {employee?.certificates &&
-                        employee?.certificates?.length > 0 && (
+                    {employeeDetails?.certificates &&
+                        employeeDetails?.certificates?.length > 0 && (
                             <Flex gap={8} wrap={"wrap"} justify={"flex-start"}>
-                                {employee?.certificates?.map((certificate) => (
-                                    <CertificateItem
-                                        className={classNames(cls.certificate)}
-                                        key={certificate.id}
-                                        certificate={certificate}
-                                    />
-                                ))}
+                                {employeeDetails?.certificates?.map(
+                                    (certificate, index) => (
+                                        <CertificateItem
+                                            className={classNames(
+                                                cls.certificate,
+                                            )}
+                                            key={certificate.id}
+                                            certificate={certificate}
+                                        />
+                                    ),
+                                )}
                             </Flex>
                         )}
                 </Flex>

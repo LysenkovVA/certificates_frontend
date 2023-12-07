@@ -1,4 +1,11 @@
 import { getAuthenticatedUser } from "@/entities/User";
+import {
+    getUserAvatar,
+    getUserAvatarIsInited,
+    getUserIsInited,
+} from "@/entities/User/model/selectors/getUserIsInited/getAuthenticatedUserId";
+import { fetchUserAvatar } from "@/entities/User/model/services/fetchUserAvatar/fetchUserAvatar";
+import { profileReducer } from "@/features/Profiles/profileCard/model/slice/profileSlice";
 import { authLogout } from "@/features/logout/model/services/logout/authLogout";
 import { logoutReducer } from "@/features/logout/model/slice/logoutSlice";
 import { RoutePath } from "@/shared/config/routeConfig/routeConfig";
@@ -10,7 +17,7 @@ import {
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Flex, Popover, Space, Typography } from "antd";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import cls from "./HeaderAvatar.module.scss";
@@ -21,6 +28,7 @@ export interface HeaderAvatarProps {
 
 const reducers: ReducersList = {
     logoutSchema: logoutReducer,
+    profileSchema: profileReducer,
 };
 
 export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
@@ -29,6 +37,24 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const user = useSelector(getAuthenticatedUser);
+    const isUserInitialized = useSelector(getUserIsInited);
+    const isUserAvatarIsInitialized = useSelector(getUserAvatarIsInited);
+    const userAvatar = useSelector(getUserAvatar);
+
+    console.log("Header avatar inited: " + isUserAvatarIsInitialized);
+
+    useEffect(() => {
+        if (isUserInitialized && !isUserAvatarIsInitialized) {
+            console.log("fetching user avatar...");
+            dispatch(fetchUserAvatar({ fileId: user.profile?.avatar?.id }));
+        }
+    }, [
+        dispatch,
+        isUserAvatarIsInitialized,
+        isUserInitialized,
+        user.profile?.avatar,
+        user.profile?.avatar?.id,
+    ]);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -40,8 +66,8 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     );
 
     const onProfileClick = useCallback(() => {
-        navigate(RoutePath.profile);
-    }, [navigate]);
+        navigate(RoutePath.profile + user.profile?.id);
+    }, [navigate, user.profile?.id]);
 
     const onLogout = useCallback(() => {
         dispatch(authLogout());
@@ -69,12 +95,9 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
             >
                 <div className={classNames(cls.HeaderAvatar, {}, [className])}>
                     <Flex vertical justify={"center"} align={"center"}>
-                        <Avatar
-                            icon={!user.profile?.avatar && <UserOutlined />}
-                            // src={`${__API__}${user.profile?.avatar}`}
-                        />
+                        <Avatar icon={<UserOutlined />} src={userAvatar} />
                         <Typography.Text keyboard type={"secondary"}>
-                            {user.email}
+                            {user.profile?.name ?? user.email}
                         </Typography.Text>
                     </Flex>
                 </div>

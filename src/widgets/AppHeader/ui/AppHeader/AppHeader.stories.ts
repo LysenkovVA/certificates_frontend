@@ -21,7 +21,7 @@ const initialState: DeepPartial<StateSchema> = {
         authenticatedUser: {
             id: "1",
             email: "sb@mail.ru",
-            token: "TOKEN",
+            // token: "TOKEN",
         },
     },
 };

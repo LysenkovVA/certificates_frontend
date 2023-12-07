@@ -38,6 +38,11 @@ export function createReduxStore(
                 thunk: {
                     extraArgument: extraArg,
                 },
+                serializableCheck: {
+                    // Исправление ошибки в консоли, значение было
+                    // not serializable
+                    ignoredActionPaths: ["meta.arg", "payload"],
+                },
             }),
     });
 

@@ -20,7 +20,7 @@ export const authLogout = createAsyncThunk<void, void, ThunkConfig<string>>(
                     userActions.setAuthData({
                         id: undefined,
                         email: undefined,
-                        token: undefined,
+                        // token: undefined,
                         profile: undefined,
                     }),
                 );

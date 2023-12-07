@@ -21,5 +21,5 @@ const employee: Employee = {
 };
 
 export const Primary: Story = {
-    args: {},
+    args: { avatar: "", onChangeAvatar: () => {} },
 };

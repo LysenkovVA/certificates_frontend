@@ -10,7 +10,7 @@ export const fetchAllOrganizations = createAsyncThunk<
     FetchRowsResult<Organization>,
     FetchAllOrganizationsProps,
     ThunkConfig<string>
->("berthes/fetchAllOrganizations", async (props, thunkApi) => {
+>("organizations/fetchAllOrganizations", async (props, thunkApi) => {
     const { extra, rejectWithValue, getState } = thunkApi;
 
     try {

@@ -10,14 +10,14 @@ describe("userSlice.test", () => {
                 userActions.setAuthData({
                     id: "1",
                     email: "email@email.ru,",
-                    token: "TOKEN",
+                    // token: "TOKEN",
                 }),
             ),
         ).toEqual({
             authenticatedUser: {
                 id: "1",
                 email: "email@email.ru,",
-                token: "TOKEN",
+                // token: "TOKEN",
             },
         });
     });

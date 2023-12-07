@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 /**
- * Эффект, который вызывается один раз при инциализации страницы
+ * Эффект, который вызывается ОДИН РАЗ при инциализации компонента
  * @param callback
  */
 export function useInitialEffect(callback: () => void) {

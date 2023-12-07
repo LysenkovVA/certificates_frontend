@@ -1,7 +1,8 @@
 import { getEmployeeDetailsError } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsError/getEmployeeDetailsError";
+import { getEmployeeDetailsIsLoading } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsIsLoading/getEmployeeDetailsIsLoading";
 import { fetchEmployeeDetailsById } from "@/features/Employees/employeeDetailsCard/model/services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
+import { updateEmployeeDetailsById } from "@/features/Employees/employeeDetailsCard/model/services/updateEmployeeDetailsById/updateEmployeeDetailsById";
 import { employeeDetailsReducer } from "@/features/Employees/employeeDetailsCard/model/slice/employeeDetailsSlice";
-import { getEmployeesInfiniteListIsLoading } from "@/features/Employees/employeesInfiniteList/model/selectors/getEmployeesInfiniteListIsLoading/getEmployeesInfiniteListIsLoading";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import {
     DynamicModuleLoader,
@@ -17,6 +18,7 @@ import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
+    getEmployeeAvatar,
     getEmployeeDetailsForm,
     getEmployeeDetailsIsInitialized,
 } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
@@ -38,13 +40,16 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
 
     const { id: employeeId } = useParams<{ id: string }>();
 
+    const [newAvatar, setNewAvatar] = useState<string>();
+
     // Можно редактировать
     const [canEdit, setCanEdit] = useState(true);
 
     const dispatch = useAppDispatch();
-    const employee = useSelector(getEmployeeDetailsForm);
-    const isLoading = useSelector(getEmployeesInfiniteListIsLoading);
+    const employeeDetailsForm = useSelector(getEmployeeDetailsForm);
+    const isLoading = useSelector(getEmployeeDetailsIsLoading);
     const error = useSelector(getEmployeeDetailsError);
+    const avatar = useSelector(getEmployeeAvatar);
     const isInited = useSelector(getEmployeeDetailsIsInitialized);
 
     useInitialEffect(() => {
@@ -58,8 +63,13 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
     }, []);
 
     const onSaveClick = useCallback(() => {
-        setCanEdit(true);
-    }, []);
+        if (employeeDetailsForm) {
+            dispatch(
+                updateEmployeeDetailsById({ employee: employeeDetailsForm }),
+            );
+            setCanEdit(true);
+        }
+    }, [dispatch, employeeDetailsForm]);
 
     const onCancelClick = useCallback(() => {
         setCanEdit(true);
@@ -71,12 +81,17 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
                 <a onClick={onEditClick}>Изменить</a>
             ) : (
                 <SaveCancelButtons
+                    isLoading={isLoading}
                     onSaveClick={onSaveClick}
                     onCancelClick={onCancelClick}
                 />
             )}
         </>
     );
+
+    const onChangeAvatar = useCallback((value: string | undefined) => {
+        setNewAvatar(value);
+    }, []);
 
     return (
         <DynamicModuleLoader reducers={reducers}>
@@ -87,13 +102,16 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
                 {!error && (
                     <Card
                         extra={extraContent}
-                        title={`${employee?.surname} ${employee?.name}`}
+                        title={`${employeeDetailsForm?.surname} ${employeeDetailsForm?.name}`}
                         className={classNames(cls.EmployeeDetailsCard, {}, [
                             className,
                         ])}
                     >
                         {!canEdit ? (
-                            <EmployeeDetailsForm />
+                            <EmployeeDetailsForm
+                                avatar={newAvatar ?? avatar}
+                                onChangeAvatar={onChangeAvatar}
+                            />
                         ) : (
                             <EmployeeDetailsView />
                         )}

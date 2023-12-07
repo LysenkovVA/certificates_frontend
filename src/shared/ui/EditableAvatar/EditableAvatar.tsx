@@ -1,7 +1,6 @@
-import { classNames } from "@/shared/lib/classNames/classNames";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar, AvatarProps, Button, Flex, Upload } from "antd";
 import { memo } from "react";
-import cls from "./EditableAvatar.module.scss";
 
 interface EditableAvatarProps extends AvatarProps {
     className?: string;
@@ -15,31 +14,30 @@ export const EditableAvatar = memo((props: EditableAvatarProps) => {
     return (
         <Flex vertical align={"center"} justify={"center"}>
             <Avatar
-                className={classNames(cls.EditableAvatar, {}, [className])}
+                //className={classNames(cls.EditableAvatar, {}, [className])}
+                icon={!avatar && <UserOutlined />}
                 src={avatar}
                 {...otherProps}
             ></Avatar>
-            <Upload
-                showUploadList={false}
-                beforeUpload={async (file) => {
-                    const arrayBufferView = new Uint8Array(
-                        await file.arrayBuffer(),
-                    );
-                    const blob = new Blob([arrayBufferView], {
-                        type: "image/jpeg",
-                    });
-                    const urlCreator = window.URL || window.webkitURL;
-                    const imageUrl = urlCreator.createObjectURL(blob);
-                    // const img = new Image();
-                    // img.src = imageUrl;
-
-                    onChangeAvatar?.(imageUrl);
-                    // setAvatar(imageUrl);
-                    return false;
-                }}
-            >
-                <Button type={"link"}>Обновить</Button>
-            </Upload>
+            <Flex vertical gap={0}>
+                <Upload
+                    showUploadList={false}
+                    beforeUpload={async (file) => {
+                        const arrayBufferView = new Uint8Array(
+                            await file.arrayBuffer(),
+                        );
+                        const blob = new Blob([arrayBufferView], {
+                            type: "image/jpeg",
+                        });
+                        const urlCreator = window.URL || window.webkitURL;
+                        const imageUrl = urlCreator.createObjectURL(blob);
+                        onChangeAvatar?.(imageUrl);
+                        return false;
+                    }}
+                >
+                    <Button type={"link"}>{"Загрузить"}</Button>
+                </Upload>
+            </Flex>
         </Flex>
     );
 });

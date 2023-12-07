@@ -11,3 +11,6 @@ export const getEmployeeDetailsFormBerth = (state: StateSchema) =>
 
 export const getEmployeeDetailsIsInitialized = (state: StateSchema) =>
     state.employeeDetailsSchema?._isInitialized ?? false;
+
+export const getEmployeeAvatar = (state: StateSchema) =>
+    state.employeeDetailsSchema?.avatar ?? "";

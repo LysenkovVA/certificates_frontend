@@ -1,3 +1,4 @@
+import { Employee } from "@/entities/Employee";
 import { fetchEmployeesInfiniteList } from "@/features/Employees/employeesInfiniteList/model/services/fetchEmployeesInfiniteList/fetchEmployeesInfiniteList";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { employeesInfiniteListAdapter } from "../adapter/employeesInfiniteListAdapter";
@@ -31,6 +32,11 @@ export const employeesInfiniteListSlice = createSlice({
         setSearchQuery: (state, action: PayloadAction<string | undefined>) => {
             state.searchQuery = action.payload;
             state.offset = 0;
+        },
+        updateEmployee: (state, action: PayloadAction<Employee>) => {
+            if (action.payload) {
+                employeesInfiniteListAdapter.setOne(state, action.payload);
+            }
         },
     },
     extraReducers: (builder) => {

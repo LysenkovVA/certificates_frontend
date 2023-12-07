@@ -8,7 +8,7 @@ describe("getAuthenticatedUser.test", () => {
                 authenticatedUser: {
                     id: "1",
                     email: "email@email.ru",
-                    token: "TOKEN",
+                    // token: "TOKEN",
                 },
             },
         };
@@ -16,7 +16,7 @@ describe("getAuthenticatedUser.test", () => {
         expect(getAuthenticatedUser(state as StateSchema)).toEqual({
             id: "1",
             email: "email@email.ru",
-            token: "TOKEN",
+            // token: "TOKEN",
         });
     });
 

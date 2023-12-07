@@ -1,38 +1,33 @@
-import { updateProfileData } from "@/entities/Profile/model/services/updateProfileData/updateProfileData";
-import { USER_LOCALSTORAGE_KEY } from "@/shared/const/localstorage";
+import { fetchUserAvatar } from "@/entities/User/model/services/fetchUserAvatar/fetchUserAvatar";
+import { initAuthData } from "@/entities/User/model/services/initAuthData/initAuthData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../types/User";
 import { UserSchema } from "../types/UserSchema";
 
 const initialState: UserSchema = {
-    authenticatedUser: {
-        id: "",
-        email: "",
-        token: "",
-    },
+    authenticatedUser: {},
+    avatar: undefined,
     registeredUserId: undefined,
     isLoading: false,
     error: "",
-    _isInited: false,
+    isAvatarLoading: false,
+    avatarError: "",
+    _isInitialized: false,
+    _isAvatarInitialized: false,
 };
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        // Новые данные
         setAuthData: (state, action: PayloadAction<User>) => {
             state.authenticatedUser = action.payload;
         },
-        // Инициализация при отрытии приложения
-        initAuthData: (state) => {
-            const data = localStorage.getItem(USER_LOCALSTORAGE_KEY);
-            if (data) {
-                state.authenticatedUser = JSON.parse(data).user;
-            } else {
-                state.authenticatedUser = {};
-            }
-            state._isInited = true;
+        setAvatarIsInitialized: (
+            state,
+            action: PayloadAction<boolean | undefined>,
+        ) => {
+            state._isAvatarInitialized = action.payload;
         },
         setRegisteredData: (state, action: PayloadAction<string>) => {
             state.registeredUserId = action.payload;
@@ -40,19 +35,38 @@ export const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(updateProfileData.pending, (state, action) => {
+            .addCase(initAuthData.pending, (state, action) => {
                 state.error = undefined;
                 state.isLoading = true;
             })
-            .addCase(updateProfileData.fulfilled, (state, action) => {
-                state.isLoading = false;
-            })
-            .addCase(updateProfileData.rejected, (state, action) => {
+            .addCase(
+                initAuthData.fulfilled,
+                (state, action: PayloadAction<User>) => {
+                    state.isLoading = false;
+                    state.error = undefined;
+                    state.authenticatedUser = action.payload;
+                    state._isInitialized = true;
+                },
+            )
+            .addCase(initAuthData.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
+            })
+            .addCase(fetchUserAvatar.pending, (state, action) => {
+                state.avatarError = undefined;
+                state.isAvatarLoading = true;
+            })
+            .addCase(fetchUserAvatar.fulfilled, (state, action) => {
+                state.avatarError = undefined;
+                state.isAvatarLoading = false;
+                state.avatar = action.payload;
+                state._isAvatarInitialized = true;
+            })
+            .addCase(fetchUserAvatar.rejected, (state, action) => {
+                state.avatarError = action.payload;
+                state.isAvatarLoading = false;
             });
     },
 });
 
-export const { actions: userActions } = userSlice;
-export const { reducer: userReducer } = userSlice;
+export const { actions: userActions, reducer: userReducer } = userSlice;

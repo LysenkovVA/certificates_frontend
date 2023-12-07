@@ -1,4 +1,4 @@
-import { ProfileCard } from "@/entities/Profile/ui/ProfileCard/ProfileCard";
+import { ProfileCard } from "@/features/Profiles/profileCard";
 import { memo } from "react";
 
 export interface ProfilePageProps {

@@ -1,13 +1,11 @@
 // Схема данных приложения
-import { ProfileSchema } from "@/entities/Profile/model/types/ProfileSchema";
 import { UserSchema } from "@/entities/User/model/types/UserSchema";
-import { CertificatesInfiniteListSchema } from "src/features/Certificates/certificatesInfiniteList";
-import { ConstructionObjectsInfiniteListSchema } from "src/features/ConstructionObjects/constructionObjectsInfiniteList";
-
 import { AllBerthesSchema } from "@/features/Berthes/berthSelector";
+import { AllDepartmentsSchema } from "@/features/Departments/departmentSelector";
 import { EmployeeDetailsSchema } from "@/features/Employees/employeeDetailsCard";
 import { AllOrganizationsSchema } from "@/features/Organizations/organizationSelector";
 import { OrganizationsInfiniteListSchema } from "@/features/Organizations/organizationsInfiniteList/model/types/OrganizationsInfiniteListSchema";
+import { ProfileSchema } from "@/features/Profiles/profileCard/model/types/ProfileSchema";
 import { UISchema } from "@/features/UI";
 import { AuthSchema } from "@/features/auth";
 import { LogoutSchema } from "@/features/logout/model/types/LogoutSchema";
@@ -20,6 +18,8 @@ import {
 } from "@reduxjs/toolkit";
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { AxiosInstance } from "axios";
+import { CertificatesInfiniteListSchema } from "src/features/Certificates/certificatesInfiniteList";
+import { ConstructionObjectsInfiniteListSchema } from "src/features/ConstructionObjects/constructionObjectsInfiniteList";
 import { DepartmentsInfiniteListSchema } from "src/features/Departments/departmentsInfiniteList";
 import { EmployeesInfiniteListSchema } from "src/features/Employees/employeesInfiniteList";
 import { InspectionsInfiniteListSchema } from "src/features/Inspections/inspectionsInfiniteList";
@@ -51,6 +51,7 @@ export interface StateSchema {
     employeeDetailsSchema?: EmployeeDetailsSchema;
     allBerthesSchema?: AllBerthesSchema;
     allOrganizationsSchema?: AllOrganizationsSchema;
+    allDepartmentsSchema?: AllDepartmentsSchema;
 }
 
 // Для автокоплита

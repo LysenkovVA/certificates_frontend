@@ -1,7 +1,8 @@
 import { getAuthenticatedUser } from "@/entities/User";
 import { getUserIsInited } from "@/entities/User/model/selectors/getUserIsInited/getAuthenticatedUserId";
-import { userActions } from "@/entities/User/model/slice/userSlice";
+import { initAuthData } from "@/entities/User/model/services/initAuthData/initAuthData";
 import { classNames } from "@/shared/lib/classNames/classNames";
+import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { AppFooter } from "@/widgets/AppFooter";
 import { AppHeader } from "@/widgets/AppHeader";
 import { AppSideMenu } from "@/widgets/AppSideMenu";
@@ -9,20 +10,22 @@ import { Layout } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { Content, Footer, Header } from "antd/es/layout/layout";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import cls from "./App.modules.scss";
 import { AppRouter } from "./providers/router";
 import "./styles/index.scss";
 
 export const App = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const authenticatedUser = useSelector(getAuthenticatedUser);
     const userIsInited = useSelector(getUserIsInited);
 
     // Загружаем информацию об авторизованном пользователе
     useEffect(() => {
-        dispatch(userActions.initAuthData());
-    }, [dispatch]);
+        if (!userIsInited) {
+            dispatch(initAuthData());
+        }
+    }, [dispatch, userIsInited]);
 
     if (authenticatedUser?.id) {
         return (
