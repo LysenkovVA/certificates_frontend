@@ -1,10 +1,12 @@
 import { Employee } from "@/entities/Employee";
 
 export interface EmployeeDetailsSchema {
-    isLoading?: boolean;
-    error?: string;
-    avatar?: string;
+    isDataLoading?: boolean;
+    dataError?: string;
     employeeDetails?: Employee;
     employeeDetailsForm?: Employee;
+    isAvatarUploading?: boolean;
+    avatarUploadError?: string;
+    employeeDetailsFormAvatar?: string;
     _isInitialized?: boolean;
 }

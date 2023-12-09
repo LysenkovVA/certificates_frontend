@@ -5,9 +5,8 @@ import { DepartmentSelector } from "@/features/Departments/departmentSelector";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { EditableAvatar } from "@/shared/ui/EditableAvatar/EditableAvatar";
 import { Col, DatePicker, Divider, Form, Input, Row } from "antd";
-import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
-import { memo, useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getEmployeeDetailsForm } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
 import { employeeDetailsActions } from "../../model/slice/employeeDetailsSlice";
@@ -22,15 +21,9 @@ interface FieldData {
 
 interface EmployeeDetailsFormProps {
     className?: string;
-    avatar: string;
-    onChangeAvatar: (value: string | undefined) => void;
 }
 
 export const EmployeeDetailsForm = memo((props: EmployeeDetailsFormProps) => {
-    const { className, avatar, onChangeAvatar } = props;
-
-    const [form] = useForm();
-
     const dispatch = useAppDispatch();
     const employeeDetailsForm = useSelector(getEmployeeDetailsForm);
 
@@ -66,92 +59,97 @@ export const EmployeeDetailsForm = memo((props: EmployeeDetailsFormProps) => {
                 switch (key) {
                     case "surname":
                         dispatch(
-                            employeeDetailsActions.setFormSurname(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                surname: changedValues[key],
+                            }),
                         );
                         break;
                     case "name":
                         dispatch(
-                            employeeDetailsActions.setFormName(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                name: changedValues[key],
+                            }),
                         );
                         break;
                     case "hireDate":
                         dispatch(
-                            employeeDetailsActions.setFormHireDate(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                hireDate: changedValues[key],
+                            }),
                         );
                         break;
                     case "dismissDate":
                         dispatch(
-                            employeeDetailsActions.setFormHireDate(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                dismissDate: changedValues[key],
+                            }),
                         );
                         break;
                     case "email":
                         dispatch(
-                            employeeDetailsActions.setFormEmail(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                email: changedValues[key],
+                            }),
                         );
                         break;
                     case "phone":
                         dispatch(
-                            employeeDetailsActions.setFormPhone(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                phone: changedValues[key],
+                            }),
                         );
                         break;
                     case "rank":
                         dispatch(
-                            employeeDetailsActions.setFormRank(
-                                changedValues[key],
-                            ),
+                            employeeDetailsActions.setEmployeeDetailsFormData({
+                                ...employeeDetailsForm,
+                                rank: changedValues[key],
+                            }),
                         );
                         break;
                 }
             });
-
-            // await form.validateFields();
         },
-        [dispatch],
+        [dispatch, employeeDetailsForm],
     );
 
-    const [isDismissed, setIsDismissed] = useState<boolean>(
-        employeeDetailsForm?.dismissDate !== undefined,
-    );
-
-    const onChangeDismissDate = useCallback(
+    const onChangeAvatar = useCallback(
         (value: string) => {
-            dispatch(employeeDetailsActions.setFormDismissDate(value));
+            dispatch(
+                employeeDetailsActions.setEmployeeDetailsFormDataAvatar(value),
+            );
         },
         [dispatch],
     );
 
     const onChangeBerth = useCallback(
         (value: Berth | undefined) => {
-            dispatch(employeeDetailsActions.setFormBerth(value));
+            dispatch(
+                employeeDetailsActions.setEmployeeDetailsFormData({
+                    ...employeeDetailsForm,
+                    berth: value,
+                }),
+            );
         },
-        [dispatch],
+        [dispatch, employeeDetailsForm],
     );
 
     const onChangeDepartment = useCallback(
         (value: Department | undefined) => {
-            dispatch(employeeDetailsActions.setFormDepartment(value));
+            dispatch(
+                employeeDetailsActions.setEmployeeDetailsFormData({
+                    ...employeeDetailsForm,
+                    department: value,
+                }),
+            );
         },
-        [dispatch],
-    );
-
-    const onChangeAvatarForm = useCallback(
-        (value: string | undefined) => {
-            dispatch(employeeDetailsActions.setFormAvatar(value));
-            onChangeAvatar(value);
-        },
-        [dispatch, onChangeAvatar],
+        [dispatch, employeeDetailsForm],
     );
 
     return (
@@ -194,8 +192,8 @@ export const EmployeeDetailsForm = memo((props: EmployeeDetailsFormProps) => {
                     <EditableAvatar
                         size={150}
                         style={{ backgroundColor: "#87d068" }}
-                        avatar={avatar}
-                        onChangeAvatar={onChangeAvatarForm}
+                        file={employeeDetailsForm?.avatar}
+                        onChangeAvatar={onChangeAvatar}
                     />
                 </Col>
             </Row>

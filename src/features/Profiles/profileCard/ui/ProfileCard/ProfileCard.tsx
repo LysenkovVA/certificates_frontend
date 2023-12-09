@@ -11,12 +11,11 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
     getProfileData,
-    getProfileDataAvatar,
-    getProfileDataAvatarInitialized,
     getProfileDataInitialized,
+    getProfileDataIsLoading,
     getProfileFormData,
+    getProfileFormDataAvatar,
 } from "../../model/selectors/profileSelectors";
-import { fetchProfileAvatar } from "../../model/services/fetchProfileAvatar/fetchProfileAvatar";
 import { fetchProfileData } from "../../model/services/fetchProfileData/fetchProfileData";
 import { updateProfileAvatar } from "../../model/services/updateProfileAvatar/updateProfileAvatar";
 import { updateProfileData } from "../../model/services/updateProfileData/updateProfileData";
@@ -33,31 +32,22 @@ const reducers: ReducersList = {
 };
 
 export const ProfileCard = memo((props: ProfileCardProps) => {
-    const { className } = props;
-
     const { id: profileId } = useParams<{ id: string }>();
-
-    const [newAvatar, setNewAvatar] = useState<string>();
     const [readOnly, setReadOnly] = useState(true);
 
     const dispatch = useAppDispatch();
-    // const user = useSelector(getAuthenticatedUser);
 
     const isInitialized = useSelector(getProfileDataInitialized);
-    const isAvatarInitialized = useSelector(getProfileDataAvatarInitialized);
+    const isLoadingData = useSelector(getProfileDataIsLoading);
     const profileData = useSelector(getProfileData);
     const profileFormData = useSelector(getProfileFormData);
-    const avatar = useSelector(getProfileDataAvatar);
+    const formAvatar = useSelector(getProfileFormDataAvatar);
 
     useEffect(() => {
-        if (!isInitialized) {
+        if (!isInitialized && !isLoadingData) {
             dispatch(fetchProfileData({ profileId }));
         }
-
-        if (isInitialized && !isAvatarInitialized) {
-            dispatch(fetchProfileAvatar({ fileId: profileData.avatar?.id }));
-        }
-    }, [dispatch, isAvatarInitialized, isInitialized, profileData, profileId]);
+    }, [dispatch, isInitialized, isLoadingData, profileData, profileId]);
 
     const onEditClick = useCallback(() => {
         setReadOnly(false);
@@ -71,80 +61,31 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
             }),
         );
 
-        // Получаем новые данные
+        // Получаем новые данные (лишний запрос!)
         await dispatch(fetchProfileData({ profileId }));
 
         // Обновляем аватар
-        if (newAvatar && profileFormData.id) {
-            const blob = await fetch(newAvatar).then((r) => r.blob());
+        if (formAvatar && profileFormData.id) {
+            const blob = await fetch(formAvatar).then((r) => r.blob());
             await dispatch(
                 updateProfileAvatar({ profileId: profileData.id!, file: blob }),
             );
         }
 
-        // Получаем новый аватар
-        await dispatch(fetchProfileAvatar({ fileId: profileData.avatar?.id }));
-
         // Обновляем пользовательскую схему
-        dispatch(userActions.setAvatarIsInitialized(false));
+        dispatch(userActions.setUserIsInitialized(false));
 
         setReadOnly(true);
-    }, [
-        dispatch,
-        profileFormData,
-        profileId,
-        newAvatar,
-        profileData.avatar?.id,
-        profileData.id,
-    ]);
+    }, [dispatch, profileFormData, profileId, formAvatar, profileData.id]);
 
     const onCancelClick = useCallback(() => {
         // Возвращаем обратно значения профиля
         dispatch(profileActions.setProfileFormData({ ...profileData }));
+        // Возвращаем обратно значение аватара
+        dispatch(profileActions.setProfileFormDataAvatar(""));
 
-        setNewAvatar(undefined);
         setReadOnly(true);
     }, [dispatch, profileData]);
-
-    const onChangeSurname = useCallback(
-        (value: string) => {
-            dispatch(
-                profileActions.setProfileFormData({
-                    ...profileFormData,
-                    surname: value,
-                }),
-            );
-        },
-        [dispatch, profileFormData],
-    );
-
-    const onChangeName = useCallback(
-        (value: string) => {
-            dispatch(
-                profileActions.setProfileFormData({
-                    ...profileFormData,
-                    name: value,
-                }),
-            );
-        },
-        [dispatch, profileFormData],
-    );
-
-    const onChangeBirthDate = useCallback(
-        (value: string | undefined) => {
-            dispatch(
-                profileActions.setProfileFormData({
-                    ...profileFormData,
-                    birthDate: value,
-                }),
-            );
-        },
-        [dispatch, profileFormData],
-    );
-
-    const onChangeAvatar = useCallback((value: string) => {
-        setNewAvatar(value);
-    }, []);
 
     const extraContent = (
         <>
@@ -162,21 +103,7 @@ export const ProfileCard = memo((props: ProfileCardProps) => {
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
             <Card title={"Профиль пользователя"} extra={extraContent}>
-                {readOnly ? (
-                    <ProfileCardView
-                        profileData={profileData}
-                        avatar={avatar}
-                    />
-                ) : (
-                    <ProfileCardForm
-                        profileData={profileFormData}
-                        avatar={newAvatar ?? avatar}
-                        onChangeSurname={onChangeSurname}
-                        onChangeName={onChangeName}
-                        onChangeBirthDate={onChangeBirthDate}
-                        onChangeAvatar={onChangeAvatar}
-                    />
-                )}
+                {readOnly ? <ProfileCardView /> : <ProfileCardForm />}
             </Card>
         </DynamicModuleLoader>
     );

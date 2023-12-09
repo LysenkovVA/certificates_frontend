@@ -1,34 +1,36 @@
-import { getEmployeeDetailsError } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsError/getEmployeeDetailsError";
-import { getEmployeeDetailsIsLoading } from "@/features/Employees/employeeDetailsCard/model/selectors/getEmployeeDetailsIsLoading/getEmployeeDetailsIsLoading";
-import { fetchEmployeeDetailsById } from "@/features/Employees/employeeDetailsCard/model/services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
-import { updateEmployeeDetailsById } from "@/features/Employees/employeeDetailsCard/model/services/updateEmployeeDetailsById/updateEmployeeDetailsById";
-import { employeeDetailsReducer } from "@/features/Employees/employeeDetailsCard/model/slice/employeeDetailsSlice";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
-import { ErrorInfo } from "@/shared/ui/ErrorInfo/ErrorInfo";
 import { SaveCancelButtons } from "@/shared/ui/SaveCancelButtons/SaveCancelButtons";
 import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
 import { Card } from "antd";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { employeesInfiniteListActions } from "../../../employeesInfiniteList/model/slice/employeesInfiniteListSlice";
 import {
-    getEmployeeAvatar,
+    getEmployeeDetails,
     getEmployeeDetailsForm,
+    getEmployeeDetailsFormAvatar,
+    getEmployeeDetailsIsDataLoading,
     getEmployeeDetailsIsInitialized,
 } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
+import { fetchEmployeeDetailsById } from "../../model/services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
+import { updateEmployeeAvatar } from "../../model/services/updateEmployeeAvatar/updateEmployeeAvatar";
+import { updateEmployeeDetailsById } from "../../model/services/updateEmployeeDetailsById/updateEmployeeDetailsById";
+import {
+    employeeDetailsActions,
+    employeeDetailsReducer,
+} from "../../model/slice/employeeDetailsSlice";
 import { EmployeeDetailsForm } from "../EmployeeDetailsForm/EmployeeDetailsForm";
 import { EmployeeDetailsView } from "../EmployeeDetailsView/EmployeeDetailsView";
 import cls from "./EmployeeDetailsCard.module.scss";
 
 interface EmployeeDetailsCardProps {
     className?: string;
-    //employeeId: string;
 }
 
 const reducers: ReducersList = {
@@ -40,40 +42,70 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
 
     const { id: employeeId } = useParams<{ id: string }>();
 
-    const [newAvatar, setNewAvatar] = useState<string>();
-
     // Можно редактировать
     const [canEdit, setCanEdit] = useState(true);
 
     const dispatch = useAppDispatch();
+    const isLoadingData = useSelector(getEmployeeDetailsIsDataLoading);
+    const employeeDetails = useSelector(getEmployeeDetails);
     const employeeDetailsForm = useSelector(getEmployeeDetailsForm);
-    const isLoading = useSelector(getEmployeeDetailsIsLoading);
-    const error = useSelector(getEmployeeDetailsError);
-    const avatar = useSelector(getEmployeeAvatar);
-    const isInited = useSelector(getEmployeeDetailsIsInitialized);
+    const formAvatar = useSelector(getEmployeeDetailsFormAvatar);
+    const isInitialized = useSelector(getEmployeeDetailsIsInitialized);
 
-    useInitialEffect(() => {
-        if (!isInited && employeeId) {
+    useEffect(() => {
+        if (!isInitialized && employeeId && !isLoadingData) {
             dispatch(fetchEmployeeDetailsById({ id: employeeId }));
         }
-    });
+    }, [dispatch, employeeId, isInitialized, isLoadingData]);
 
     const onEditClick = useCallback(() => {
         setCanEdit(false);
     }, []);
 
-    const onSaveClick = useCallback(() => {
-        if (employeeDetailsForm) {
-            dispatch(
-                updateEmployeeDetailsById({ employee: employeeDetailsForm }),
+    const onSaveClick = useCallback(async () => {
+        await dispatch(
+            updateEmployeeDetailsById({ employee: employeeDetailsForm! }),
+        );
+
+        // Получаем новые данные (лишний запрос!)
+        if (employeeDetails) {
+            await dispatch(
+                fetchEmployeeDetailsById({ id: employeeDetails.id! }),
             );
-            setCanEdit(true);
         }
-    }, [dispatch, employeeDetailsForm]);
+
+        // Обновляем аватар
+        if (formAvatar && employeeDetails?.id) {
+            const blob = await fetch(formAvatar).then((r) => r.blob());
+            await dispatch(
+                updateEmployeeAvatar({
+                    employeeId: employeeDetails.id,
+                    file: blob,
+                }),
+            );
+        }
+
+        // Обновляем запись в списке сотрудников
+        if (employeeDetails) {
+            dispatch(
+                employeesInfiniteListActions.updateEmployee(employeeDetails),
+            );
+        }
+
+        setCanEdit(true);
+    }, [dispatch, employeeDetails, employeeDetailsForm, formAvatar]);
 
     const onCancelClick = useCallback(() => {
+        // Возвращаем обратно значения сотрудника
+        dispatch(
+            employeeDetailsActions.setEmployeeDetailsFormData({
+                ...employeeDetails,
+            }),
+        );
+        // Возвращаем обратно значение аватара
+        dispatch(employeeDetailsActions.setEmployeeDetailsFormDataAvatar(""));
         setCanEdit(true);
-    }, []);
+    }, [dispatch, employeeDetails]);
 
     const extraContent = (
         <>
@@ -81,7 +113,6 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
                 <a onClick={onEditClick}>Изменить</a>
             ) : (
                 <SaveCancelButtons
-                    isLoading={isLoading}
                     onSaveClick={onSaveClick}
                     onCancelClick={onCancelClick}
                 />
@@ -89,34 +120,22 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
         </>
     );
 
-    const onChangeAvatar = useCallback((value: string | undefined) => {
-        setNewAvatar(value);
-    }, []);
-
     return (
         <DynamicModuleLoader reducers={reducers}>
             <InfiniteScrollPage>
-                {error && (
-                    <ErrorInfo status={"error"} title={error} subtitle={""} />
-                )}
-                {!error && (
-                    <Card
-                        extra={extraContent}
-                        title={`${employeeDetailsForm?.surname} ${employeeDetailsForm?.name}`}
-                        className={classNames(cls.EmployeeDetailsCard, {}, [
-                            className,
-                        ])}
-                    >
-                        {!canEdit ? (
-                            <EmployeeDetailsForm
-                                avatar={newAvatar ?? avatar}
-                                onChangeAvatar={onChangeAvatar}
-                            />
-                        ) : (
-                            <EmployeeDetailsView />
-                        )}
-                    </Card>
-                )}
+                <Card
+                    extra={extraContent}
+                    title={`${employeeDetailsForm?.surname} ${employeeDetailsForm?.name}`}
+                    className={classNames(cls.EmployeeDetailsCard, {}, [
+                        className,
+                    ])}
+                >
+                    {!canEdit ? (
+                        <EmployeeDetailsForm />
+                    ) : (
+                        <EmployeeDetailsView />
+                    )}
+                </Card>
             </InfiniteScrollPage>
         </DynamicModuleLoader>
     );

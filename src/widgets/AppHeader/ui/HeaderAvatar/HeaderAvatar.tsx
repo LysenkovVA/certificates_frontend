@@ -1,10 +1,4 @@
 import { getAuthenticatedUser } from "@/entities/User";
-import {
-    getUserAvatar,
-    getUserAvatarIsInited,
-    getUserIsInited,
-} from "@/entities/User/model/selectors/getUserIsInited/getAuthenticatedUserId";
-import { fetchUserAvatar } from "@/entities/User/model/services/fetchUserAvatar/fetchUserAvatar";
 import { profileReducer } from "@/features/Profiles/profileCard/model/slice/profileSlice";
 import { authLogout } from "@/features/logout/model/services/logout/authLogout";
 import { logoutReducer } from "@/features/logout/model/slice/logoutSlice";
@@ -15,9 +9,9 @@ import {
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Flex, Popover, Space, Typography } from "antd";
-import { memo, useCallback, useEffect, useState } from "react";
+import { EditableAvatar } from "@/shared/ui/EditableAvatar/EditableAvatar";
+import { Flex, Popover, Space, Typography } from "antd";
+import { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import cls from "./HeaderAvatar.module.scss";
@@ -34,29 +28,11 @@ const reducers: ReducersList = {
 export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
     const { className } = props;
 
+    const [isOpen, setIsOpen] = useState(false);
+
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const user = useSelector(getAuthenticatedUser);
-    const isUserInitialized = useSelector(getUserIsInited);
-    const isUserAvatarIsInitialized = useSelector(getUserAvatarIsInited);
-    const userAvatar = useSelector(getUserAvatar);
-
-    console.log("Header avatar inited: " + isUserAvatarIsInitialized);
-
-    useEffect(() => {
-        if (isUserInitialized && !isUserAvatarIsInitialized) {
-            console.log("fetching user avatar...");
-            dispatch(fetchUserAvatar({ fileId: user.profile?.avatar?.id }));
-        }
-    }, [
-        dispatch,
-        isUserAvatarIsInitialized,
-        isUserInitialized,
-        user.profile?.avatar,
-        user.profile?.avatar?.id,
-    ]);
-
-    const [isOpen, setIsOpen] = useState(false);
 
     const showMenu = useCallback(
         (open: boolean) => {
@@ -87,7 +63,6 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
         // TODO Редюсер демонтируется до fulfilled
         <DynamicModuleLoader reducers={reducers}>
             <Popover
-                // title={user?.email}
                 content={content}
                 open={isOpen}
                 onOpenChange={showMenu}
@@ -95,7 +70,10 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
             >
                 <div className={classNames(cls.HeaderAvatar, {}, [className])}>
                     <Flex vertical justify={"center"} align={"center"}>
-                        <Avatar icon={<UserOutlined />} src={userAvatar} />
+                        <EditableAvatar
+                            file={user.profile?.avatar}
+                            canEdit={false}
+                        />
                         <Typography.Text keyboard type={"secondary"}>
                             {user.profile?.name ?? user.email}
                         </Typography.Text>

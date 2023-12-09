@@ -15,7 +15,7 @@ import {
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
 import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
-import { Flex, Typography } from "antd";
+import { Col, Flex, Row, Typography } from "antd";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -77,28 +77,34 @@ export const EmployeesInfiniteList = memo(
             [navigate],
         );
 
+        const content = (
+            <Row gutter={[0, 0]}>
+                {employees.map((employee, index) => (
+                    <Col key={index} span={24 / 4}>
+                        <EmployeeItem
+                            key={employee.id}
+                            employee={employee}
+                            onClick={onClick}
+                        />
+                    </Col>
+                ))}
+            </Row>
+        );
+
         return (
             <DynamicModuleLoader
                 reducers={initialReducers}
                 removeAfterUnmount={false}
             >
                 <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
-                    <Flex vertical gap={16}>
-                        <Flex vertical wrap={"wrap"}>
-                            {employees.map((employee) => (
-                                <EmployeeItem
-                                    key={employee.id}
-                                    employee={employee}
-                                    onClick={onClick}
-                                />
-                            ))}
-                            {isLoading && <div>{"Загрузка..."}</div>}
-                            {error && (
-                                <Typography.Text type={"danger"}>
-                                    {error}
-                                </Typography.Text>
-                            )}
-                        </Flex>
+                    <Flex vertical gap={8}>
+                        {content}
+                        {isLoading && <div>{"Загрузка..."}</div>}
+                        {error && (
+                            <Typography.Text type={"danger"}>
+                                {error}
+                            </Typography.Text>
+                        )}
                     </Flex>
                 </InfiniteScrollPage>
             </DynamicModuleLoader>

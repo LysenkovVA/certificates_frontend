@@ -3,9 +3,10 @@ import departmentSvg from "@/shared/assets/svg/department.svg";
 import organizationSvg from "@/shared/assets/svg/organization.svg";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import { PreviewField } from "@/shared/ui/PreviewField";
-import { Card, Flex, Image, Typography } from "antd";
+import { Card, Flex, Typography } from "antd";
 
 import { Employee } from "@/entities/Employee";
+import { EditableAvatar } from "@/shared/ui/EditableAvatar/EditableAvatar";
 import cls from "./EmployeeItem.module.scss";
 
 interface EmployeeItemProps {
@@ -27,7 +28,12 @@ export const EmployeeItem = (props: EmployeeItemProps) => {
         >
             <Flex vertical>
                 <Flex>
-                    <Image rootClassName={cls.photo} preview={false} />
+                    <EditableAvatar
+                        className={cls.photo}
+                        file={employee.avatar}
+                        canEdit={false}
+                        shape={"square"}
+                    />
                     <Flex vertical align={"flex-start"}>
                         <Typography.Text className={cls.surname}>
                             {employee.surname}

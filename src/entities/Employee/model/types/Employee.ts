@@ -4,7 +4,7 @@ import { Department } from "@/entities/Department";
 import { File } from "@/entities/File";
 
 export interface Employee {
-    id: string;
+    id?: string;
     avatar?: File;
     surname?: string;
     name?: string;

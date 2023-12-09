@@ -1,19 +1,22 @@
 import { ThunkConfig } from "@/app/providers/StoreProvider";
+import { getFileDownloadRoute } from "@/shared/config/routeConfig/fileRoutes";
 import { ServerError } from "@/shared/error/ServerError";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError } from "axios";
 
-export interface FetchDepartmentsInfiniteListProps {
-    route: string;
+export interface DownloadFileProps {
+    fileId: string;
 }
 
 export const downloadFile = createAsyncThunk<
     string,
-    FetchDepartmentsInfiniteListProps,
+    DownloadFileProps,
     ThunkConfig<string>
 >("files/downloadFile", async (props, thunkApi) => {
-    const { route } = props;
-    const { dispatch, extra, rejectWithValue } = thunkApi;
+    const { fileId } = props;
+    const { dispatch, extra, rejectWithValue, signal } = thunkApi;
+
+    const route = getFileDownloadRoute(fileId);
 
     try {
         const response = await extra.api.get(route, {

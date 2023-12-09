@@ -5,3 +5,7 @@ export const getFileDownloadRoute = (fileId: string) => {
 export const getProfileAvatarUploadRoute = (profileId: string) => {
     return `/files/upload/avatar/${profileId}`;
 };
+
+export const getEmployeeAvatarUploadRoute = (employeeId: string) => {
+    return `/files/upload/employee/${employeeId}`;
+};

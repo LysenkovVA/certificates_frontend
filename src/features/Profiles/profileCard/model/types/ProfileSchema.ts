@@ -5,10 +5,8 @@ export interface ProfileSchema {
     dataError?: string;
     profileData?: Profile;
     profileFormData?: Profile;
-    isAvatarLoading?: boolean;
-    avatarError?: string;
-    profileDataAvatar?: string;
+    isAvatarUploading?: boolean;
+    avatarUploadError?: string;
     profileFormDataAvatar?: string;
     _isDataInitialized: boolean;
-    _isAvatarInitialized: boolean;
 }

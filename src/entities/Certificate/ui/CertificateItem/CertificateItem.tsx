@@ -19,7 +19,7 @@ export const CertificateItem = memo((props: CertificateItemProps) => {
     const { className, certificate } = props;
     return (
         <Card
-            hoverable
+            // hoverable
             // title={certificate.certificateType?.value ?? "Удостоверение"}
             headStyle={{ color: "green" }}
             className={classNames(cls.CertificateItem, {}, [className])}

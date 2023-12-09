@@ -4,7 +4,7 @@ import { ServerError } from "@/shared/error/ServerError";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosError, AxiosHeaders } from "axios";
 
-export interface FetchDepartmentsInfiniteListProps {
+export interface UploadFileProps {
     route: string;
     file: Blob;
     fileName?: string;
@@ -12,7 +12,7 @@ export interface FetchDepartmentsInfiniteListProps {
 
 export const uploadFile = createAsyncThunk<
     File,
-    FetchDepartmentsInfiniteListProps,
+    UploadFileProps,
     ThunkConfig<string>
 >("files/uploadFile", async (props, thunkApi) => {
     const { route, file, fileName } = props;

@@ -16,14 +16,7 @@ export const authLogout = createAsyncThunk<void, void, ThunkConfig<string>>(
                 localStorage.removeItem(USER_LOCALSTORAGE_KEY);
 
                 // Сброс состояния пользователя
-                dispatch(
-                    userActions.setAuthData({
-                        id: undefined,
-                        email: undefined,
-                        // token: undefined,
-                        profile: undefined,
-                    }),
-                );
+                dispatch(userActions.setAuthData({}));
             }
 
             return response.data;

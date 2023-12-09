@@ -1,27 +1,30 @@
-import { Profile } from "@/entities/Profile/model/types/Profile";
+import { getProfileData } from "@/features/Profiles/profileCard/model/selectors/profileSelectors";
 import calendarSvg from "@/shared/assets/svg/dateField.svg";
 import { classNames } from "@/shared/lib/classNames/classNames";
+import { EditableAvatar } from "@/shared/ui/EditableAvatar/EditableAvatar";
 import { PreviewField } from "@/shared/ui/PreviewField";
-import { Avatar, Typography } from "antd";
+import { Typography } from "antd";
 import dayjs from "dayjs";
 import { memo } from "react";
+import { useSelector } from "react-redux";
 import cls from "./ProfileCardView.module.scss";
 
 interface ProfileCardViewProps {
     className?: string;
-    avatar: string;
-    profileData?: Profile;
 }
 
 export const ProfileCardView = memo((props: ProfileCardViewProps) => {
-    const { className, profileData, avatar } = props;
+    const profileData = useSelector(getProfileData);
 
     return (
         <>
             <div className={cls.avatar}>
-                <Avatar size={100} src={avatar} />
+                <EditableAvatar
+                    file={profileData.avatar}
+                    canEdit={false}
+                    size={100}
+                />
             </div>
-
             <Typography.Text
                 className={classNames(cls.surname)}
                 type={!profileData?.surname ? "secondary" : undefined}

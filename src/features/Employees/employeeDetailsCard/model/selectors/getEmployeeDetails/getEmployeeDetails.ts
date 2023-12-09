@@ -6,11 +6,20 @@ export const getEmployeeDetails = (state: StateSchema) =>
 export const getEmployeeDetailsForm = (state: StateSchema) =>
     state.employeeDetailsSchema?.employeeDetailsForm ?? undefined;
 
-export const getEmployeeDetailsFormBerth = (state: StateSchema) =>
-    state.employeeDetailsSchema?.employeeDetailsForm?.berth ?? undefined;
+export const getEmployeeDetailsIsDataLoading = (state: StateSchema) =>
+    state.employeeDetailsSchema?.isDataLoading ?? false;
+
+export const getEmployeeDetailsDataError = (state: StateSchema) =>
+    state.employeeDetailsSchema?.dataError ?? "";
 
 export const getEmployeeDetailsIsInitialized = (state: StateSchema) =>
     state.employeeDetailsSchema?._isInitialized ?? false;
 
-export const getEmployeeAvatar = (state: StateSchema) =>
-    state.employeeDetailsSchema?.avatar ?? "";
+export const getEmployeeDetailsFormAvatar = (state: StateSchema) =>
+    state.employeeDetailsSchema?.employeeDetailsFormAvatar ?? undefined;
+
+export const getEmployeeDetailsAvatarIsUploading = (state: StateSchema) =>
+    state.employeeDetailsSchema?.isAvatarUploading ?? false;
+
+export const getEmployeeDetailsAvatarUploadError = (state: StateSchema) =>
+    state.employeeDetailsSchema?.avatarUploadError ?? "";

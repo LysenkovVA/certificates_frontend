@@ -1,4 +1,3 @@
-import { fetchUserAvatar } from "@/entities/User/model/services/fetchUserAvatar/fetchUserAvatar";
 import { initAuthData } from "@/entities/User/model/services/initAuthData/initAuthData";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../types/User";
@@ -6,14 +5,14 @@ import { UserSchema } from "../types/UserSchema";
 
 const initialState: UserSchema = {
     authenticatedUser: {},
-    avatar: undefined,
+    // avatar: undefined,
     registeredUserId: undefined,
     isLoading: false,
     error: "",
-    isAvatarLoading: false,
-    avatarError: "",
+    // isAvatarLoading: false,
+    // avatarError: "",
     _isInitialized: false,
-    _isAvatarInitialized: false,
+    // _isAvatarInitialized: false,
 };
 
 export const userSlice = createSlice({
@@ -23,12 +22,18 @@ export const userSlice = createSlice({
         setAuthData: (state, action: PayloadAction<User>) => {
             state.authenticatedUser = action.payload;
         },
-        setAvatarIsInitialized: (
+        setUserIsInitialized: (
             state,
             action: PayloadAction<boolean | undefined>,
         ) => {
-            state._isAvatarInitialized = action.payload;
+            state._isInitialized = action.payload;
         },
+        // setAvatarIsInitialized: (
+        //     state,
+        //     action: PayloadAction<boolean | undefined>,
+        // ) => {
+        //     state._isAvatarInitialized = action.payload;
+        // },
         setRegisteredData: (state, action: PayloadAction<string>) => {
             state.registeredUserId = action.payload;
         },
@@ -51,21 +56,21 @@ export const userSlice = createSlice({
             .addCase(initAuthData.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-            })
-            .addCase(fetchUserAvatar.pending, (state, action) => {
-                state.avatarError = undefined;
-                state.isAvatarLoading = true;
-            })
-            .addCase(fetchUserAvatar.fulfilled, (state, action) => {
-                state.avatarError = undefined;
-                state.isAvatarLoading = false;
-                state.avatar = action.payload;
-                state._isAvatarInitialized = true;
-            })
-            .addCase(fetchUserAvatar.rejected, (state, action) => {
-                state.avatarError = action.payload;
-                state.isAvatarLoading = false;
             });
+        // .addCase(fetchUserAvatar.pending, (state, action) => {
+        //     state.avatarError = undefined;
+        //     state.isAvatarLoading = true;
+        // })
+        // .addCase(fetchUserAvatar.fulfilled, (state, action) => {
+        //     state.avatarError = undefined;
+        //     state.isAvatarLoading = false;
+        //     state.avatar = action.payload;
+        //     state._isAvatarInitialized = true;
+        // })
+        // .addCase(fetchUserAvatar.rejected, (state, action) => {
+        //     state.avatarError = action.payload;
+        //     state.isAvatarLoading = false;
+        // });
     },
 });
 

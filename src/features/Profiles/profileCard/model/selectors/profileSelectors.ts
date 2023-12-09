@@ -11,26 +11,20 @@ export const getProfileFormData = createSelector(
     (data) => data,
 );
 
-export const getProfileDataAvatar = (state: StateSchema) =>
-    state?.profileSchema?.profileDataAvatar ?? "";
-
-export const getProfileFormDataAvatar = (state: StateSchema) =>
-    state?.profileSchema?.profileFormDataAvatar ?? "";
+export const getProfileDataIsLoading = (state: StateSchema) =>
+    state?.profileSchema?.isDataLoading ?? false;
 
 export const getProfileDataError = (state: StateSchema) =>
     state?.profileSchema?.dataError ?? "";
 
-export const getProfileDataIsLoading = (state: StateSchema) =>
-    state?.profileSchema?.isDataLoading ?? false;
+export const getProfileFormDataAvatar = (state: StateSchema) =>
+    state?.profileSchema?.profileFormDataAvatar ?? "";
 
-export const getProfileDataAvatarError = (state: StateSchema) =>
-    state?.profileSchema?.avatarError ?? "";
+export const getProfileAvatarIsUploading = (state: StateSchema) =>
+    state?.profileSchema?.isAvatarUploading ?? false;
 
-export const getProfileDataAvatarIsLoading = (state: StateSchema) =>
-    state?.profileSchema?.isAvatarLoading ?? false;
+export const getProfileAvatarUploadError = (state: StateSchema) =>
+    state?.profileSchema?.avatarUploadError ?? "";
 
 export const getProfileDataInitialized = (state: StateSchema) =>
     state?.profileSchema?._isDataInitialized ?? false;
-
-export const getProfileDataAvatarInitialized = (state: StateSchema) =>
-    state?.profileSchema?._isAvatarInitialized ?? false;
