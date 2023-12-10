@@ -1,6 +1,6 @@
 import { Inspection } from "@/entities/Inspection";
 import { classNames } from "@/shared/lib/classNames/classNames";
-import { Card, Flex, Typography } from "antd";
+import { Card, Flex, Skeleton, Typography } from "antd";
 import dayjs from "dayjs";
 import { memo } from "react";
 import cls from "./InspectionItem.module.scss";
@@ -8,11 +8,15 @@ import cls from "./InspectionItem.module.scss";
 interface InspectionCardProps {
     className?: string;
     inspection: Inspection;
+    isLoading?: boolean;
 }
 
 export const InspectionItem = memo((props: InspectionCardProps) => {
-    const { className, inspection } = props;
-    return (
+    const { className, inspection, isLoading } = props;
+
+    const skeleton = <Skeleton active />;
+
+    const card = (
         <Card
             className={classNames(cls.DepartmentCard, {}, [className])}
             title={
@@ -67,4 +71,10 @@ export const InspectionItem = memo((props: InspectionCardProps) => {
             </Flex>
         </Card>
     );
+
+    if (isLoading) {
+        return skeleton;
+    }
+
+    return card;
 });

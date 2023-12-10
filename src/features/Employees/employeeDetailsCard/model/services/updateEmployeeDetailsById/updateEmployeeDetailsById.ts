@@ -17,12 +17,23 @@ export const updateEmployeeDetailsById = createAsyncThunk<
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
-        const response = await extra.api.patch<Employee | ServerError>(
-            `/employees/${employee.id}`,
-            {
-                ...employee,
-            },
-        );
+        let response = null;
+
+        if (employee.id) {
+            response = await extra.api.patch<Employee | ServerError>(
+                `/employees/${employee.id}`,
+                {
+                    ...employee,
+                },
+            );
+        } else {
+            response = await extra.api.post<Employee | ServerError>(
+                "/employees/create",
+                {
+                    ...employee,
+                },
+            );
+        }
 
         if (!response.data) {
             return rejectWithValue("Ответ от сервера не получен");
@@ -33,11 +44,19 @@ export const updateEmployeeDetailsById = createAsyncThunk<
             return rejectWithValue(serverError.error);
         }
 
-        dispatch(
-            employeesInfiniteListActions.updateEmployee(
-                response.data as Employee,
-            ),
-        );
+        if (employee.id) {
+            dispatch(
+                employeesInfiniteListActions.updateEmployee(
+                    response.data as Employee,
+                ),
+            );
+        } else {
+            dispatch(
+                employeesInfiniteListActions.addEmployee(
+                    response.data as Employee,
+                ),
+            );
+        }
 
         return response.data as Employee;
     } catch (e) {

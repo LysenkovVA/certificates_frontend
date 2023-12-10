@@ -15,7 +15,8 @@ import {
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
 import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
-import { Col, Flex, Row, Typography } from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { Col, Flex, FloatButton, Row, Typography } from "antd";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -91,6 +92,8 @@ export const EmployeesInfiniteList = memo(
             </Row>
         );
 
+        // const ref = useRef<HTMLDivElement>(null);
+
         return (
             <DynamicModuleLoader
                 reducers={initialReducers}
@@ -107,6 +110,14 @@ export const EmployeesInfiniteList = memo(
                         )}
                     </Flex>
                 </InfiniteScrollPage>
+                <FloatButton
+                    icon={<PlusCircleOutlined />}
+                    // description={"ADD"}
+                    shape={"circle"}
+                    type={"primary"}
+                    style={{ bottom: 50, right: 50, width: 50, height: 50 }}
+                    onClick={() => navigate(RoutePath.create_employee)}
+                />
             </DynamicModuleLoader>
         );
     },

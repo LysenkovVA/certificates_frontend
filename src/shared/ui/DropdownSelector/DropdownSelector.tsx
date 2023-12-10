@@ -2,8 +2,18 @@ import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
-import { Flex, Select, SelectProps, Spin } from "antd";
-import { memo, useCallback } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import {
+    Button,
+    Empty,
+    Flex,
+    Form,
+    Input,
+    Modal,
+    Select,
+    SelectProps,
+} from "antd";
+import { memo, useCallback, useState } from "react";
 
 interface DropdownSelectorType {
     label: string;
@@ -20,6 +30,7 @@ interface DropdownSelectorProps extends DDSelectorProps {
     isLoading: boolean;
     error?: string;
     options: DropdownSelectorType[];
+    onAdd?: () => void;
 }
 
 export const DropdownSelector = memo((props: DropdownSelectorProps) => {
@@ -31,8 +42,11 @@ export const DropdownSelector = memo((props: DropdownSelectorProps) => {
         isLoading,
         onValueChanged,
         error,
+        onAdd,
         ...otherProps
     } = props;
+
+    const [modalOpen, setModalOpen] = useState(false);
 
     const onChange = useCallback(
         (value: DropdownSelectorType[]) => {
@@ -51,46 +65,78 @@ export const DropdownSelector = memo((props: DropdownSelectorProps) => {
     }, [onValueChanged]);
 
     const disabled = useCallback(() => {
-        if (isLoading) {
-            return true;
-        }
-
-        if (error) {
+        if (isLoading || error) {
             return true;
         }
 
         return false;
     }, [error, isLoading]);
 
+    const onAddClick = useCallback(() => {
+        setModalOpen(true);
+
+        onAdd?.();
+    }, [onAdd]);
+
+    const modalDialog = (
+        <Modal
+            title="Укажите значение"
+            centered
+            open={modalOpen}
+            onOk={() => setModalOpen(false)}
+            onCancel={() => setModalOpen(false)}
+            okText={"Сохранить"}
+            cancelText={"Отмена"}
+        >
+            <Form key={"modalForm"}>
+                <Form.Item label={"Значение"}>
+                    <Input />
+                </Form.Item>
+            </Form>
+        </Modal>
+    );
+
     return (
         <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
-            <Flex vertical gap={8}>
-                <Select
-                    showSearch
-                    allowClear={true}
-                    labelInValue
-                    virtual={false}
-                    // Без этого поиск не показывал найдненное
-                    filterOption={(inputValue, option) =>
-                        option!
-                            .label!.toLocaleString()
-                            .toLowerCase()
-                            .includes(inputValue.toLowerCase())
-                    }
-                    options={options}
-                    notFoundContent={isLoading ? <Spin size="small" /> : null}
-                    value={value}
-                    onChange={onChange}
-                    onClear={onClear}
-                    loading={isLoading}
-                    disabled={disabled()}
-                    placeholder={error}
-                    {...otherProps}
-                />
-                {/*{error && (*/}
-                {/*    <Typography.Text type={"danger"}>{error}</Typography.Text>*/}
-                {/*)}*/}
-            </Flex>
+            <Select
+                showSearch
+                allowClear={true}
+                labelInValue
+                virtual={false}
+                // Без этого поиск не показывал найдненное
+                filterOption={(inputValue, option) =>
+                    option!
+                        .label!.toLocaleString()
+                        .toLowerCase()
+                        .includes(inputValue.toLowerCase())
+                }
+                options={options}
+                value={value}
+                onChange={onChange}
+                onClear={onClear}
+                loading={isLoading}
+                disabled={disabled()}
+                placeholder={error}
+                notFoundContent={
+                    <Empty description={false} style={{ paddingBottom: 10 }} />
+                }
+                dropdownRender={(menu) => (
+                    <>
+                        {menu}
+                        <Flex justify={"center"} align={"center"}>
+                            <Button
+                                icon={<PlusOutlined />}
+                                type={"primary"}
+                                onClick={onAddClick}
+                            >
+                                {"Добавить"}
+                            </Button>
+                        </Flex>
+                    </>
+                )}
+                {...otherProps}
+            />
+            {modalDialog}
         </DynamicModuleLoader>
     );
 });

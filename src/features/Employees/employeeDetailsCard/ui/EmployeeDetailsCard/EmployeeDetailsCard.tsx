@@ -1,12 +1,13 @@
+import { Employee } from "@/entities/Employee";
+import { removeEmployeeAvatar } from "@/features/Employees/employeeDetailsCard/model/services/removeEmployeeAvatar/removeEmployeeAvatar";
 import { classNames } from "@/shared/lib/classNames/classNames";
 import {
     DynamicModuleLoader,
     ReducersList,
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
-import { SaveCancelButtons } from "@/shared/ui/SaveCancelButtons/SaveCancelButtons";
 import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
-import { Card } from "antd";
+import { Button, Card } from "antd";
 import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -17,6 +18,7 @@ import {
     getEmployeeDetailsFormAvatar,
     getEmployeeDetailsIsDataLoading,
     getEmployeeDetailsIsInitialized,
+    getEmployeeDetailsRemoveAvatarOnUpdate,
 } from "../../model/selectors/getEmployeeDetails/getEmployeeDetails";
 import { fetchEmployeeDetailsById } from "../../model/services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
 import { updateEmployeeAvatar } from "../../model/services/updateEmployeeAvatar/updateEmployeeAvatar";
@@ -51,6 +53,9 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
     const employeeDetailsForm = useSelector(getEmployeeDetailsForm);
     const formAvatar = useSelector(getEmployeeDetailsFormAvatar);
     const isInitialized = useSelector(getEmployeeDetailsIsInitialized);
+    const needAvatarDelete = useSelector(
+        getEmployeeDetailsRemoveAvatarOnUpdate,
+    );
 
     useEffect(() => {
         if (!isInitialized && employeeId && !isLoadingData) {
@@ -67,15 +72,8 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
             updateEmployeeDetailsById({ employee: employeeDetailsForm! }),
         );
 
-        // Получаем новые данные (лишний запрос!)
-        if (employeeDetails) {
-            await dispatch(
-                fetchEmployeeDetailsById({ id: employeeDetails.id! }),
-            );
-        }
-
         // Обновляем аватар
-        if (formAvatar && employeeDetails?.id) {
+        if (!needAvatarDelete && formAvatar && employeeDetails?.id) {
             const blob = await fetch(formAvatar).then((r) => r.blob());
             await dispatch(
                 updateEmployeeAvatar({
@@ -85,15 +83,37 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
             );
         }
 
-        // Обновляем запись в списке сотрудников
-        if (employeeDetails) {
-            dispatch(
-                employeesInfiniteListActions.updateEmployee(employeeDetails),
+        // Удаляем аватар
+        if (needAvatarDelete) {
+            await dispatch(
+                removeEmployeeAvatar({ fileId: employeeDetails?.avatar?.id }),
             );
         }
 
+        // Получаем новые данные
+        if (employeeDetails) {
+            await dispatch(
+                fetchEmployeeDetailsById({ id: employeeDetails.id! }),
+            ).then((r) => {
+                // Обновляем запись в списке сотрудников
+                const employee = r.payload as Employee;
+
+                if (employee) {
+                    dispatch(
+                        employeesInfiniteListActions.updateEmployee(employee),
+                    );
+                }
+            });
+        }
+
         setCanEdit(true);
-    }, [dispatch, employeeDetails, employeeDetailsForm, formAvatar]);
+    }, [
+        dispatch,
+        employeeDetails,
+        employeeDetailsForm,
+        formAvatar,
+        needAvatarDelete,
+    ]);
 
     const onCancelClick = useCallback(() => {
         // Возвращаем обратно значения сотрудника
@@ -104,21 +124,21 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
         );
         // Возвращаем обратно значение аватара
         dispatch(employeeDetailsActions.setEmployeeDetailsFormDataAvatar(""));
+        dispatch(employeeDetailsActions.setRemoveAvatarOnUpdate(false));
         setCanEdit(true);
     }, [dispatch, employeeDetails]);
 
     const extraContent = (
         <>
             {canEdit ? (
-                <a onClick={onEditClick}>Изменить</a>
-            ) : (
-                <SaveCancelButtons
-                    onSaveClick={onSaveClick}
-                    onCancelClick={onCancelClick}
-                />
-            )}
+                <Button type={"dashed"} onClick={onEditClick}>
+                    Править
+                </Button>
+            ) : null}
         </>
     );
+
+    const onSubmitForm = useCallback(() => {}, []);
 
     return (
         <DynamicModuleLoader reducers={reducers}>
@@ -131,7 +151,10 @@ export const EmployeeDetailsCard = memo((props: EmployeeDetailsCardProps) => {
                     ])}
                 >
                     {!canEdit ? (
-                        <EmployeeDetailsForm />
+                        <EmployeeDetailsForm
+                            onSave={onSaveClick}
+                            onCancel={onCancelClick}
+                        />
                     ) : (
                         <EmployeeDetailsView />
                     )}

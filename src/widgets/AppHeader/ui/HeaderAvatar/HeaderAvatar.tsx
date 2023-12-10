@@ -47,7 +47,6 @@ export const HeaderAvatar = memo((props: HeaderAvatarProps) => {
 
     const onLogout = useCallback(() => {
         dispatch(authLogout());
-        // navigate(RoutePath.login); <-- это не отрабатывало
     }, [dispatch]);
 
     const content = (

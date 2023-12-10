@@ -16,6 +16,11 @@ export const fetchEmployeeDetailsById = createAsyncThunk<
     const { dispatch, extra, rejectWithValue } = thunkApi;
 
     try {
+        if (!id) {
+            return rejectWithValue(
+                "Идентификатор сотрудника не задан! (fetchEmployeeDetailsById)",
+            );
+        }
         const response = await extra.api.get<Employee | ServerError>(
             `/employees/${id}`,
         );

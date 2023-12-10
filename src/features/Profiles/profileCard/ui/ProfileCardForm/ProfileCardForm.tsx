@@ -79,6 +79,10 @@ export const ProfileCardForm = memo((props: ProfileCardFormProps) => {
         [dispatch],
     );
 
+    const onDeleteAvatar = useCallback(() => {
+        dispatch(profileActions.setRemoveAvatarOnUpdate(true));
+    }, [dispatch]);
+
     return (
         <Form
             id={"profileCardForm"}
@@ -90,6 +94,7 @@ export const ProfileCardForm = memo((props: ProfileCardFormProps) => {
                 <EditableAvatar
                     file={profileFormData.avatar}
                     onChangeAvatar={onChangeAvatar}
+                    onDeleteAvatar={onDeleteAvatar}
                     style={{ width: 150, height: 150 }}
                 />
             </Form.Item>

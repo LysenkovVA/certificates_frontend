@@ -23,3 +23,6 @@ export const getEmployeeDetailsAvatarIsUploading = (state: StateSchema) =>
 
 export const getEmployeeDetailsAvatarUploadError = (state: StateSchema) =>
     state.employeeDetailsSchema?.avatarUploadError ?? "";
+
+export const getEmployeeDetailsRemoveAvatarOnUpdate = (state: StateSchema) =>
+    state?.employeeDetailsSchema?.removeAvatarOnUpdate ?? false;

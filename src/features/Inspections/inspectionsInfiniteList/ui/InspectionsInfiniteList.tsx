@@ -6,9 +6,10 @@ import {
 } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
+import { ErrorInfo } from "@/shared/ui/ErrorInfo/ErrorInfo";
 import { InfiniteScrollPage } from "@/widgets/InfiniteScrollPage";
-import { Flex, Typography } from "antd";
-import { memo, useCallback } from "react";
+import { Empty, Flex } from "antd";
+import { memo, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import {
     getInspectionInfiniteListOffset,
@@ -63,8 +64,27 @@ export const InspectionsInfiniteList = memo(
             }
         }, [dispatch, hasMore, isInitialized, isLoading, limit, offset]);
 
+        const skeletons = useMemo(() => {
+            const skeletons = [];
+
+            for (let i = 0; i < limit; i++) {
+                skeletons.push(
+                    <InspectionItem
+                        key={i}
+                        inspection={{ id: "0" }}
+                        isLoading={true}
+                    />,
+                );
+            }
+
+            return skeletons;
+        }, [limit]);
+
         return (
             <DynamicModuleLoader reducers={reducers} removeAfterUnmount={false}>
+                {!isLoading && error && (
+                    <ErrorInfo status={"error"} title={error} subtitle={""} />
+                )}
                 <InfiniteScrollPage onScrollEnd={onLoadNextPart}>
                     <Flex vertical gap={8}>
                         {inspections?.map((inspection) => (
@@ -73,13 +93,18 @@ export const InspectionsInfiniteList = memo(
                                 inspection={inspection}
                             />
                         ))}
-                        {isLoading && <div>{"Загрузка данных..."}</div>}
-                        {error && (
-                            <Typography.Text type={"danger"}>
-                                {error}
-                            </Typography.Text>
+                        {isLoading && (
+                            <Flex vertical gap={8}>
+                                {skeletons}
+                            </Flex>
                         )}
                     </Flex>
+                    {!isLoading &&
+                        !error &&
+                        inspections &&
+                        inspections?.length === 0 && (
+                            <Empty description={"Ничего не найдено"} />
+                        )}
                 </InfiniteScrollPage>
             </DynamicModuleLoader>
         );

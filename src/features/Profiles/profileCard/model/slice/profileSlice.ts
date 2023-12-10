@@ -1,4 +1,5 @@
 import { Profile } from "@/entities/Profile";
+import { removeProfileAvatar } from "@/features/Profiles/profileCard/model/services/removeProfileAvatar/removeProfileAvatar";
 import { updateProfileAvatar } from "@/features/Profiles/profileCard/model/services/updateProfileAvatar/updateProfileAvatar";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchProfileData } from "../services/fetchProfileData/fetchProfileData";
@@ -26,6 +27,9 @@ export const profileSlice = createSlice({
         // Используется когда в форме выбирается файл на диске
         setProfileFormDataAvatar: (state, action: PayloadAction<string>) => {
             state.profileFormDataAvatar = action.payload;
+        },
+        setRemoveAvatarOnUpdate: (state, action: PayloadAction<boolean>) => {
+            state.removeAvatarOnUpdate = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -66,6 +70,19 @@ export const profileSlice = createSlice({
                 state.avatarUploadError = undefined;
             })
             .addCase(updateProfileAvatar.rejected, (state, action) => {
+                state.isAvatarUploading = false;
+                state.avatarUploadError = action.payload;
+            })
+            .addCase(removeProfileAvatar.pending, (state, action) => {
+                state.avatarUploadError = undefined;
+                state.isAvatarUploading = true;
+            })
+            .addCase(removeProfileAvatar.fulfilled, (state, action) => {
+                state.isAvatarUploading = false;
+                state.avatarUploadError = undefined;
+                state.removeAvatarOnUpdate = false;
+            })
+            .addCase(removeProfileAvatar.rejected, (state, action) => {
                 state.isAvatarUploading = false;
                 state.avatarUploadError = action.payload;
             });

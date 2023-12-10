@@ -7,6 +7,7 @@ import {
 } from "@/features/Berthes/berthSelector/model/selectors/allBerthesSelectors";
 import { fetchAllBerthes } from "@/features/Berthes/berthSelector/model/services/fetchAllBerthes/fetchAllBerthes";
 import { allBerthesReducer } from "@/features/Berthes/berthSelector/model/slice/allBerthesSlice";
+import { classNames } from "@/shared/lib/classNames/classNames";
 import { ReducersList } from "@/shared/lib/components/DynamicModuleLoader/DynamicModuleLoader";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
 import { useInitialEffect } from "@/shared/lib/hooks/useInitialEffect/useInitialEffect";
@@ -14,6 +15,7 @@ import { DropdownSelector } from "@/shared/ui/DropdownSelector/DropdownSelector"
 import { Flex } from "antd";
 import { memo, useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
+import cls from "./BerthSelector.module.scss";
 
 interface BerthSelectorProps {
     className?: string;
@@ -78,15 +80,18 @@ export const BerthSelector = memo((props: BerthSelectorProps) => {
     );
 
     return (
-        <Flex vertical gap={8}>
-            <DropdownSelector
-                reducers={reducers}
-                value={convertBerthToSelectObject(value)}
-                isLoading={isLoading}
-                onValueChanged={onChanged}
-                options={options}
-                error={error}
-            />
-        </Flex>
+        <div className={classNames(cls.BerthSelector, {}, [className])}>
+            <Flex gap={4}>
+                <DropdownSelector
+                    className={cls.selector}
+                    reducers={reducers}
+                    value={convertBerthToSelectObject(value)}
+                    isLoading={isLoading}
+                    onValueChanged={onChanged}
+                    options={options}
+                    error={error}
+                />
+            </Flex>
+        </div>
     );
 });

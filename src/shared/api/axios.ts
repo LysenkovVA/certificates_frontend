@@ -92,4 +92,4 @@ $api.interceptors.response.use(
     },
 );
 
-export { $api };
+export { $api, $publicApi };

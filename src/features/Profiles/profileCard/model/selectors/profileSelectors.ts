@@ -28,3 +28,7 @@ export const getProfileAvatarUploadError = (state: StateSchema) =>
 
 export const getProfileDataInitialized = (state: StateSchema) =>
     state?.profileSchema?._isDataInitialized ?? false;
+
+export const getProfileDataFormDataRemoveAvatarOnUpdate = (
+    state: StateSchema,
+) => state?.profileSchema?.removeAvatarOnUpdate ?? false;

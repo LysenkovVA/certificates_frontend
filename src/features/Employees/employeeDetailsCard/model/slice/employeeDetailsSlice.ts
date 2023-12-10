@@ -1,4 +1,5 @@
 import { Employee } from "@/entities/Employee/model/types/Employee";
+import { removeEmployeeAvatar } from "@/features/Employees/employeeDetailsCard/model/services/removeEmployeeAvatar/removeEmployeeAvatar";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchEmployeeDetailsById } from "../services/fetchEmployeeDetailsById/fetchEmployeeDetailsById";
 import { updateEmployeeAvatar } from "../services/updateEmployeeAvatar/updateEmployeeAvatar";
@@ -13,6 +14,7 @@ const initialState: EmployeeDetailsSchema = {
     isAvatarUploading: false,
     avatarUploadError: "",
     employeeDetailsFormAvatar: "",
+    removeAvatarOnUpdate: false,
     _isInitialized: false,
 };
 
@@ -32,6 +34,9 @@ export const employeeDetailsSlice = createSlice({
             action: PayloadAction<string | undefined>,
         ) => {
             state.employeeDetailsFormAvatar = action.payload;
+        },
+        setRemoveAvatarOnUpdate: (state, action: PayloadAction<boolean>) => {
+            state.removeAvatarOnUpdate = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -81,6 +86,19 @@ export const employeeDetailsSlice = createSlice({
                 state.avatarUploadError = undefined;
             })
             .addCase(updateEmployeeAvatar.rejected, (state, action) => {
+                state.isAvatarUploading = false;
+                state.avatarUploadError = action.payload;
+            })
+            .addCase(removeEmployeeAvatar.pending, (state) => {
+                state.isAvatarUploading = true;
+                state.avatarUploadError = undefined;
+            })
+            .addCase(removeEmployeeAvatar.fulfilled, (state, action) => {
+                state.isAvatarUploading = false;
+                state.avatarUploadError = undefined;
+                state.removeAvatarOnUpdate = false;
+            })
+            .addCase(removeEmployeeAvatar.rejected, (state, action) => {
                 state.isAvatarUploading = false;
                 state.avatarUploadError = action.payload;
             });

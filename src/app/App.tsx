@@ -71,8 +71,6 @@ export const App = () => {
             </Layout>
         );
     } else {
-        return (
-            <div className="content-page">{userIsInited && <AppRouter />}</div>
-        );
+        return <div className="content-page">{<AppRouter />}</div>;
     }
 };

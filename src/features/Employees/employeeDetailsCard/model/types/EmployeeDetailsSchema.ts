@@ -8,5 +8,6 @@ export interface EmployeeDetailsSchema {
     isAvatarUploading?: boolean;
     avatarUploadError?: string;
     employeeDetailsFormAvatar?: string;
+    removeAvatarOnUpdate?: boolean;
     _isInitialized?: boolean;
 }

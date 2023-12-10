@@ -65,6 +65,7 @@ module.exports = {
         "react-hooks/exhaustive-deps": "error",
         "multiline-ternary": "off",
         "@typescript-eslint/no-invalid-void-type": "off",
+        "@typescript-eslint/ban-types": "off"
     },
     globals: {
         __IS_DEV__: true,

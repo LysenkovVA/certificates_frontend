@@ -9,7 +9,7 @@ import { Route, Routes } from "react-router-dom";
 const AppRouter = () => {
     const renderWithWrapper = useCallback((route: AppRouteProps) => {
         const element = (
-            <Suspense fallback={"Loading..."}>{route.element}</Suspense>
+            <Suspense fallback={"Загрузка..."}>{route.element}</Suspense>
         );
 
         return (

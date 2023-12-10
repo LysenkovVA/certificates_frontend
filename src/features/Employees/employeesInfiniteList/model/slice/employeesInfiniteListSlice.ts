@@ -38,6 +38,11 @@ export const employeesInfiniteListSlice = createSlice({
                 employeesInfiniteListAdapter.setOne(state, action.payload);
             }
         },
+        addEmployee: (state, action: PayloadAction<Employee>) => {
+            if (action.payload) {
+                employeesInfiniteListAdapter.addOne(state, action.payload);
+            }
+        },
     },
     extraReducers: (builder) => {
         builder

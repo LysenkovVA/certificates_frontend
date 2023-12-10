@@ -8,5 +8,6 @@ export interface ProfileSchema {
     isAvatarUploading?: boolean;
     avatarUploadError?: string;
     profileFormDataAvatar?: string;
+    removeAvatarOnUpdate?: boolean;
     _isDataInitialized: boolean;
 }

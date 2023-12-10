@@ -3,6 +3,7 @@ import { getEmployeesInfiniteListSearchQuery } from "@/features/Employees/employ
 import { fetchEmployeesInfiniteList } from "@/features/Employees/employeesInfiniteList/model/services/fetchEmployeesInfiniteList/fetchEmployeesInfiniteList";
 import { employeesInfiniteListActions } from "@/features/Employees/employeesInfiniteList/model/slice/employeesInfiniteListSlice";
 import { useAppDispatch } from "@/shared/lib/hooks/useAppDispatch/useAppDispatch";
+import { Flex } from "antd";
 import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 
@@ -28,14 +29,9 @@ const EmployeesPage = (props: EmployeesPageProps) => {
     );
 
     return (
-        // <Flex vertical gap={8}>
-        //     <SearchBar
-        //         currentSearchQuery={searchQuery}
-        //         onChangeValue={onChange}
-        //         searchCallbackForDebounce={fetchData}
-        //     />
-        <EmployeesInfiniteList />
-        // {/*</Flex>*/}
+        <Flex vertical gap={8}>
+            <EmployeesInfiniteList />
+        </Flex>
     );
 };
 
